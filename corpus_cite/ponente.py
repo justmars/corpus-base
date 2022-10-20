@@ -586,10 +586,10 @@ def get_cleaned_names(db):
 
     return db.execute(
         f"""--sql
-        select min(date), max(date), clean(ponente) name, count(*) num
+        select min(date), max(date), raw_ponente, count(*) num
         from {DECISION_TBL}
-        where ponente is not null and name is not null and name != 'per curiam'
-        group by name
+        where raw_ponente is not null
+        group by raw_ponente
         order by num desc
     ;"""
     ).fetchall()
