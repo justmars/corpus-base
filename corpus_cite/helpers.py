@@ -1,6 +1,7 @@
 import re
 
 from markdownify import markdownify
+from sqlite_utils import Database
 
 WHITELIST = re.compile(
     r""" # ^ exclusion [^ ... ]
@@ -65,3 +66,8 @@ def is_line_ok(text: str):
             first_char_capital_letter,
         ]
     )
+
+
+## Database
+
+db = Database("cases.db", use_counts_table=True)

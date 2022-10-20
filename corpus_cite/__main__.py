@@ -37,6 +37,7 @@ SRC_FILES = os.getenv("SRC_FILES", "code/corpus/decisions/**/*/details.yaml")
 DECISION_TBL = os.getenv("DECISION_TBL", "decisions_tbl")
 CITATION_TBL = os.getenv("CITATION_TBL", "decision_citations_tbl")
 VOTELINE_TBL = os.getenv("VOTELINE_TBL", "decision_votelines_tbl")
+TITLETAG_TBL = os.getenv("TITLETAG_TBL", "decision_tags_tbl")
 CATEGORY_START_DECISION = re.compile(r"d\s*e\s*c", re.I)
 CATEGORY_START_RESOLUTION = re.compile(r"r\s*e\s*s", re.I)
 COMPOSITION_START_DIVISION = re.compile(r"div", re.I)
@@ -107,6 +108,18 @@ class CitationRow(Citation):
             foreign_keys=[("decision_id", DECISION_TBL, "id")],
             if_not_exists=True,
         )
+        idx_prefix = "idx_cites_"
+        indexes = [
+            ["id", "decision_id"],
+            ["docket_category", "docket_serial", "docket_date"],
+            ["scra", "phil", "offg", "docket"],
+            ["offg"],
+            ["scra"],
+            ["phil"],
+            ["docket"],
+        ]
+        for i in indexes:
+            tbl.create_index(i, idx_prefix + "_".join(i), if_not_exists=True)
         return tbl
 
     @classmethod
@@ -131,6 +144,16 @@ class VoteLine(BaseModel):
             pk="id",
             foreign_keys=[("decision_id", DECISION_TBL, "id")],
             if_not_exists=True,
+        )
+        idx_prefix = "idx_votes_"
+        indexes = [["id", "decision_id"]]
+        for i in indexes:
+            tbl.create_index(i, idx_prefix + "_".join(i), if_not_exists=True)
+        tbl.enable_fts(
+            ["text"],
+            create_triggers=True,
+            replace=True,
+            tokenize="porter",
         )
         return tbl
 
@@ -161,7 +184,7 @@ class DecisionRow(BaseModel):
     citation: Citation = Field(exclude=True)
     emails: str
     title: str
-    description: str
+    description: str = Field("Sample")
     date: datetime.date
     raw_ponente: str = Field(None)
     per_curiam: bool = Field(
@@ -230,6 +253,7 @@ class DecisionRow(BaseModel):
                     - /details.yaml <-- the file containing the metadata that is `p`
         """
         from .helpers import voteline_clean
+        from .ponente import clean_raw_ponente
 
         data = yaml.safe_load(p.read_text())
         citation = Citation.from_details(data)
@@ -244,7 +268,7 @@ class DecisionRow(BaseModel):
                     ponente = None
                 else:
                     if len(ponente) >= 3:
-                        ponente = ponente.title()
+                        ponente = clean_raw_ponente(ponente)
 
         emails = data.get("emails", ["bot@lawsql.com"])
         emails = ", ".join(emails)
@@ -301,7 +325,6 @@ class DecisionRow(BaseModel):
             created=p.stat().st_ctime,
             modified=p.stat().st_mtime,
             title=title,
-            description=str(citation),
             date=date_obj,
             composition=CourtComposition._setter(data.get("composition")),
             category=DecisionCategory._setter(data.get("category")),
