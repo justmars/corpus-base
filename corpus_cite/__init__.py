@@ -1,0 +1,9 @@
+__version__ = "0.0.1"
+from .__main__ import (
+    CITATION_TBL,
+    DECISION_TBL,
+    SRC_FILES,
+    CitationRow,
+    DecisionRow,
+    VoteLine,
+)
