@@ -1,6 +1,6 @@
 import pytest
 
-from corpus_cite import clean_raw_ponente
+from corpus_cite import RawPonente
 
 
 @pytest.mark.parametrize(
@@ -51,4 +51,4 @@ from corpus_cite import clean_raw_ponente
 )
 def test_clean_raw_ponente(orig_samples, fix):
     for o in orig_samples:
-        assert clean_raw_ponente(o) == fix
+        assert RawPonente.clean(o) == fix

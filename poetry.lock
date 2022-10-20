@@ -197,7 +197,7 @@ citation-date = ">=0.0.3,<0.0.4"
 
 [[package]]
 name = "citation-utils"
-version = "0.0.8"
+version = "0.0.9"
 description = "Regex-based docket and report formula for Citations found in Philippine Supreme Court Decisions"
 category = "main"
 optional = false
@@ -243,7 +243,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 name = "commonmark"
 version = "0.9.1"
 description = "Python parser for the CommonMark Markdown spec"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -1068,7 +1068,7 @@ email = ["email-validator (>=1.0.3)"]
 name = "pygments"
 version = "2.13.0"
 description = "Pygments is a syntax highlighting package written in Python."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -1279,7 +1279,7 @@ test = ["pytest (>=6,!=7.0.0,!=7.0.1)", "pytest-cov (>=3.0.0)", "pytest-qt"]
 name = "rich"
 version = "12.6.0"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6.3,<4.0.0"
 
@@ -1601,7 +1601,7 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "78d89ef61f0745bc342e25afd3ffbe72f334e5be80defbd5e431b6e380e8aa75"
+content-hash = "770d9b3a0ead58977ce0626c0923f591ed2d0cd14ffddd8c4c936bbaf9598eea"
 
 [metadata.files]
 anyio = [
@@ -1756,8 +1756,8 @@ citation-report = [
     {file = "citation_report-0.0.6-py3-none-any.whl", hash = "sha256:6ef72fa5e80dfc6da7c130cc7fdbb58e33e235b68f9ee92fb0a487c5aaac3b45"},
 ]
 citation-utils = [
-    {file = "citation-utils-0.0.8.tar.gz", hash = "sha256:43ce819152e653a9706e3634d94f7c18ff44c973b24dac236a4459836a13f208"},
-    {file = "citation_utils-0.0.8-py3-none-any.whl", hash = "sha256:977197bd93b53352648fdb98037a36990b16a60b2ce5ba9948106e231eda18df"},
+    {file = "citation_utils-0.0.9-py3-none-any.whl", hash = "sha256:671e73442e60f5b179a371f0bca4fa505da9cd0e9de1e543a68fcbf70ac0cba6"},
+    {file = "citation_utils-0.0.9.tar.gz", hash = "sha256:1ba35c13a23e4a2588c70c6ff69e20ab73bce5e00a2163d4ec605d8c7aa5b1d3"},
 ]
 click = [
     {file = "click-8.1.3-py3-none-any.whl", hash = "sha256:bb4d8133cb15a609f44e8213d9b391b0809795062913b383c62be0ee95b1db48"},

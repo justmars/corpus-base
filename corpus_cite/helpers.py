@@ -1,7 +1,53 @@
 import re
+from enum import Enum
 
 from markdownify import markdownify
-from sqlite_utils import Database
+
+
+class DecisionSource(str, Enum):
+    sc = "sc"
+    legacy = "legacy"
+
+
+class DecisionCategory(str, Enum):
+    decision = "Decision"
+    resolution = "Resolution"
+    other = "Unspecified"
+
+    @classmethod
+    def _setter(cls, text: str | None):
+        from .resources import (
+            CATEGORY_START_DECISION,
+            CATEGORY_START_RESOLUTION,
+        )
+
+        if text:
+            if CATEGORY_START_DECISION.search(text):
+                return cls.decision
+            elif CATEGORY_START_RESOLUTION.search(text):
+                return cls.resolution
+        return cls.other
+
+
+class CourtComposition(str, Enum):
+    enbanc = "En Banc"
+    division = "Division"
+    other = "Unspecified"
+
+    @classmethod
+    def _setter(cls, text: str | None):
+        from .resources import (
+            COMPOSITION_START_DIVISION,
+            COMPOSITION_START_ENBANC,
+        )
+
+        if text:
+            if COMPOSITION_START_DIVISION.search(text):
+                return cls.division
+            elif COMPOSITION_START_ENBANC.search(text):
+                return cls.enbanc
+        return cls.other
+
 
 WHITELIST = re.compile(
     r""" # ^ exclusion [^ ... ]
@@ -42,8 +88,13 @@ startlines = re.compile(r"^[\.,\s]")
 endlines = re.compile(r"\-+$")
 
 
-def voteline_clean(text: str):
+def voteline_clean(text: str | None):
+    if not text:
+        return None
+    text = text.lstrip(". ").rstrip()
     init = markdownify(text).replace("*", "").strip()
+    if len(text) < 20:
+        return None
     clean = WHITELIST.sub("", init)
     add_concur_line = clean.replace("concur.", "concur.\n")
     unchair = CHAIRPERSON.sub("", add_concur_line)
@@ -66,8 +117,3 @@ def is_line_ok(text: str):
             first_char_capital_letter,
         ]
     )
-
-
-## Database
-
-db = Database("cases.db", use_counts_table=True)

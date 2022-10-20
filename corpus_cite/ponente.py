@@ -1,9 +1,39 @@
 import re
 from enum import Enum
+from typing import NamedTuple
 
 from unidecode import unidecode
 
-from .helpers import db
+from .resources import DECISION_TBL, db
+
+IS_PER_CURIAM = re.compile(r"per\s+curiam", re.I)
+
+
+class RawPonente(NamedTuple):
+    writer: str | None = None
+    per_curiam: bool = False
+
+    @classmethod
+    def extract(cls, text: str | None):
+        if not text:
+            return None
+        text = text.strip()
+        if text:
+            if IS_PER_CURIAM.search(text):
+                return cls(per_curiam=True)
+            else:
+                return cls(writer=cls.clean(text))
+
+    @classmethod
+    def clean(cls, text: str) -> str | None:
+        """Since most ponente strings from the case files are not uniform, clean this field by a variety of fixes such"""
+
+        no_asterisk = re.sub(r"\[?(\*)+\]?", "", text)
+        surname = init_surnames(no_asterisk)
+        no_suffix = TitleSuffixClean.clean_end(surname).strip()
+        repl = CommonTypos.replace_value(no_suffix).strip()
+        res = repl + "." if repl.endswith((" jr", " sr")) else repl
+        return res if 4 < len(res) < 20 else None
 
 
 class TitleSuffixClean(Enum):
@@ -563,32 +593,18 @@ def init_surnames(text: str):
     return text
 
 
-def clean_raw_ponente(text: str) -> str | None:
-    """Since most ponente strings from the case files are not uniform, clean this field by a variety of fixes such"""
-
-    no_asterisk = re.sub(r"\[?(\*)+\]?", "", text)
-    surname = init_surnames(no_asterisk)
-    no_suffix = TitleSuffixClean.clean_end(surname).strip()
-    repl = CommonTypos.replace_value(no_suffix).strip()
-    res = repl + "." if repl.endswith((" jr", " sr")) else repl
-    return res if 4 < len(res) < 20 else None
-
-
-@db.register_function(name="clean", deterministic=True)
+@db.register_function(name="clean", deterministic=True)  # type:ignore
 def db_clean_raw_ponente(text: str):
-    """See in relation to `get_cleaned_names()`. Needs to have a wrapper around the python function. Calling the `db_clean_raw_ponente` in a python context won't work."""
-    return clean_raw_ponente(text)
+    """See in relation to `most_popular()`. Needs to have a wrapper around the python function. Calling the `db_clean_raw_ponente` in a python context won't work."""
+    return RawPonente.clean(text)
 
 
-def get_cleaned_names(db):
-    """Uses the `clean()` function registered to sqlite by `db_clean_raw_ponente` within the sql statement to execute."""
-    from .__main__ import DECISION_TBL
-
+def most_popular(db):
     return db.execute(
         f"""--sql
         select min(date), max(date), raw_ponente, count(*) num
         from {DECISION_TBL}
-        where raw_ponente is not null
+        where raw_ponente is not null and per_curiam is 0
         group by raw_ponente
         order by num desc
     ;"""
