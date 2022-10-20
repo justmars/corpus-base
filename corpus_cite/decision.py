@@ -129,7 +129,7 @@ class DecisionRow(BaseModel):
         f = p.parent / "fallo.html"
         data = yaml.safe_load(p.read_text())
         citation = Citation.from_details(data)
-        ponente = RawPonente(data.get("ponente"))
+        ponente = RawPonente.extract(data.get("ponente"))
         id = p.parent.name
         if p.parent.parent.stem == "legacy":
             id = citation.slug or p.parent.name
@@ -150,8 +150,8 @@ class DecisionRow(BaseModel):
             category=DecisionCategory._setter(data.get("category")),
             fallo=markdownify(f.read_text()) if f.exists() else None,
             voting=voteline_clean(data.get("voting")),
-            raw_ponente=ponente.writer,
-            per_curiam=ponente.per_curiam,
+            raw_ponente=ponente.writer if ponente else None,
+            per_curiam=ponente.per_curiam if ponente else False,
             citation=citation,
             emails=", ".join(data.get("emails", ["bot@lawsql.com"])),
         )

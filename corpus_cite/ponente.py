@@ -17,7 +17,6 @@ class RawPonente(NamedTuple):
     def extract(cls, text: str | None):
         if not text:
             return None
-        text = text.strip()
         if text:
             if IS_PER_CURIAM.search(text):
                 return cls(per_curiam=True)
