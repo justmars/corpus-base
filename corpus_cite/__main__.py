@@ -226,7 +226,20 @@ class DecisionRow(BaseModel):
             pk="id",
             if_not_exists=True,
         )
+        idx_prefix = "idx_cases_"
+        indexes = [
+            ["source", "origin", "date"],
+            ["date"],
+            ["source", "origin"],
+            ["category", "composition"],
+            ["per_curiam", "raw_ponente"],
+            ["raw_ponente"],
+            ["per_curiam"],
+        ]
+        for i in indexes:
+            tbl.create_index(i, idx_prefix + "_".join(i), if_not_exists=True)
         tbl.enable_fts(
+            ["voting"],
             ["title", "fallo"],
             create_triggers=True,
             replace=True,

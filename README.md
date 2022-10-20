@@ -23,7 +23,7 @@ In the `decisions_tbl` of the database, we can see the most common names in the 
 
 ```python
 >>> from corpus_cite.utils import get_cleaned_names
->>> [i for i in get_cleaned_names(db)] # excluding per curiams and unidentified cases (about 2k+)
+>>> [i for i in get_cleaned_names(db)] # excluding per curiams and unidentified cases
 [
     ('1994-07-04', '2017-08-09', 'mendoza', 1294), # combined: vv m. (1994); j.m. (2010)
     ('2009-03-17', '2021-03-24', 'peralta', 1242),
