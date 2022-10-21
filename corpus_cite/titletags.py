@@ -2,7 +2,7 @@ from typing import Iterator
 
 from pydantic import BaseModel
 
-from .resources import DECISION_TBL, TITLETAG_TBL
+from .settings import settings
 
 
 class TitleTagRow(BaseModel):
@@ -11,13 +11,13 @@ class TitleTagRow(BaseModel):
 
     @classmethod
     def make_table(cls, db):
-        tbl = db[TITLETAG_TBL]
+        tbl = db[settings.TitleTagTableName]
         if tbl.exists():
             return tbl
         tbl.create(
             columns={"decision_id": str, "tag": str},
             pk="id",
-            foreign_keys=[("decision_id", DECISION_TBL, "id")],
+            foreign_keys=[("decision_id", settings.DecisionTableName, "id")],
             if_not_exists=True,
         )
         return tbl
@@ -28,8 +28,10 @@ class TitleTagRow(BaseModel):
             yield cls(decision_id=pk, tag=data["tag"])
 
     @classmethod
-    def insert_rows(cls, db, items: Iterator["TitleTagRow"]):
-        if items:
+    def insert_rows(cls, db, pk: str, text: str | None):
+        if not text:
+            return
+        if items := cls.extract_tags(pk, text):
             tbl = cls.make_table(db)
             rows = [i.dict() for i in items]
             for row in rows:

@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field, root_validator
 from slugify import slugify
 
 from .helpers import CourtComposition, DecisionCategory, DecisionSource
-from .resources import DECISION_TBL
+from .settings import settings
 
 
 class DecisionRow(BaseModel):
@@ -61,7 +61,7 @@ class DecisionRow(BaseModel):
 
     @classmethod
     def make_table(cls, db):
-        tbl = db[DECISION_TBL]
+        tbl = db[settings.DecisionTableName]
         if tbl.exists():
             return tbl
         tbl.create(

@@ -4,7 +4,7 @@ from typing import NamedTuple
 
 from unidecode import unidecode
 
-from .resources import DECISION_TBL, db
+from .settings import settings
 
 IS_PER_CURIAM = re.compile(r"per\s+curiam", re.I)
 
@@ -592,17 +592,11 @@ def init_surnames(text: str):
     return text
 
 
-@db.register_function(name="clean", deterministic=True)  # type:ignore
-def db_clean_raw_ponente(text: str):
-    """See in relation to `most_popular()`. Needs to have a wrapper around the python function. Calling the `db_clean_raw_ponente` in a python context won't work."""
-    return RawPonente.clean(text)
-
-
 def most_popular(db):
     return db.execute(
         f"""--sql
         select min(date), max(date), raw_ponente, count(*) num
-        from {DECISION_TBL}
+        from {settings.DecisionTableName}
         where raw_ponente is not null and per_curiam is 0
         group by raw_ponente
         order by num desc

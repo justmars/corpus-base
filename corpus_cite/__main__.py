@@ -1,32 +1,34 @@
 from pathlib import Path
 
+from loguru import logger
+
 from .citation import CitationRow
 from .decision import DecisionRow
+from .settings import BaseCaseSettings
 from .titletags import TitleTagRow
 from .voteline import VoteLine
 
 
-def setup(db):
+def setup_base_case_tbls(db):
     DecisionRow.make_table(db)
     CitationRow.make_table(db)
     VoteLine.make_table(db)
     TitleTagRow.make_table(db)
+    return db
 
 
-def add_components(db, path: Path):
+def add_base_case_components(db, path: Path):
     obj = DecisionRow.from_path(path)
-    cite = obj.citation.dict() | {"decision_id": obj.id}
+    cite = obj.citation.dict()
     DecisionRow.insert_row(db, obj.dict())
-    CitationRow.insert_row(db, cite)
-    if obj.voting:
-        VoteLine.insert_rows(db, VoteLine.extract_lines(obj.id, obj.voting))
-    if tags := TitleTagRow.extract_tags(obj.id, obj.title):
-        TitleTagRow.insert_rows(db, tags)
+    CitationRow.insert_row(db, {"decision_id": obj.id} | cite)
+    VoteLine.insert_rows(db, obj.id, obj.voting)
+    TitleTagRow.insert_rows(db, obj.id, obj.title)
 
 
-def add_cases(db, paths):
-    for i in paths:
+def add_cases(settings: BaseCaseSettings):
+    for details_file in settings.case_folders:
         try:
-            add_components(db, i)
-        except Exception:
-            continue
+            add_base_case_components(settings.db, details_file)
+        except Exception as e:
+            logger.info(e)

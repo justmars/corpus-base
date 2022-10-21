@@ -3,6 +3,16 @@ from enum import Enum
 
 from markdownify import markdownify
 
+from .settings import (
+    CATEGORY_START_DECISION,
+    CATEGORY_START_RESOLUTION,
+    COMPOSITION_START_DIVISION,
+    COMPOSITION_START_ENBANC,
+    VOTEFULL_MIN_LENGTH,
+    VOTELINE_MAX_LENGTH,
+    VOTELINE_MIN_LENGTH,
+)
+
 
 class DecisionSource(str, Enum):
     sc = "sc"
@@ -16,10 +26,6 @@ class DecisionCategory(str, Enum):
 
     @classmethod
     def _setter(cls, text: str | None):
-        from .resources import (
-            CATEGORY_START_DECISION,
-            CATEGORY_START_RESOLUTION,
-        )
 
         if text:
             if CATEGORY_START_DECISION.search(text):
@@ -36,10 +42,6 @@ class CourtComposition(str, Enum):
 
     @classmethod
     def _setter(cls, text: str | None):
-        from .resources import (
-            COMPOSITION_START_DIVISION,
-            COMPOSITION_START_ENBANC,
-        )
 
         if text:
             if COMPOSITION_START_DIVISION.search(text):
@@ -89,8 +91,6 @@ endlines = re.compile(r"\-+$")
 
 
 def voteline_clean(text: str | None):
-    from .resources import VOTEFULL_MIN_LENGTH
-
     if not text:
         return None
     text = text.lstrip(". ").rstrip()
@@ -107,8 +107,6 @@ def voteline_clean(text: str | None):
 
 
 def is_line_ok(text: str):
-    from .resources import VOTELINE_MAX_LENGTH, VOTELINE_MIN_LENGTH
-
     has_proper_length = VOTELINE_MAX_LENGTH > len(text) > VOTELINE_MIN_LENGTH
     has_indicator = re.search(r"(C\.|J\.)?J\.", text)
     not_all_caps = not text.isupper()

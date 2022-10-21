@@ -1,6 +1,6 @@
 from citation_utils import Citation
 
-from .resources import CITATION_TBL, DECISION_TBL
+from .settings import settings
 
 
 class CitationRow(Citation):
@@ -10,7 +10,7 @@ class CitationRow(Citation):
 
     @classmethod
     def make_table(cls, db):
-        tbl = db[CITATION_TBL]
+        tbl = db[settings.CitationTableName]
         if tbl.exists():
             return tbl
         tbl.create(
@@ -26,7 +26,7 @@ class CitationRow(Citation):
                 "docket_date": str,
             },
             pk="id",
-            foreign_keys=[("decision_id", DECISION_TBL, "id")],
+            foreign_keys=[("decision_id", settings.DecisionTableName, "id")],
             if_not_exists=True,
         )
         idx_prefix = "idx_cites_"

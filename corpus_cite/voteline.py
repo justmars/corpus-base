@@ -1,8 +1,6 @@
-from typing import Iterator
-
 from pydantic import BaseModel
 
-from .resources import DECISION_TBL, VOTELINE_TBL
+from .settings import settings
 
 
 class VoteLine(BaseModel):
@@ -13,13 +11,13 @@ class VoteLine(BaseModel):
 
     @classmethod
     def make_table(cls, db):
-        tbl = db[VOTELINE_TBL]
+        tbl = db[settings.VotelineTableName]
         if tbl.exists():
             return tbl
         tbl.create(
             columns={"id": int, "decision_id": str, "text": str},
             pk="id",
-            foreign_keys=[("decision_id", DECISION_TBL, "id")],
+            foreign_keys=[("decision_id", settings.DecisionTableName, "id")],
             if_not_exists=True,
         )
         idx_prefix = "idx_votes_"
@@ -35,8 +33,10 @@ class VoteLine(BaseModel):
         return tbl
 
     @classmethod
-    def insert_rows(cls, db, items: Iterator["VoteLine"]):
-        if items:
+    def insert_rows(cls, db, pk: str, text: str | None):
+        if not text:
+            return
+        if items := cls.extract_lines(pk, text):
             tbl = cls.make_table(db)
             rows = [i.dict() for i in items]
             for row in rows:
