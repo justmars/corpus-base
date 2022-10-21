@@ -26,9 +26,9 @@ def add_base_case_components(db, path: Path):
     TitleTagRow.insert_rows(db, obj.id, obj.title)
 
 
-def add_cases(settings: BaseCaseSettings):
-    for details_file in settings.case_folders:
+def add_cases(s: BaseCaseSettings):
+    for details_file in s.case_folders:
         try:
-            add_base_case_components(settings.db, details_file)
+            add_base_case_components(s.db, details_file)
         except Exception as e:
             logger.info(e)

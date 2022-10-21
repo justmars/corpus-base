@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "corpus-cite"
-version = "0.0.1"
+version = "0.0.2"
 description = "Initializer for decisions, citations, and voting tables."
 authors = ["Marcelino G. Veloso III <mars@veloso.one>"]
 readme = "README.md"
