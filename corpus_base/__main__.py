@@ -30,7 +30,7 @@ def add_base_case_components(db, path: Path):
     TitleTagRow.insert_rows(db, obj.id, obj.title)
 
 
-def init():
+def init(test_only: int = 0):
     # create tables
     setup_base_tbls(settings.db)
 
@@ -39,7 +39,11 @@ def init():
     Justice.init_justices_tbl()
 
     # infuse decision tables from path
-    for details_file in settings.case_folders:
+
+    for idx, details_file in enumerate(settings.case_folders):
+        if test_only:
+            if idx == test_only:
+                break
         try:
             add_base_case_components(settings.db, details_file)
         except Exception as e:
