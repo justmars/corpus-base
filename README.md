@@ -41,7 +41,7 @@ Path().home().joinpath("corpus").glob("**/*/details.yaml")
 The source of justice information is the `sc.yaml` file stored in the Github Repository. We can make a more detailed copy of this file, supplying mandatory `retire` and `inactive` dates, through the following invocation:
 
 ```python
->>> from corpus_cite import Justice
+>>> from corpus_base import Justice
 >>> Justice.from_api()
 PosixPath('path_to_repo/sc.yaml')
 ```
@@ -49,7 +49,7 @@ PosixPath('path_to_repo/sc.yaml')
 ### Settings
 
 ```python
->>>from corpus_cite.settings import settings
+>>>from corpus_base.settings import settings
 >>>settings
 BaseCaseSettings(
     DecisionSourceFiles='code/corpus/decisions',
@@ -67,7 +67,7 @@ BaseCaseSettings(
 ### Initialize
 
 ```python
->>>from corpus_cite import init
+>>>from corpus_base import init
 >>>init()
 ```
 
@@ -78,8 +78,8 @@ BaseCaseSettings(
 Can add all pydantic validated records from the local copy of justices to the database.
 
 ```python
->>> from corpus_cite import Justice
->>> from corpus_cite.settings import settings as x
+>>> from corpus_base import Justice
+>>> from corpus_base.settings import settings as x
 
 >>> Justice.init_justices_tbl(x)
 <Database <sqlite3.Connection object at 0x10b7c8540>>
@@ -93,7 +93,7 @@ Can add all pydantic validated records from the local copy of justices to the da
 Each `ponente` name stored in `decisions_tbl` of the database has been made uniform, e.g.:
 
 ```python
->>> from corpus_vote import RawPonente
+>>> from corpus_base import RawPonente
 >>> RawPonente.clean("REYES , J.B.L, Acting C.J.") # sample name 1
 "reyes, j.b.l."
 >>> RawPonente.clean("REYES, J, B. L. J.") # sample name 2
@@ -103,7 +103,7 @@ Each `ponente` name stored in `decisions_tbl` of the database has been made unif
 We can see  most common names in the `ponente` field and the covered dates, e.g. from 1954 to 1972 (dates found in the decisions), there have been 1053 decisions marked with `jbl` (as cleaned):
 
 ```python
->>> from corpus_cite.helpers import most_popular
+>>> from corpus_base.helpers import most_popular
 >>> [i for i in most_popular(db)] # excluding per curiams and unidentified cases
 [
     ('1994-07-04', '2017-08-09', 'mendoza', 1297),
@@ -136,7 +136,7 @@ order by num desc
 When selecting a ponente or voting members, create a candidate list of justices based on date:
 
 ```python
->>> from corpus_vote import Justice
+>>> from corpus_base import Justice
 >>> Justice.get_active_on_date('Dec. 1, 1995') # target date
 [
     {
@@ -163,7 +163,7 @@ When selecting a ponente or voting members, create a candidate list of justices 
 Since we already have candidates, we can cleaning desired option to get the `id` and `designation`:
 
 ```python
->>> from corpus_cite import RawPonente
+>>> from corpus_base import RawPonente
 >>> RawPonente.clean('Panganiban, Acting Cj')
 'panganiban'
 >>> Justice.get_justice_on_date('2005-09-08', 'panganiban')
@@ -198,7 +198,7 @@ With a different date, we can get the 'C.J.' designation.:
 ### View chief justice dates
 
 ```python
->>> from corpus_vote import Justice
+>>> from corpus_base import Justice
 >>> Justice.view_chiefs()
 [
     {

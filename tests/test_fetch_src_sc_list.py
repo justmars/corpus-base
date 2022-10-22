@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from corpus_cite import Justice
+from corpus_base import Justice
 
 
 def test_setup():

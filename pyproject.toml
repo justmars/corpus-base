@@ -37,7 +37,7 @@ jupyter = "^1.0.0"
 
 [tool.pytest]
 minversion = "7.1"
-addopts = "-ra -q --cov=corpus_cite tests/"
+addopts = "-ra -q --cov=corpus_base tests/"
 testpaths = ["tests"]
 
 [tool.isort]

@@ -1,4 +1,4 @@
-from corpus_cite import __version__
+from corpus_base import __version__
 
 
 def test_version():

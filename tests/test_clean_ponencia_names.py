@@ -1,6 +1,6 @@
 import pytest
 
-from corpus_cite import RawPonente
+from corpus_base import RawPonente
 
 data = [
     (
