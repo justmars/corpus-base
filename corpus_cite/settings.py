@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 from typing import Iterator
 
+import httpx
 from loguru import logger
 from pydantic import BaseSettings, Field
 from sqlite_utils import Database
@@ -10,7 +11,7 @@ from sqlite_utils import Database
 
 class BaseCaseSettings(BaseSettings):
     DecisionSourceFiles: str = Field(
-        ...,
+        "code/corpus/decisions",
         env="DecisionSourceFiles",
         description="String that represents the path to the decisions.",
     )
@@ -19,6 +20,12 @@ class BaseCaseSettings(BaseSettings):
         env="DB_FILE",
         description="Intended / existing path to the database.",
     )
+
+    GithubToken: str = Field(..., repr=False, env="EXPIRING_TOKEN")
+    GithubOwner: str = Field("justmars", env="OWNER")
+    GithubRepo: str = Field("corpus", env="REPOSITORY")
+
+    JusticeTableName: str = Field("justices_tbl")
     DecisionTableName: str = Field("decisions_tbl")
     CitationTableName: str = Field("decision_citations_tbl")
     VotelineTableName: str = Field("decision_votelines_tbl")
@@ -27,15 +34,39 @@ class BaseCaseSettings(BaseSettings):
     @property
     def db(self) -> Database:
         return Database(
-            Path().home().joinpath(self.DatabasePath), use_counts_table=True
+            Path().home().joinpath(self.DatabasePath),
+            use_counts_table=True,
         )
 
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
 
+    def call_api(self) -> httpx.Response | None:
+        if all([self.GithubToken, self.GithubOwner, self.GithubRepo]):
+            with httpx.Client() as client:
+                return client.get(
+                    f"https://api.github.com/repos/{self.GithubOwner}/{self.GithubRepo}/contents/justices/sc.yaml",
+                    headers=dict(
+                        Authorization=f"token {self.GithubToken}",
+                        Accept="application/vnd.github.VERSION.raw",
+                    ),
+                )
+        return None
+
+    @property
+    def sql(self) -> Path:
+        """Location of SQL templates"""
+        return Path(__file__).parent / "templates"
+
+    @property
+    def local_justice_file(self) -> Path:
+        """Location of the justice file created"""
+        return Path(__file__).parent / "sc.yaml"
+
     @property
     def case_folders(self) -> Iterator[Path]:
+        """Details.yaml files to be used for creation of decision rows and other components."""
         return (
             Path()
             .home()
@@ -58,7 +89,10 @@ COMPOSITION_START_ENBANC = re.compile(r"en", re.I)
 VOTEFULL_MIN_LENGTH = 20
 VOTELINE_MIN_LENGTH = 15
 VOTELINE_MAX_LENGTH = 1000
+MAX_JUSTICE_AGE = 70
 
+## VIEWS
+CHIEF_DATES_VIEW = "chief_dates"
 
 ## Logger
 

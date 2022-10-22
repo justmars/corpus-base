@@ -1,7 +1,8 @@
 .DS_Store
 .vscode
-cases.db
-cases.db*
+sc.yaml
+sc.db
+sc.db*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

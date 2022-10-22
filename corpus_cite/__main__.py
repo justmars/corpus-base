@@ -1,19 +1,23 @@
 from pathlib import Path
 
 from loguru import logger
+from sqlite_utils import Database
 
 from .citation import CitationRow
 from .decision import DecisionRow
-from .settings import BaseCaseSettings
+from .justice import Justice
+from .settings import settings
 from .titletags import TitleTagRow
 from .voteline import VoteLine
 
 
-def setup_base_case_tbls(db):
+def setup_base_tbls(db: Database):
+    Justice.make_table(db)
     DecisionRow.make_table(db)
     CitationRow.make_table(db)
     VoteLine.make_table(db)
     TitleTagRow.make_table(db)
+    db.index_foreign_keys()
     return db
 
 
@@ -26,9 +30,21 @@ def add_base_case_components(db, path: Path):
     TitleTagRow.insert_rows(db, obj.id, obj.title)
 
 
-def add_cases(s: BaseCaseSettings):
-    for details_file in s.case_folders:
+def init():
+    # create tables
+    setup_base_tbls(settings.db)
+
+    # insert justices into the justice table
+    Justice.from_api()
+    Justice.init_justices_tbl()
+
+    # infuse decision tables from path
+    for details_file in settings.case_folders:
         try:
-            add_base_case_components(s.db, details_file)
+            add_base_case_components(settings.db, details_file)
         except Exception as e:
             logger.info(e)
+
+    # update justice id column in the decisions table
+    sqlpath = settings.sql / "update_justice_ids.sql"
+    settings.db.execute(sqlpath.read_text())

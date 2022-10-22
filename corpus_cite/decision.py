@@ -25,7 +25,16 @@ class DecisionRow(BaseModel):
     title: str
     description: str
     date: datetime.date
-    raw_ponente: str | None = Field(None)
+    raw_ponente: str | None = Field(
+        None,
+        title="Ponente",
+        description="After going through a cleaning process, this should be in lowercase and be suitable for matching a justice id.",
+    )
+    justice_id: int | None = Field(
+        None,
+        title="Justice ID",
+        description="Using the raw_ponente, determine the appropriate justice_id using the `update_justice_ids.sql` template.",
+    )
     per_curiam: bool = Field(
         False,
         title="Is Per Curiam",
@@ -81,6 +90,7 @@ class DecisionRow(BaseModel):
                 "composition": str,
                 "per_curiam": bool,
                 "raw_ponente": str,  # what appears on file
+                "justice_id": int,  # initially null
             },
             pk="id",
             if_not_exists=True,
@@ -91,6 +101,8 @@ class DecisionRow(BaseModel):
             ["date"],
             ["source", "origin"],
             ["category", "composition"],
+            ["id", "justice_id"],
+            ["date", "justice_id", "raw_ponente", "per_curiam"],
             ["per_curiam", "raw_ponente"],
             ["raw_ponente"],
             ["per_curiam"],
@@ -151,6 +163,7 @@ class DecisionRow(BaseModel):
             fallo=markdownify(f.read_text()) if f.exists() else None,
             voting=voteline_clean(data.get("voting")),
             raw_ponente=ponente.writer if ponente else None,
+            justice_id=None,
             per_curiam=ponente.per_curiam if ponente else False,
             citation=citation,
             emails=", ".join(data.get("emails", ["bot@lawsql.com"])),

@@ -41,4 +41,7 @@ jobs:
       - name: Install Python Dependencies
         run: poetry install
       - name: Test with Pytest
+        env:
+          EXPIRING_TOKEN: ${{secrets.EXPIRING_TOKEN}}
+          DB_FILE: ${secrets.DB_FILE}
         run: poetry run pytest

@@ -21,7 +21,7 @@ class VoteLine(BaseModel):
             if_not_exists=True,
         )
         idx_prefix = "idx_votes_"
-        indexes = [["id", "decision_id"]]
+        indexes = [["id", "decision_id"], ["text"]]
         for i in indexes:
             tbl.create_index(i, idx_prefix + "_".join(i), if_not_exists=True)
         tbl.enable_fts(
