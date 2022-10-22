@@ -5,7 +5,8 @@ WITH candidate_justices AS (
         jt.last_name,
         COUNT(*) num
     FROM
-        justice_tbl jt
+        {{ justice_table }}
+        jt
     WHERE
         jt.inactive_date > d.date -- decision written before the justice became inactive
         AND d.date > jt.start_term -- decision written after the justice was appointed
@@ -37,10 +38,11 @@ justices_matched(
                 candidate_justices
         ) -- the matched justice id
     FROM
-        decisions_tbl d
+        {{ decision_table }}
+        d
 )
 UPDATE
-    decisions_tbl AS dtbl -- update the decisions table with the newly matched justice id
+    {{ decision_table }} AS dtbl -- update the decisions table with the newly matched justice id
     SET justice_id = m.matched_justice_id
 FROM
     justices_matched m

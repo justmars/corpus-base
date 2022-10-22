@@ -6,7 +6,8 @@ WITH end_chief_date(d) AS (
             '-1 day'
         )
     FROM
-        justices_tbl tbl2
+        {{ justice_table }}
+        tbl2
     WHERE
         tbl2.chief_date IS NOT NULL
         AND tbl2.chief_date > tbl1.chief_date
@@ -52,7 +53,8 @@ SELECT
             time_as_chief
     ) years_as_chief
 FROM
-    justices_tbl tbl1
+    {{ justice_table }}
+    tbl1
 WHERE
     tbl1.chief_date IS NOT NULL
 ORDER BY

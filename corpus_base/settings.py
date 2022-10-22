@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Iterator
 
 import httpx
+from jinja2 import Environment, PackageLoader, select_autoescape
 from loguru import logger
 from pydantic import BaseSettings, Field
 from sqlite_utils import Database
@@ -55,11 +56,6 @@ class BaseCaseSettings(BaseSettings):
         return None
 
     @property
-    def sql(self) -> Path:
-        """Location of SQL templates"""
-        return Path(__file__).parent / "templates"
-
-    @property
     def local_justice_file(self) -> Path:
         """Location of the justice file created"""
         return Path(__file__).parent / "sc.yaml"
@@ -72,6 +68,16 @@ class BaseCaseSettings(BaseSettings):
             .home()
             .joinpath(self.DecisionSourceFiles)
             .glob("**/*/details.yaml")
+        )
+
+    @property
+    def base_env(self):
+        """The Jinja2 environment to yield various sql files."""
+        return Environment(
+            loader=PackageLoader(
+                package_name="corpus_base", package_path="templates"
+            ),
+            autoescape=select_autoescape(),
         )
 
 

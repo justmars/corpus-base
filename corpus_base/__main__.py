@@ -46,5 +46,9 @@ def init():
             logger.info(e)
 
     # update justice id column in the decisions table
-    sqlpath = settings.sql / "update_justice_ids.sql"
-    settings.db.execute(sqlpath.read_text())
+    settings.db.execute(
+        sql=settings.base_env.get_template("update_justice_ids.sql").render(
+            justice_table=settings.JusticeTableName,
+            decision_table=settings.DecisionTableName,
+        ),
+    )

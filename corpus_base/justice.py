@@ -291,6 +291,10 @@ class Justice(Bio):
         view = CHIEF_DATES_VIEW
         if view in db.view_names():
             return list(db[view].rows)
-        sqlpath = Path(__file__).parent / "sql_templates" / "chief_dates.sql"
-        db.create_view(view, sql=sqlpath.read_text())
+        db.create_view(
+            view,
+            sql=settings.base_env.get_template("chief_dates.sql").render(
+                justice_table=settings.JusticeTableName
+            ),
+        )
         return list(db[view].rows)
