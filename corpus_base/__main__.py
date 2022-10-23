@@ -44,13 +44,10 @@ def setup_case(path: Path):
     if not decision_id:
         return
 
-    # add a justice id to the just inserted decision row
-    obj.update_justice_id()
-
     # add associated citation of decision
     if obj.citation.has_citation:
         settings.tbl_decision_citation.insert(
-            {"decision_id": decision_id} | obj.citation.dict()
+            CitationRow(**obj.citation_fk).dict()
         )
 
     # process votelines of voting text in decision

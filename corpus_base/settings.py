@@ -1,4 +1,3 @@
-import re
 import sys
 from pathlib import Path
 from typing import Iterator
@@ -120,9 +119,8 @@ class BaseCaseSettings(DecisionParts, JusticeParts):
     @classmethod
     def add_indexes(cls, tbl: Table, indexes: list[list[str]]):
         for i in indexes:
-            tbl.create_index(
-                i, "idx" + tbl.name + "_".join(i), if_not_exists=True
-            )
+            idx_name = "_".join(["idx", tbl.name, "_".join(i)])
+            tbl.create_index(i, idx_name, if_not_exists=True)
 
     @classmethod
     def add_fts(cls, tbl: Table, columns: list[str]):
@@ -147,7 +145,7 @@ logger.configure(
             "level": "ERROR",
         },
         {
-            "sink": "logs/decision.log",
+            "sink": "logs/base.log",
             "format": "{message}",
             "level": "WARNING",
             "serialize": True,

@@ -40,11 +40,6 @@ justices_matched(
     FROM
         {{ decision_tbl }}
         d
-
-        {% if target_decision_id -%}
-    WHERE
-        d.id = '{{ target_decision_id }}' -- if a target decision is supplied, limit the update
-    {%- endif %}
 )
 UPDATE
     {{ decision_tbl }} AS dtbl -- update the decisions table with the newly matched justice id

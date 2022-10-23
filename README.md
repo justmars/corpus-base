@@ -4,9 +4,10 @@ Validator of inputs from raw files for the following sqlite db tables:
 
 1. Justices
 2. Decisions
-3. Citations
-4. Votelines
-5. Titletags
+   - Citations
+   - Votelines
+   - Titletags
+   - Opinions
 
 ## Setup
 
@@ -52,15 +53,16 @@ PosixPath('path_to_repo/sc.yaml')
 >>>from corpus_base.settings import settings
 >>>settings
 BaseCaseSettings(
-    DecisionSourceFiles='code/corpus/decisions',
-    DatabasePath='code/corpus-cite/sc.db',
     GithubOwner='justmars',
     GithubRepo='corpus',
-    JusticeTableName='justice_tbl',
-    DecisionTableName='decisions_tbl',
+    JusticeTableName='justices_tbl',
+    DecisionSourceFiles='code/corpus/decisions',
     CitationTableName='decision_citations_tbl',
     VotelineTableName='decision_votelines_tbl',
-    TitleTagTableName='decision_titletags_tbl'
+    TitleTagTableName='decision_titletags_tbl',
+    DatabasePath='code/corpus-base/sc.db',
+    DecisionTableName='decisions_tbl',
+    OpinionTableName='opinions_tbl'
 )
 ```
 

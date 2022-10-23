@@ -3,19 +3,25 @@ from pathlib import Path
 
 import yaml
 from citation_utils import Citation
+from dateutil.parser import parse
 from loguru import logger
 from markdownify import markdownify
 from pydantic import BaseModel, Field, root_validator
 from slugify import slugify
 
 from .settings import settings
-from .utils import CourtComposition, DecisionCategory, DecisionSource
+from .utils import (
+    CourtComposition,
+    DecisionCategory,
+    DecisionSource,
+    RawPonente,
+    voteline_clean,
+)
 
 case_tbl = settings.tbl_decision
 
 
 class DecisionRow(BaseModel):
-
     id: str
     created: float
     modified: float
@@ -119,7 +125,6 @@ class DecisionRow(BaseModel):
                 - /folder_name, e.g. 12341 <-- the original id when scraped
                     - /details.yaml <-- the file containing the metadata that is `p`
         """
-        from .utils import RawPonente, voteline_clean
 
         f = p.parent / "fallo.html"
         data = yaml.safe_load(p.read_text())
@@ -146,17 +151,44 @@ class DecisionRow(BaseModel):
             fallo=markdownify(f.read_text()) if f.exists() else None,
             voting=voteline_clean(data.get("voting")),
             raw_ponente=ponente.writer if ponente else None,
-            justice_id=None,
+            justice_id=cls.get_justice_id(ponente, data.get("date_prom")),
             per_curiam=ponente.per_curiam if ponente else False,
             citation=citation,
             emails=", ".join(data.get("emails", ["bot@lawsql.com"])),
         )
 
-    def update_justice_id(self):
+    @classmethod
+    def get_justice_id(
+        cls, ponente: RawPonente | None, date: str | None
+    ) -> int | None:
+        if not ponente:
+            return None
+        if not ponente.writer:
+            return None
+        if not date:
+            return None
+
+        template = settings.base_env.get_template("get_justice_id.sql")
+        sql = template.render(
+            justice_tbl=settings.JusticeTableName,
+            target_name=ponente.writer,
+            target_date=parse(date).date().isoformat(),
+        )
+        candidates = settings.db.execute_returning_dicts(sql=sql)
+        if not candidates:
+            logger.error(f"No justice_id for {ponente.writer=}")
+        elif len(candidates) > 1:
+            logger.error(f"Multiple justice_ids; similarity {candidates=}")
+        return candidates[0]["id"]
+
+    def update_justice_ids(self):
         template = settings.base_env.get_template("update_justice_ids.sql")
         sql = template.render(
             justice_tbl=settings.JusticeTableName,
             decision_tbl=settings.DecisionTableName,
-            target_decision_id=self.id,
         )
         return settings.db.execute(sql=sql)
+
+    @property
+    def citation_fk(self) -> dict:
+        return self.citation.dict() | {"decision_id": self.id}
