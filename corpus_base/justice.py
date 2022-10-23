@@ -8,10 +8,12 @@ from dateutil.parser import parse
 from dateutil.relativedelta import relativedelta as rd
 from loguru import logger
 from pydantic import BaseModel, Field, validator
-from sqlite_utils import Database
-from sqlite_utils.db import Table
 
-from .settings import CHIEF_DATES_VIEW, MAX_JUSTICE_AGE, settings
+from .settings import settings
+
+CHIEF_DATES_VIEW = "chief_dates"
+MAX_JUSTICE_AGE = 70
+just_tbl = settings.tbl_justice
 
 
 class Gender(str, Enum):
@@ -140,11 +142,8 @@ class Justice(Bio):
         )
 
     @classmethod
-    def make_table(cls, db):
-        tbl = db[settings.JusticeTableName]
-        if tbl.exists():
-            return tbl
-        tbl.create(
+    def make_table(cls):
+        just_tbl.create(
             columns={
                 "id": int,
                 "first_name": str,
@@ -163,29 +162,24 @@ class Justice(Bio):
             pk="id",
             if_not_exists=True,
         )
-        idx_prefix = "idx_justices_"
-        indexes = [
-            ["last_name", "alias", "start_term", "inactive_date"],
-            ["start_term", "inactive_date"],
-            ["last_name", "alias"],
-            ["alias"],
-            ["last_name"],
-            ["full_name"],
-            ["start_term"],
-            ["end_term"],
-            ["chief_date"],
-            ["retire_date"],
-            ["inactive_date"],
-        ]
-        for i in indexes:
-            tbl.create_index(i, idx_prefix + "_".join(i), if_not_exists=True)
-        tbl.enable_fts(
-            ["full_name"],
-            create_triggers=True,
-            replace=True,
-            tokenize="porter",
+        settings.add_indexes(
+            just_tbl,
+            [
+                ["last_name", "alias", "start_term", "inactive_date"],
+                ["start_term", "inactive_date"],
+                ["last_name", "alias"],
+                ["alias"],
+                ["last_name"],
+                ["full_name"],
+                ["start_term"],
+                ["end_term"],
+                ["chief_date"],
+                ["retire_date"],
+                ["inactive_date"],
+            ],
         )
-        return tbl
+        settings.add_fts(just_tbl, ["full_name"])
+        return just_tbl
 
     @classmethod
     def from_api(
@@ -223,14 +217,9 @@ class Justice(Bio):
         raise Exception(f"Need file to exist: {settings.local_justice_file=}")
 
     @classmethod
-    def init_justices_tbl(cls) -> Database:
+    def init_justices_tbl(cls):
         """Add a table containing names and ids of justices; alter the original decision's table for it to include a justice id."""
-        db = settings.db
-        justice_tbl = db[settings.JusticeTableName]
-        if justice_tbl.exists() and isinstance(justice_tbl, Table):
-            # add all records from the local file to the created justice table
-            justice_tbl.insert_all(i.dict() for i in Justice.from_local())
-        return db
+        return just_tbl.insert_all(i.dict() for i in Justice.from_local())
 
     @classmethod
     def get_active_on_date(cls, target_date: str) -> list[dict]:
@@ -239,18 +228,14 @@ class Justice(Bio):
             valid_date = parse(target_date).date().isoformat()
         except:
             raise Exception(f"Need {target_date=}")
-        db = settings.db
-        tbl = db[settings.JusticeTableName]
-        if tbl.exists():
-            return list(
-                tbl.rows_where(
-                    "inactive_date > :date and :date > start_term",
-                    {"date": valid_date},
-                    select="id, lower(last_name) surname, alias, start_term, inactive_date, chief_date",
-                    order_by="start_term desc",
-                )
+        return list(
+            just_tbl.rows_where(
+                "inactive_date > :date and :date > start_term",
+                {"date": valid_date},
+                select="id, lower(last_name) surname, alias, start_term, inactive_date, chief_date",
+                order_by="start_term desc",
             )
-        raise Exception(f"Need valid {tbl=}")
+        )
 
     @classmethod
     def get_justice_on_date(

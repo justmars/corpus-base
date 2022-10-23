@@ -3,7 +3,7 @@ WITH justice_data AS (
         start_term,
         inactive_date
     FROM
-        justice_tbl
+        justices_tbl
     WHERE
         (
             dtl.raw_ponente = alias

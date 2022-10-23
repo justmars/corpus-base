@@ -4,7 +4,7 @@ from typing import NamedTuple
 
 from unidecode import unidecode
 
-from .settings import settings
+from ..settings import settings
 
 IS_PER_CURIAM = re.compile(r"per\s+curiam", re.I)
 

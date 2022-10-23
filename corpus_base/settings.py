@@ -8,29 +8,36 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from loguru import logger
 from pydantic import BaseSettings, Field
 from sqlite_utils import Database
+from sqlite_utils.db import Table
 
 
-class BaseCaseSettings(BaseSettings):
-    DecisionSourceFiles: str = Field(
-        "code/corpus/decisions",
-        env="DecisionSourceFiles",
-        description="String that represents the path to the decisions.",
-    )
-    DatabasePath: str = Field(
-        ...,
-        env="DB_FILE",
-        description="Intended / existing path to the database.",
-    )
-
+class JusticeParts(BaseSettings):
     GithubToken: str = Field(..., repr=False, env="EXPIRING_TOKEN")
     GithubOwner: str = Field("justmars", env="OWNER")
     GithubRepo: str = Field("corpus", env="REPOSITORY")
 
     JusticeTableName: str = Field("justices_tbl")
-    DecisionTableName: str = Field("decisions_tbl")
+
+
+class DecisionParts(BaseSettings):
+    DecisionSourceFiles: str = Field(
+        "code/corpus/decisions",
+        env="DecisionSourceFiles",
+        description="String that represents the path to the decisions.",
+    )
     CitationTableName: str = Field("decision_citations_tbl")
     VotelineTableName: str = Field("decision_votelines_tbl")
     TitleTagTableName: str = Field("decision_titletags_tbl")
+
+
+class BaseCaseSettings(DecisionParts, JusticeParts):
+    DatabasePath: str = Field(
+        ...,
+        env="DB_FILE",
+        description="Intended / existing path to the database.",
+    )
+    DecisionTableName: str = Field("decisions_tbl")
+    OpinionTableName: str = Field("opinions_tbl")
 
     @property
     def db(self) -> Database:
@@ -80,25 +87,55 @@ class BaseCaseSettings(BaseSettings):
             autoescape=select_autoescape(),
         )
 
+    def set_table(self, table_name: str) -> Table:
+        tbl = self.db[table_name]
+        if isinstance(tbl, Table):
+            return tbl
+        raise Exception(f"Missing {table_name=}")
+
+    @property
+    def tbl_justice(self) -> Table:
+        return self.set_table(self.JusticeTableName)
+
+    @property
+    def tbl_decision(self) -> Table:
+        return self.set_table(self.DecisionTableName)
+
+    @property
+    def tbl_decision_citation(self) -> Table:
+        return self.set_table(self.CitationTableName)
+
+    @property
+    def tbl_decision_voteline(self) -> Table:
+        return self.set_table(self.VotelineTableName)
+
+    @property
+    def tbl_decision_titletags(self) -> Table:
+        return self.set_table(self.TitleTagTableName)
+
+    @property
+    def tbl_opinion(self) -> Table:
+        return self.set_table(self.OpinionTableName)
+
+    @classmethod
+    def add_indexes(cls, tbl: Table, indexes: list[list[str]]):
+        for i in indexes:
+            tbl.create_index(
+                i, "idx" + tbl.name + "_".join(i), if_not_exists=True
+            )
+
+    @classmethod
+    def add_fts(cls, tbl: Table, columns: list[str]):
+        tbl.enable_fts(
+            columns=columns,
+            create_triggers=True,
+            replace=True,
+            tokenize="porter",
+        )
+
 
 settings = BaseCaseSettings()  # pyright: ignore
 
-
-CATEGORY_START_DECISION = re.compile(r"d\s*e\s*c", re.I)
-CATEGORY_START_RESOLUTION = re.compile(r"r\s*e\s*s", re.I)
-COMPOSITION_START_DIVISION = re.compile(r"div", re.I)
-COMPOSITION_START_ENBANC = re.compile(r"en", re.I)
-
-
-## Numbers
-
-VOTEFULL_MIN_LENGTH = 20
-VOTELINE_MIN_LENGTH = 15
-VOTELINE_MAX_LENGTH = 1000
-MAX_JUSTICE_AGE = 70
-
-## VIEWS
-CHIEF_DATES_VIEW = "chief_dates"
 
 ## Logger
 

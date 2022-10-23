@@ -1,6 +1,5 @@
 import datetime
 from pathlib import Path
-from sqlite3 import IntegrityError
 
 import yaml
 from citation_utils import Citation
@@ -9,8 +8,10 @@ from markdownify import markdownify
 from pydantic import BaseModel, Field, root_validator
 from slugify import slugify
 
-from .helpers import CourtComposition, DecisionCategory, DecisionSource
 from .settings import settings
+from .utils import CourtComposition, DecisionCategory, DecisionSource
+
+case_tbl = settings.tbl_decision
 
 
 class DecisionRow(BaseModel):
@@ -69,11 +70,8 @@ class DecisionRow(BaseModel):
         use_enum_values = True
 
     @classmethod
-    def make_table(cls, db):
-        tbl = db[settings.DecisionTableName]
-        if tbl.exists():
-            return tbl
-        tbl.create(
+    def make_table(cls):
+        case_tbl.create(
             columns={
                 "id": str,
                 "created": str,
@@ -95,36 +93,22 @@ class DecisionRow(BaseModel):
             pk="id",
             if_not_exists=True,
         )
-        idx_prefix = "idx_cases_"
-        indexes = [
-            ["source", "origin", "date"],
-            ["date"],
-            ["source", "origin"],
-            ["category", "composition"],
-            ["id", "justice_id"],
-            ["date", "justice_id", "raw_ponente", "per_curiam"],
-            ["per_curiam", "raw_ponente"],
-            ["raw_ponente"],
-            ["per_curiam"],
-        ]
-        for i in indexes:
-            tbl.create_index(i, idx_prefix + "_".join(i), if_not_exists=True)
-        tbl.enable_fts(
-            ["voting", "title", "fallo"],
-            create_triggers=True,
-            replace=True,
-            tokenize="porter",
+        settings.add_indexes(
+            case_tbl,
+            [
+                ["source", "origin", "date"],
+                ["date"],
+                ["source", "origin"],
+                ["category", "composition"],
+                ["id", "justice_id"],
+                ["date", "justice_id", "raw_ponente", "per_curiam"],
+                ["per_curiam", "raw_ponente"],
+                ["raw_ponente"],
+                ["per_curiam"],
+            ],
         )
-        return tbl
-
-    @classmethod
-    def insert_row(cls, db, item: dict):
-        tbl = cls.make_table(db)
-        try:
-            tbl.insert(item)
-        except IntegrityError as e:
-            msg = f"Skipping duplicate {item=}; {e=}"
-            logger.error(msg)
+        settings.add_fts(case_tbl, ["voting", "title", "fallo"])
+        return case_tbl
 
     @classmethod
     def from_path(cls, p: Path):
@@ -135,8 +119,7 @@ class DecisionRow(BaseModel):
                 - /folder_name, e.g. 12341 <-- the original id when scraped
                     - /details.yaml <-- the file containing the metadata that is `p`
         """
-        from .helpers import voteline_clean
-        from .ponente import RawPonente
+        from .utils import RawPonente, voteline_clean
 
         f = p.parent / "fallo.html"
         data = yaml.safe_load(p.read_text())
@@ -168,3 +151,12 @@ class DecisionRow(BaseModel):
             citation=citation,
             emails=", ".join(data.get("emails", ["bot@lawsql.com"])),
         )
+
+    def update_justice_id(self):
+        template = settings.base_env.get_template("update_justice_ids.sql")
+        sql = template.render(
+            justice_tbl=settings.JusticeTableName,
+            decision_tbl=settings.DecisionTableName,
+            target_decision_id=self.id,
+        )
+        return settings.db.execute(sql=sql)

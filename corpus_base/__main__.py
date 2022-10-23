@@ -1,58 +1,87 @@
 from pathlib import Path
 
 from loguru import logger
-from sqlite_utils import Database
 
 from .citation import CitationRow
 from .decision import DecisionRow
 from .justice import Justice
+from .opinions import OpinionRow
 from .settings import settings
 from .titletags import TitleTagRow
+from .utils import extract_votelines, tags_from_title
 from .voteline import VoteLine
 
+db = settings.db
 
-def setup_base_tbls(db: Database):
-    Justice.make_table(db)
-    DecisionRow.make_table(db)
-    CitationRow.make_table(db)
-    VoteLine.make_table(db)
-    TitleTagRow.make_table(db)
+
+def setup_base_tbls():
+    Justice.make_table()
+    DecisionRow.make_table()
+    OpinionRow.make_table()
+    CitationRow.make_table()
+    VoteLine.make_table()
+    TitleTagRow.make_table()
     db.index_foreign_keys()
     return db
 
 
-def add_base_case_components(db, path: Path):
+def setup_case(path: Path):
+    """
+    1. Adds a decision row
+    2. Updates the decision row's justice id
+    3. Adds a citation row
+    4. Adds voteline rows
+    5. Adds opinion rows
+    """
     obj = DecisionRow.from_path(path)
-    cite = obj.citation.dict()
-    DecisionRow.insert_row(db, obj.dict())
-    CitationRow.insert_row(db, {"decision_id": obj.id} | cite)
-    VoteLine.insert_rows(db, obj.id, obj.voting)
-    TitleTagRow.insert_rows(db, obj.id, obj.title)
+
+    # add decision row
+    try:
+        decision_id = settings.tbl_decision.insert(obj.dict(), pk="id").last_pk  # type: ignore
+    except Exception as e:
+        logger.error(f"Skipping duplicate {obj=}; {e=}")
+        return
+    if not decision_id:
+        return
+
+    # add a justice id to the just inserted decision row
+    obj.update_justice_id()
+
+    # add associated citation of decision
+    if obj.citation.has_citation:
+        settings.tbl_decision_citation.insert(
+            {"decision_id": decision_id} | obj.citation.dict()
+        )
+
+    # process votelines of voting text in decision
+    if obj.voting:
+        for item in extract_votelines(decision_id, obj.voting):
+            settings.tbl_decision_voteline.insert(VoteLine(**item).dict())
+
+    # add tags based on the title of decision
+    if obj.title:
+        for item in tags_from_title(decision_id, obj.title):
+            settings.tbl_decision_titletags.insert(TitleTagRow(**item).dict())
+
+    # add opinions
+    justice_id = settings.tbl_decision.get(decision_id).get("justice_id")
+    for opinion in OpinionRow.get_opinions(path.parent, justice_id):
+        settings.tbl_opinion.insert(opinion.dict(exclude={"concurs", "tags"}))
 
 
 def init(test_only: int = 0):
     # create tables
-    setup_base_tbls(settings.db)
+    setup_base_tbls()
 
     # insert justices into the justice table
     Justice.from_api()
     Justice.init_justices_tbl()
 
     # infuse decision tables from path
-
-    for idx, details_file in enumerate(settings.case_folders):
-        if test_only:
-            if idx == test_only:
-                break
+    for counter, details_file in enumerate(settings.case_folders):
+        if test_only and counter == test_only:
+            break
         try:
-            add_base_case_components(settings.db, details_file)
+            setup_case(details_file)
         except Exception as e:
             logger.info(e)
-
-    # update justice id column in the decisions table
-    settings.db.execute(
-        sql=settings.base_env.get_template("update_justice_ids.sql").render(
-            justice_table=settings.JusticeTableName,
-            decision_table=settings.DecisionTableName,
-        ),
-    )

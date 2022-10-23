@@ -1,56 +1,10 @@
 import re
-from enum import Enum
 
 from markdownify import markdownify
 
-from .settings import (
-    CATEGORY_START_DECISION,
-    CATEGORY_START_RESOLUTION,
-    COMPOSITION_START_DIVISION,
-    COMPOSITION_START_ENBANC,
-    VOTEFULL_MIN_LENGTH,
-    VOTELINE_MAX_LENGTH,
-    VOTELINE_MIN_LENGTH,
-)
-
-
-class DecisionSource(str, Enum):
-    sc = "sc"
-    legacy = "legacy"
-
-
-class DecisionCategory(str, Enum):
-    decision = "Decision"
-    resolution = "Resolution"
-    other = "Unspecified"
-
-    @classmethod
-    def _setter(cls, text: str | None):
-
-        if text:
-            if CATEGORY_START_DECISION.search(text):
-                return cls.decision
-            elif CATEGORY_START_RESOLUTION.search(text):
-                return cls.resolution
-        return cls.other
-
-
-class CourtComposition(str, Enum):
-    enbanc = "En Banc"
-    division = "Division"
-    other = "Unspecified"
-
-    @classmethod
-    def _setter(cls, text: str | None):
-
-        if text:
-            if COMPOSITION_START_DIVISION.search(text):
-                return cls.division
-            elif COMPOSITION_START_ENBANC.search(text):
-                return cls.enbanc
-        return cls.other
-
-
+VOTEFULL_MIN_LENGTH = 20
+VOTELINE_MIN_LENGTH = 15
+VOTELINE_MAX_LENGTH = 1000
 WHITELIST = re.compile(
     r""" # ^ exclusion [^ ... ]
     [^
@@ -119,3 +73,9 @@ def is_line_ok(text: str):
             first_char_capital_letter,
         ]
     )
+
+
+def extract_votelines(decision_pk: str, text: str):
+    for line in text.splitlines():
+        if is_line_ok(line):
+            yield dict(decision_id=decision_pk, text=line)

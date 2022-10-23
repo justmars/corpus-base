@@ -79,13 +79,8 @@ Can add all pydantic validated records from the local copy of justices to the da
 
 ```python
 >>> from corpus_base import Justice
->>> from corpus_base.settings import settings as x
-
->>> Justice.init_justices_tbl(x)
-<Database <sqlite3.Connection object at 0x10b7c8540>>
-
->>> x.db[x.JusticeTableName]
-<Table justice_tbl (id, first_name, last_name, full_name, suffix, alias, gender, birth_date, start_term, end_term, chief_date, retire_date, inactive_date)>
+>>> Justice.init_justices_tbl()
+<Table justices_tbl (first_name, last_name, suffix, full_name, gender, id, alias, start_term, end_term, chief_date, birth_date, retire_date, inactive_date)>
 ```
 
 ### Clean raw ponente string
