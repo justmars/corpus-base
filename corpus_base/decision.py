@@ -128,14 +128,15 @@ class DecisionRow(BaseModel):
 
         f = p.parent / "fallo.html"
         data = yaml.safe_load(p.read_text())
-        citation = Citation.from_details(data)
         ponente = RawPonente.extract(data.get("ponente"))
+        citation = Citation.from_details(data)
+        id = cls.get_id_from_citation(
+            original_folder_name=p.parent.name,
+            source=p.parent.parent.stem,
+            citation=citation,
+        )
         return cls(
-            id=cls.setup_id_from_citation(
-                original_folder_name=p.parent.name,
-                source=p.parent.parent.stem,
-                citation=citation,
-            ),
+            id=id,
             origin=p.parent.name,
             source=DecisionSource(p.parent.parent.stem),
             created=p.stat().st_ctime,
@@ -148,7 +149,7 @@ class DecisionRow(BaseModel):
             fallo=markdownify(f.read_text()) if f.exists() else None,
             voting=voteline_clean(data.get("voting")),
             raw_ponente=ponente.writer if ponente else None,
-            justice_id=cls.get_justice_id(ponente, data),
+            justice_id=cls.get_justice_id(ponente, data.get("date_prom"), p),
             per_curiam=ponente.per_curiam if ponente else False,
             citation=citation,
             emails=", ".join(data.get("emails", ["bot@lawsql.com"])),
@@ -156,9 +157,8 @@ class DecisionRow(BaseModel):
 
     @classmethod
     def get_justice_id(
-        cls, ponente: RawPonente | None, data: dict
+        cls, ponente: RawPonente | None, raw_date: str, path: Path
     ) -> int | None:
-        raw_date = data.get("date_prom")
         if not ponente:
             return None
         if not ponente.writer:
@@ -168,15 +168,8 @@ class DecisionRow(BaseModel):
         try:
             converted_date = parse(raw_date).date().isoformat()
         except Exception as e:
-            logger.error(f"Bad {raw_date=}")
+            logger.error(f"Bad {raw_date=}; {e=} {path=}")
             return None
-        path = (
-            Path()
-            .home()
-            .joinpath(
-                settings.DecisionSourceFiles, data["source"], data["origin"]
-            )
-        )
 
         candidates = settings.db.execute_returning_dicts(
             sql=settings.base_env.get_template("get_justice_id.sql").render(
@@ -198,16 +191,8 @@ class DecisionRow(BaseModel):
 
         return candidates[0]["id"]
 
-    def update_justice_ids(self):
-        template = settings.base_env.get_template("update_justice_ids.sql")
-        sql = template.render(
-            justice_tbl=settings.JusticeTableName,
-            decision_tbl=settings.DecisionTableName,
-        )
-        return settings.db.execute(sql=sql)
-
     @classmethod
-    def setup_id_from_citation(
+    def get_id_from_citation(
         cls,
         original_folder_name: str,
         source: str,

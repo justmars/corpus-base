@@ -38,20 +38,6 @@ class RawPonente(NamedTuple):
 class TitleSuffixClean(Enum):
     """The order matters: will try to match the old style first."""
 
-    OLD = re.compile(
-        r"""
-        ,
-        \s+
-        M\.? # e.g. HORRILLENO, M.
-        (
-            \s+
-            J\.? # e.g. PABLO, M. J.
-        )?
-        $ # end of string
-        """,
-        re.X | re.I,
-    )
-
     CHIEF = re.compile(
         r"""
         ,?
@@ -133,7 +119,7 @@ class CommonTypos(Enum):
             """,
             re.I | re.X,
         ),
-        "gonzaga-reyes",
+        "bengzon",
     )
 
     GONZAGA = (
@@ -183,7 +169,7 @@ class CommonTypos(Enum):
             """,
             re.I | re.X,
         ),
-        "torres jr.",
+        "villarama jr.",
     )
 
     CONCEPCION_JR = (
@@ -207,7 +193,7 @@ class CommonTypos(Enum):
             """,
             re.I | re.X,
         ),
-        "concepcion jr.",
+        "grino-aquino",
     )
 
     CARPIO_MORALES = (
@@ -288,6 +274,16 @@ class CommonTypos(Enum):
             re.I | re.X,
         ),
         "leonardo-de castro",
+    )
+
+    AUSTRIA_MARTINEZ = (
+        re.compile(
+            r"""
+            austria[\s-]+martinez
+            """,
+            re.I | re.X,
+        ),
+        "austria-martinez",
     )
 
     PERLAS_BERNABE = (
