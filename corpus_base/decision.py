@@ -148,7 +148,7 @@ class DecisionRow(BaseModel):
             fallo=markdownify(f.read_text()) if f.exists() else None,
             voting=voteline_clean(data.get("voting")),
             raw_ponente=ponente.writer if ponente else None,
-            justice_id=cls.get_justice_id(ponente, data.get("date_prom")),
+            justice_id=cls.get_justice_id(ponente, data),
             per_curiam=ponente.per_curiam if ponente else False,
             citation=citation,
             emails=", ".join(data.get("emails", ["bot@lawsql.com"])),
@@ -156,29 +156,44 @@ class DecisionRow(BaseModel):
 
     @classmethod
     def get_justice_id(
-        cls, ponente: RawPonente | None, date: str | None
+        cls, ponente: RawPonente | None, data: dict
     ) -> int | None:
+        raw_date = data.get("date_prom")
         if not ponente:
             return None
         if not ponente.writer:
             return None
-        if not date:
+        if not raw_date:
             return None
-
-        template = settings.base_env.get_template("get_justice_id.sql")
-        sql = template.render(
-            justice_tbl=settings.JusticeTableName,
-            target_name=ponente.writer,
-            target_date=parse(date).date().isoformat(),
+        try:
+            converted_date = parse(raw_date).date().isoformat()
+        except Exception as e:
+            logger.error(f"Bad {raw_date=}")
+            return None
+        path = (
+            Path()
+            .home()
+            .joinpath(
+                settings.DecisionSourceFiles, data["source"], data["origin"]
+            )
         )
-        candidates = settings.db.execute_returning_dicts(sql=sql)
+
+        candidates = settings.db.execute_returning_dicts(
+            sql=settings.base_env.get_template("get_justice_id.sql").render(
+                justice_tbl=settings.JusticeTableName,
+                target_name=ponente.writer,
+                target_date=converted_date,
+            )
+        )
 
         if not candidates:
-            logger.error(f"No justice_id for {ponente.writer=}; case {date=}")
+            msg = f"No id: {ponente.writer=}; {converted_date=}; {path=}"
+            logger.error(msg)
             return None
 
         elif len(candidates) > 1:
-            logger.error(f"Multiple justice_ids; similarity {candidates=}")
+            msg = f"Multiple ids; similarity {candidates=}; {path=}"
+            logger.error(msg)
             return None
 
         return candidates[0]["id"]
