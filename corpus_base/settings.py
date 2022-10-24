@@ -40,10 +40,12 @@ class BaseCaseSettings(DecisionParts, JusticeParts):
 
     @property
     def db(self) -> Database:
-        return Database(
+        obj = Database(
             Path().home().joinpath(self.DatabasePath),
             use_counts_table=True,
         )
+        obj.enable_wal()
+        return obj
 
     class Config:
         env_file = ".env"
