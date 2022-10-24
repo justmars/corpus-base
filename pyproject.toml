@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "corpus-base"
-version = "0.0.3"
+version = "0.0.4"
 description = "Initialize justice, decision, citation, voting, and opinion tables."
 authors = ["Marcelino G. Veloso III <mars@veloso.one>"]
 readme = "README.md"
@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 python-dotenv = "^0.21.0"
-citation-utils = "^0.0.9"
+citation-utils = "^0.0.10"
 python-slugify = "^6.1.2"
 sqlite-utils = "^3.29"
 loguru = "^0.6.0"

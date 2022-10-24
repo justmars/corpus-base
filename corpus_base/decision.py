@@ -130,15 +130,12 @@ class DecisionRow(BaseModel):
         data = yaml.safe_load(p.read_text())
         citation = Citation.from_details(data)
         ponente = RawPonente.extract(data.get("ponente"))
-        id = p.parent.name
-        if p.parent.parent.stem == "legacy":
-            id = citation.slug or p.parent.name
-        elif citation.docket:
-            id = slugify("-".join(citation.docket))
-        if not citation.slug:
-            logger.debug(f"Citation absent: {p=}")
         return cls(
-            id=id,
+            id=cls.setup_id_from_citation(
+                original_folder_name=p.parent.name,
+                source=p.parent.parent.stem,
+                citation=citation,
+            ),
             origin=p.parent.name,
             source=DecisionSource(p.parent.parent.stem),
             created=p.stat().st_ctime,
@@ -175,10 +172,15 @@ class DecisionRow(BaseModel):
             target_date=parse(date).date().isoformat(),
         )
         candidates = settings.db.execute_returning_dicts(sql=sql)
+
         if not candidates:
-            logger.error(f"No justice_id for {ponente.writer=}")
+            logger.error(f"No justice_id for {ponente.writer=}; case {date=}")
+            return None
+
         elif len(candidates) > 1:
             logger.error(f"Multiple justice_ids; similarity {candidates=}")
+            return None
+
         return candidates[0]["id"]
 
     def update_justice_ids(self):
@@ -188,6 +190,29 @@ class DecisionRow(BaseModel):
             decision_tbl=settings.DecisionTableName,
         )
         return settings.db.execute(sql=sql)
+
+    @classmethod
+    def setup_id_from_citation(
+        cls,
+        original_folder_name: str,
+        source: str,
+        citation: Citation,
+    ) -> str:
+        """The decision id to be used as a url slug ought to be unique, based on citation paramters if possible."""
+        if not citation.slug:
+            msg = f"Citation absent: {source=}; {original_folder_name=}"
+            logger.debug(msg)
+            return original_folder_name
+
+        if source == "legacy":
+            return citation.slug or original_folder_name
+
+        elif citation.docket:
+            if report := citation.scra or citation.phil:
+                return slugify("-".join([citation.docket, report]))
+            return slugify(citation.docket)
+
+        return original_folder_name
 
     @property
     def citation_fk(self) -> dict:
