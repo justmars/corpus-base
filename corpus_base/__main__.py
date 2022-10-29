@@ -1,23 +1,35 @@
 from pathlib import Path
 
+from corpus_persons import Individual
 from loguru import logger
-from sqlite_utils import Database
 from sqlpyd import Connection
 
-from .decision import CitationRow, DecisionRow, TitleTagRow, VoteLine
+from .decision import (
+    CitationRow,
+    DecisionRow,
+    OpinionRow,
+    TitleTagRow,
+    VoteLine,
+)
 from .justice import Justice
-from .opinions import OpinionRow
-from .settings import settings
-from .utils import extract_votelines, tags_from_title
+from .utils import CASE_FOLDERS, extract_votelines, tags_from_title
 
 
-def setup_base_tbls(c: Connection) -> None:
-    Justice.make_table(c)
-    DecisionRow.make_table(c)
-    OpinionRow.make_table(c)
-    CitationRow.make_table(c)
-    VoteLine.make_table(c)
-    TitleTagRow.make_table(c)
+def create_if_not_exist(kls, c: Connection):
+    tbl = c.tbl(kls.__tablename__)
+    if not tbl.exists():
+        kls.make_table(c)
+        return None
+
+
+def add_sc_tables(c: Connection) -> None:
+    Justice.from_api()
+    Justice.init_justices_tbl(c)
+    create_if_not_exist(DecisionRow, c)
+    create_if_not_exist(CitationRow, c)
+    create_if_not_exist(OpinionRow, c)
+    create_if_not_exist(VoteLine, c)
+    create_if_not_exist(TitleTagRow, c)
     c.db.index_foreign_keys()
 
 
@@ -29,21 +41,27 @@ def setup_case(c: Connection, path: Path) -> None:
     4. Adds voteline rows
     5. Adds opinion rows
     """
-    obj = DecisionRow.from_path(c, path)
     case_tbl = c.tbl(DecisionRow.__tablename__)
     cite_tbl = c.tbl(CitationRow.__tablename__)
     opin_tbl = c.tbl(OpinionRow.__tablename__)
     vote_tbl = c.tbl(VoteLine.__tablename__)
     tags_tbl = c.tbl(TitleTagRow.__tablename__)
+    authors_tbl = c.tbl(Individual.__tablename__)
 
-    # add decision row
-    try:
+    obj = DecisionRow.from_path(c, path)
+
+    try:  # add decision row
         decision_id = case_tbl.insert(obj.dict(), pk="id").last_pk  # type: ignore
     except Exception as e:
         logger.error(f"Skipping duplicate {obj=}; {e=}")
         return
     if not decision_id:
         return
+
+    for email in obj.emails:  # assign an author row to a joined m2m table
+        case_tbl.update(obj.id).m2m(
+            other_table=authors_tbl, lookup={"email": email}, pk="id"
+        )
 
     # add associated citation of decision
     if obj.citation and obj.citation.has_citation:
@@ -61,20 +79,12 @@ def setup_case(c: Connection, path: Path) -> None:
 
     # add opinions
     justice_id = case_tbl.get(decision_id).get("justice_id")
-    for opinion in OpinionRow.get_opinions(path.parent, justice_id):
-        opin_tbl.insert(opinion.dict(exclude={"concurs", "tags"}))
+    for op in OpinionRow.get_opinions(path.parent, justice_id):
+        opin_tbl.insert(op.dict(exclude={"concurs", "tags"}))
 
 
 def init(c: Connection, test_only: int = 0):
-    # create tables
-    setup_base_tbls(c)
-
-    # insert justices into the justice table
-    Justice.from_api()
-    Justice.init_justices_tbl(c)
-
-    # infuse decision tables from path
-    for counter, details_file in enumerate(settings.case_folders):
+    for counter, details_file in enumerate(CASE_FOLDERS):
         if test_only and counter == test_only:
             break
         try:

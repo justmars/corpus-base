@@ -2,9 +2,8 @@ import re
 from enum import Enum
 from typing import NamedTuple
 
+from sqlpyd import Connection
 from unidecode import unidecode
-
-from ..settings import settings
 
 IS_PER_CURIAM = re.compile(r"per\s+curiam", re.I)
 
@@ -618,11 +617,13 @@ def init_surnames(text: str):
     return text
 
 
-def most_popular(db):
-    return db.execute(
+def most_popular(c: Connection):
+    from corpus_base.decision import DecisionRow
+
+    return c.db.execute(
         f"""--sql
         select min(date), max(date), raw_ponente, count(*) num
-        from {settings.DecisionTableName}
+        from {DecisionRow.__tablename__}
         where raw_ponente is not null and per_curiam is 0
         group by raw_ponente
         order by num desc

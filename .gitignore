@@ -1,8 +1,8 @@
 .DS_Store
 .vscode
 sc.yaml
-sc.db
 sc.db*
+persons-decisions.db*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

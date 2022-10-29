@@ -1,6 +1,17 @@
-# Corpus Base
+# Corpus-Base
 
-Validator of inputs from raw files for the following sqlite db tables:
+Builds on top of *corpus-persons* and *sqlpyd* to create additional tables related to the Supreme Court:
+
+```python
+from sqlpyd import Connection
+from corpus_persons.__main__ import init_persons
+c = Connection() # will use the database path declared in DB_FILE
+init_persons(c) # creates then populates the persons tables with
+add_sc_tables(c) # creates the sc tables
+init(c, test_only=10) # add the first 10 rows of decisions to check
+```
+
+This creates tables associated with:
 
 1. Justices
 2. Decisions
@@ -11,66 +22,13 @@ Validator of inputs from raw files for the following sqlite db tables:
 
 ## Setup
 
-### Database File
-
-`DB_FILE` .env will be used as the path to create the database, e.g.
+### Environment Variables
 
 ```zsh
-DB_FILE="sc.db"  # will create the database file at Path().cwd() / sc.db
-```
-
-### Decision Files
-
-`DecisionSourceFiles` will be used as path to source decision files, e.g.
-
-```zsh
-DecisionSourceFiles="corpus"
-```
-
-See staging directory:
-
-```python
-Path().home().joinpath("corpus").glob("**/*/details.yaml")
-```
-
-### Repo Tokens
-
-- `OWNER`,
-- `REPOSITORY` (of source files),
-- `EXPIRING_TOKEN` (see Github PAT generation).
-
-The source of justice information is the `sc.yaml` file stored in the Github Repository. We can make a more detailed copy of this file, supplying mandatory `retire` and `inactive` dates, through the following invocation:
-
-```python
->>> from corpus_base import Justice
->>> Justice.from_api()
-PosixPath('path_to_repo/sc.yaml')
-```
-
-### Settings
-
-```python
->>>from corpus_base.settings import settings
->>>settings
-BaseCaseSettings(
-    GithubOwner='justmars',
-    GithubRepo='corpus',
-    JusticeTableName='justices_tbl',
-    DecisionSourceFiles='code/corpus/decisions',
-    CitationTableName='decision_citations_tbl',
-    VotelineTableName='decision_votelines_tbl',
-    TitleTagTableName='decision_titletags_tbl',
-    DatabasePath='code/corpus-base/sc.db',
-    DecisionTableName='decisions_tbl',
-    OpinionTableName='opinions_tbl'
-)
-```
-
-### Initialize
-
-```python
->>>from corpus_base import init
->>>init()
+CF_ACCT=XXX # account for cloudflare images; see corpus-persons
+CF_TOKEN=XXX # token to access cloudflare images; see corpus-persons
+EXPIRING_TOKEN=XXX # token to access github repository; see corpus-persons
+DB_FILE=XXX # see sqlpyd; corpus-persons
 ```
 
 ## Features
@@ -81,7 +39,7 @@ Can add all pydantic validated records from the local copy of justices to the da
 
 ```python
 >>> from corpus_base import Justice
->>> Justice.init_justices_tbl()
+>>> Justice.init_justices_tbl(c) # c = instantiated Connection
 <Table justices_tbl (first_name, last_name, suffix, full_name, gender, id, alias, start_term, end_term, chief_date, birth_date, retire_date, inactive_date)>
 ```
 
@@ -101,7 +59,7 @@ We can see  most common names in the `ponente` field and the covered dates, e.g.
 
 ```python
 >>> from corpus_base.helpers import most_popular
->>> [i for i in most_popular(db)] # excluding per curiams and unidentified cases
+>>> [i for i in most_popular(c, db)] # excluding per curiams and unidentified cases
 [
     ('1994-07-04', '2017-08-09', 'mendoza', 1297),
     ('1921-10-22', '1992-07-03', 'paras', 1287),
@@ -118,23 +76,13 @@ We can see  most common names in the `ponente` field and the covered dates, e.g.
 ]
 ```
 
-This is retrieved through the following sql query:
-
-```sql
-select min(date), max(date), raw_ponente, count(*) num
-from decisions_tbl
-where raw_ponente is not null
-group by raw_ponente
-order by num desc
-```
-
 ### Isolate active justices on date
 
 When selecting a ponente or voting members, create a candidate list of justices based on date:
 
 ```python
 >>> from corpus_base import Justice
->>> Justice.get_active_on_date('Dec. 1, 1995') # target date
+>>> Justice.get_active_on_date(c, 'Dec. 1, 1995') # target date
 [
     {
         'id': 137,
@@ -163,7 +111,7 @@ Since we already have candidates, we can cleaning desired option to get the `id`
 >>> from corpus_base import RawPonente
 >>> RawPonente.clean('Panganiban, Acting Cj')
 'panganiban'
->>> Justice.get_justice_on_date('2005-09-08', 'panganiban')
+>>> Justice.get_justice_on_date(c, '2005-09-08', 'panganiban')
 {
     'id': 137,
     'surname': 'Panganiban',
@@ -196,7 +144,7 @@ With a different date, we can get the 'C.J.' designation.:
 
 ```python
 >>> from corpus_base import Justice
->>> Justice.view_chiefs()
+>>> Justice.view_chiefs(c)
 [
     {
         'id': 178,

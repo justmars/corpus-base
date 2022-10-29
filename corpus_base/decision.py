@@ -1,6 +1,8 @@
 import datetime
 from pathlib import Path
+from typing import Iterator
 
+import frontmatter
 import yaml
 from citation_utils import Citation
 from dateutil.parser import parse
@@ -11,12 +13,13 @@ from slugify import slugify
 from sqlpyd import Connection, TableConfig
 
 from .justice import Justice
-from .settings import settings
 from .utils import (
     CourtComposition,
     DecisionCategory,
+    DecisionHTMLConvertMarkdown,
     DecisionSource,
     RawPonente,
+    sc_jinja_env,
     voteline_clean,
 )
 
@@ -30,7 +33,7 @@ class DecisionRow(BaseModel, TableConfig):
     origin: str = Field(col=str, index=True)
     source: DecisionSource = Field(col=str, index=True)
     citation: Citation = Field(exclude=True)
-    emails: str = Field(col=str)
+    emails: list[str] = Field(exclude=True)
     title: str = Field(col=str, index=True, fts=True)
     description: str = Field(col=str, index=True, fts=True)
     date: datetime.date = Field(col=datetime.date, index=True)
@@ -134,7 +137,7 @@ class DecisionRow(BaseModel, TableConfig):
             justice_id=cls.get_justice_id(c, pon, data.get("date_prom"), p),
             per_curiam=pon.per_curiam if pon else False,
             citation=citation,
-            emails=", ".join(data.get("emails", ["bot@lawsql.com"])),
+            emails=data.get("emails", ["bot@lawsql.com"]),
         )
 
     @classmethod
@@ -158,7 +161,7 @@ class DecisionRow(BaseModel, TableConfig):
             return None
 
         candidates = c.db.execute_returning_dicts(
-            sql=settings.sc_env.get_template("get_justice_id.sql").render(
+            sql=sc_jinja_env.get_template("get_justice_id.sql").render(
                 justice_tbl=Justice.__tablename__,
                 target_name=ponente.writer,
                 target_date=converted_date,
@@ -205,12 +208,16 @@ class DecisionRow(BaseModel, TableConfig):
         return self.citation.dict() | {"decision_id": self.id}
 
 
-class CitationRow(Citation, TableConfig):
-    __tablename__ = "sc_decisions_citations_tbl"
+class DecisionFK(BaseModel):
+    """Common foreign key used in component tables."""
 
     decision_id: str = Field(
         ..., col=str, fk=(DecisionRow.__tablename__, "id")
     )
+
+
+class CitationRow(DecisionFK, Citation, TableConfig):
+    __tablename__ = "sc_decisions_citations_tbl"
 
     @classmethod
     def make_table(cls, c: Connection):
@@ -225,12 +232,9 @@ class CitationRow(Citation, TableConfig):
         )
 
 
-class VoteLine(BaseModel, TableConfig):
+class VoteLine(DecisionFK, TableConfig):
     __tablename__ = "sc_decisions_votelines_tbl"
 
-    decision_id: str = Field(
-        ..., col=str, fk=(DecisionRow.__tablename__, "id")
-    )
     text: str = Field(
         ...,
         title="Voteline Text",
@@ -248,12 +252,9 @@ class VoteLine(BaseModel, TableConfig):
         )
 
 
-class TitleTagRow(BaseModel, TableConfig):
+class TitleTagRow(DecisionFK, TableConfig):
     __tablename__ = "sc_decisions_titletags_tbl"
 
-    decision_id: str = Field(
-        ..., col=str, fk=(DecisionRow.__tablename__, "id")
-    )
     tag: str = Field(..., col=str, index=True)
 
     @classmethod
@@ -261,3 +262,95 @@ class TitleTagRow(BaseModel, TableConfig):
         return cls.config_tbl(
             tbl=c.tbl(cls.__tablename__), cols=cls.__fields__
         )
+
+
+class OpinionRow(DecisionFK, TableConfig):
+    __tablename__ = "sc_decisions_opinions_tbl"
+
+    id: str = Field(
+        ...,
+        description="The opinion pk is based on combining the decision_id with the justice_id",
+        col=str,
+    )
+    title: str | None = Field(
+        ...,
+        description="How is the opinion called, e.g. Ponencia, Concurring Opinion, Separate Opinion",
+        col=str,
+    )
+    tags: list[str] | None = Field(
+        None,
+        description="e.g. main, dissenting, concurring, separate",
+    )
+    justice_id: int | None = Field(
+        None,
+        description="The writer of the opinion; when not supplied could mean a Per Curiam opinion, or unable to detect the proper justice.",
+        col=int,
+        index=True,
+        fk=(Justice.__tablename__, "id"),
+    )
+    remark: str | None = Field(
+        None,
+        description="Short description of the opinion, when available, i.e. 'I reserve my right, etc.', 'On leave.', etc.",
+        col=str,
+        fts=True,
+    )
+    concurs: list[dict] | None
+    text: str = Field(
+        ..., description="Text proper of the opinion.", col=str, fts=True
+    )
+
+    @classmethod
+    def make_table(cls, c: Connection):
+        return cls.config_tbl(
+            tbl=c.tbl(cls.__tablename__),
+            cols=cls.__fields__,
+            idxs=[
+                ["id", "title"],
+                ["id", "justice_id"],
+                ["id", "decision_id"],
+                ["decision_id", "title"],
+            ],
+        )
+
+    @classmethod
+    def get_opinions(
+        cls, case_path: Path, justice_id: int | None = None
+    ) -> Iterator:
+        """Each opinion of a decision, except the ponencia, should be added separately. The format of the opinion should follow the form in test_data/legacy/tanada1."""
+        ops = case_path / "opinions"
+        for op in ops.glob("[!ponencia]*.md"):
+            opinion = cls.extract_separate(case_path, op)
+            yield opinion
+        if main := cls.extract_main(case_path, justice_id):
+            yield main
+
+    @classmethod
+    def extract_separate(cls, case_path: Path, opinion_path: Path):
+        data = frontmatter.loads(opinion_path.read_text())
+        return cls(
+            id=f"{case_path.stem}-{opinion_path.stem}",
+            title=data.get("title", None),
+            tags=data.get("tags", []),
+            decision_id=case_path.stem,
+            justice_id=int(opinion_path.stem),
+            remark=data.get("remark", None),
+            concurs=data.get("concur", None),
+            text=data.content,
+        )
+
+    @classmethod
+    def extract_main(cls, case_path: Path, justice_id: int | None = None):
+        try:  # option: add_markdown_file(case_path, md_txt.result)
+            return cls(
+                id=f"{case_path.stem}-main",
+                title="Ponencia",
+                tags=["main"],
+                decision_id=case_path.stem,
+                justice_id=justice_id,
+                remark=None,
+                concurs=None,
+                text=DecisionHTMLConvertMarkdown(case_path).result,
+            )
+        except Exception as e:
+            logger.error(f"Could not convert text {case_path.stem=}; see {e=}")
+            return None
