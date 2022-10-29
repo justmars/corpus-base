@@ -1,0 +1,1981 @@
+- full_name: Cayetano Arellano
+  first_name: Cayetano
+  last_name: Arellano
+  gender: male
+  id: 1
+  start_term: 1901-06-15
+  end_term: &id001 1920-04-01
+  chief_date: 1901-06-15
+  birth_date: 1847-03-02
+  retire_date: 1917-03-02
+  inactive_date: *id001
+- full_name: Florentino Torres
+  first_name: Torres
+  last_name: Torres
+  gender: male
+  id: 2
+  start_term: 1901-06-17
+  end_term: &id002 1920-04-20
+  birth_date: 1844-10-16
+  retire_date: 1914-10-16
+  inactive_date: *id002
+- full_name: Victorino Mapa
+  first_name: Victorino
+  last_name: Mapa
+  gender: male
+  id: 3
+  start_term: 1901-06-15
+  end_term: &id003 1921-10-31
+  chief_date: 1920-07-01
+  birth_date: 1855-02-25
+  retire_date: 1925-02-25
+  inactive_date: *id003
+- full_name: James Francis Smith
+  first_name: James
+  last_name: Smith
+  gender: male
+  id: 4
+  start_term: 1901-06-15
+  end_term: &id004 1903-02-17
+  birth_date: 1859-01-28
+  retire_date: 1929-01-28
+  inactive_date: *id004
+- full_name: Joseph F. Cooper
+  first_name: Joseph
+  last_name: Cooper
+  gender: male
+  id: 5
+  start_term: 1901-06-17
+  end_term: &id005 1904-10-17
+  birth_date: 1854-03-30
+  retire_date: 1924-03-30
+  inactive_date: *id005
+- full_name: Charles A. Willard
+  first_name: Charles
+  last_name: Willard
+  gender: male
+  id: 6
+  start_term: 1901-06-17
+  end_term: &id006 1909-04-24
+  birth_date: 1857-05-21
+  retire_date: 1927-05-21
+  inactive_date: *id006
+- full_name: Fletcher Ladd
+  first_name: Fletcher
+  last_name: Ladd
+  gender: male
+  id: 7
+  start_term: 1901-06-17
+  end_term: &id007 1903-07-13
+  birth_date: 1862-12-21
+  retire_date: 1932-12-21
+  inactive_date: *id007
+- full_name: John T. McDonough
+  first_name: John
+  last_name: McDonough
+  gender: male
+  id: 8
+  start_term: 1903-06-17
+  end_term: &id008 1904-05-01
+  birth_date: 1843-07-12
+  retire_date: 1913-07-12
+  inactive_date: *id008
+- full_name: Elias Finley Johnson
+  first_name: Elias
+  last_name: Johnson
+  gender: male
+  id: 9
+  start_term: 1903-10-03
+  end_term: &id009 1933-04-01
+  birth_date: 1861-06-24
+  retire_date: 1931-06-24
+  inactive_date: *id009
+- full_name: Adam Clarke Carson
+  first_name: Adam
+  last_name: Carson
+  gender: male
+  id: 10
+  start_term: 1904-11-16
+  end_term: &id010 1920-11-30
+  birth_date: 1869-01-14
+  retire_date: 1939-01-14
+  inactive_date: *id010
+- full_name: James F. Tracey
+  first_name: James
+  last_name: Tracey
+  gender: male
+  id: 11
+  start_term: 1905-07-01
+  end_term: &id011 1909-07-02
+  birth_date: 1854-03-30
+  retire_date: 1924-03-30
+  inactive_date: *id011
+- full_name: Sherman Moreland
+  first_name: Sherman
+  last_name: Moreland
+  gender: male
+  id: 12
+  start_term: 1909-02-01
+  end_term: &id012 1917-04-23
+  birth_date: 1868-10-16
+  retire_date: 1938-10-16
+  inactive_date: *id012
+- full_name: Charles Burke Elliott
+  first_name: Charles
+  last_name: Elliot
+  gender: male
+  id: 13
+  start_term: 1909-06-03
+  end_term: &id013 1910-02-13
+  birth_date: 1861-01-06
+  retire_date: 1931-01-06
+  inactive_date: *id013
+- full_name: Grant T. Trent
+  first_name: Grant
+  last_name: Trent
+  gender: male
+  id: 14
+  start_term: 1910-02-28
+  end_term: &id014 1917-04-23
+  inactive_date: *id014
+- full_name: Manuel Araullo
+  first_name: Manuel
+  last_name: Araullo
+  gender: male
+  id: 15
+  start_term: 1913-12-16
+  end_term: &id015 1924-07-26
+  chief_date: 1921-11-01
+  birth_date: 1853-01-01
+  retire_date: 1923-01-01
+  inactive_date: *id015
+- full_name: Thomas A. Street
+  first_name: Thomas
+  last_name: Street
+  gender: male
+  id: 16
+  start_term: 1917-06-13
+  end_term: &id016 1935-06-01
+  birth_date: 1872-03-14
+  retire_date: 1942-03-14
+  inactive_date: *id016
+- full_name: George A. Malcolm
+  first_name: George
+  last_name: Malcolm
+  gender: male
+  id: 17
+  start_term: 1917-07-09
+  end_term: &id017 1936-02-01
+  birth_date: 1881-11-05
+  retire_date: 1951-11-05
+  inactive_date: *id017
+- full_name: Ramon Avancena
+  first_name: Ramon
+  last_name: Avancena
+  gender: male
+  id: 18
+  start_term: 1917-10-31
+  end_term: &id018 1941-12-24
+  chief_date: 1925-04-01
+  birth_date: 1872-04-13
+  retire_date: 1942-04-13
+  inactive_date: *id018
+- full_name: Frederich Charles Fisher
+  first_name: Frederich
+  last_name: Fisher
+  gender: male
+  id: 19
+  start_term: 1917-11-17
+  end_term: &id019 1918-11-16
+  inactive_date: *id019
+- full_name: Percy M. Moir
+  first_name: Percy
+  last_name: Moir
+  gender: male
+  id: 20
+  start_term: 1918-11-25
+  end_term: &id020 1920-11-20
+  inactive_date: *id020
+- full_name: Ignacio Villamor
+  first_name: Ignacio
+  last_name: Villamor
+  gender: male
+  id: 21
+  start_term: 1920-05-19
+  end_term: &id021 1933-05-23
+  birth_date: 1863-02-01
+  retire_date: 1933-02-01
+  inactive_date: *id021
+- full_name: James A. Ostrand
+  first_name: James
+  last_name: Ostrand
+  gender: male
+  id: 22
+  start_term: 1921-09-27
+  end_term: &id022 1933-06-30
+  birth_date: 1871-01-20
+  retire_date: 1941-01-20
+  inactive_date: *id022
+- full_name: Charles A. Johns
+  first_name: Charles
+  last_name: Johns
+  gender: male
+  id: 23
+  start_term: 1921-10-07
+  end_term: &id023 1932-01-11
+  birth_date: 1857-06-25
+  retire_date: 1927-06-25
+  inactive_date: *id023
+- full_name: Norberto Romualdez
+  first_name: Norberto
+  last_name: Romualdez
+  gender: male
+  id: 24
+  start_term: 1921-11-01
+  end_term: &id024 1932-04-01
+  birth_date: 1875-06-06
+  retire_date: 1945-06-06
+  inactive_date: *id024
+- full_name: Antonio Villa-Real
+  first_name: Antonio
+  last_name: Villa-Real
+  gender: male
+  id: 25
+  start_term: 1925-06-16
+  end_term: &id025 1940-06-05
+  birth_date: 1880-01-17
+  retire_date: 1950-01-17
+  inactive_date: *id025
+- full_name: John A. Hull
+  first_name: John
+  last_name: Hull
+  gender: male
+  id: 26
+  start_term: 1932-06-01
+  end_term: &id026 1936-02-01
+  birth_date: 1874-08-07
+  retire_date: 1944-08-07
+  inactive_date: *id026
+- full_name: James C. Vickers
+  first_name: James
+  last_name: Vickers
+  gender: male
+  id: 27
+  start_term: 1932-06-01
+  end_term: &id027 1936-02-01
+  birth_date: 1877-08-05
+  retire_date: 1947-08-05
+  inactive_date: *id027
+- full_name: Jose Abad Santos
+  first_name: Jose
+  last_name: Abad Santos
+  gender: male
+  id: 28
+  start_term: 1932-06-18
+  end_term: &id028 1942-05-02
+  chief_date: 1941-12-24
+  birth_date: 1886-02-19
+  retire_date: 1956-02-19
+  inactive_date: *id028
+- full_name: Carlos A. Imperial
+  first_name: Carlos
+  last_name: Imperial
+  gender: male
+  id: 29
+  start_term: 1932-06-22
+  end_term: &id029 1941-05-20
+  birth_date: 1880-11-04
+  retire_date: 1950-11-04
+  inactive_date: *id029
+- full_name: George C. Butte
+  first_name: George
+  last_name: Butte
+  gender: male
+  id: 30
+  start_term: 1932-07-01
+  end_term: &id030 1936-02-01
+  birth_date: 1877-05-09
+  retire_date: 1947-05-09
+  inactive_date: *id030
+- full_name: Anacleto Diaz
+  first_name: Anacleto
+  last_name: Diaz
+  gender: male
+  id: 31
+  start_term: 1933-11-20
+  end_term: &id031 1941-12-19
+  birth_date: 1878-11-20
+  retire_date: 1948-11-20
+  inactive_date: *id031
+- full_name: Leonard S. Goddard
+  first_name: Leonard
+  last_name: Goddard
+  gender: male
+  id: 32
+  start_term: 1934-01-09
+  end_term: &id032 1936-01-29
+  birth_date: 1871-01-29
+  retire_date: 1941-01-29
+  inactive_date: *id032
+- full_name: Claro M. Recto
+  first_name: Claro
+  last_name: Recto
+  gender: male
+  id: 33
+  start_term: 1935-07-03
+  end_term: &id033 1936-11-01
+  birth_date: 1890-02-08
+  retire_date: 1960-02-08
+  inactive_date: *id033
+- full_name: "Jo\u015Be P. Laurel"
+  first_name: "Jo\u015Be"
+  last_name: Laurel
+  gender: male
+  id: 34
+  start_term: 1936-02-29
+  end_term: &id034 1942-02-05
+  birth_date: 1891-03-09
+  retire_date: 1961-03-09
+  inactive_date: *id034
+- full_name: Pedro Concepcion
+  first_name: Pedro
+  last_name: Concepcion
+  gender: male
+  id: 35
+  start_term: 1936-10-31
+  end_term: &id035 1940-08-01
+  birth_date: 1870-08-01
+  retire_date: 1940-08-01
+  inactive_date: *id035
+- full_name: Manuel V. Moran
+  first_name: Manuel
+  last_name: Moran
+  gender: male
+  id: 36
+  start_term: 1938-12-12
+  end_term: &id036 1951-03-20
+  chief_date: 1945-07-09
+  birth_date: 1893-10-27
+  retire_date: 1963-10-27
+  inactive_date: *id036
+- full_name: Roman Ozaeta
+  first_name: Roman
+  last_name: Ozaeta
+  gender: male
+  id: 37
+  start_term: 1941-06-24
+  end_term: &id037 1950-10-16
+  birth_date: 1891-02-28
+  retire_date: 1961-02-28
+  inactive_date: *id037
+- full_name: Ricardo Paras
+  first_name: Ricardo
+  last_name: Paras
+  gender: male
+  id: 38
+  start_term: 1941-12-28
+  end_term: &id038 1961-02-17
+  chief_date: 1951-04-02
+  birth_date: 1891-02-17
+  retire_date: 1961-02-17
+  inactive_date: *id038
+- full_name: Jose Yulo
+  first_name: Jose
+  last_name: Yulo
+  gender: male
+  id: 39
+  start_term: 1942-02-05
+  end_term: &id039 1945-07-09
+  chief_date: 1942-05-07
+  birth_date: 1894-09-24
+  retire_date: 1964-09-24
+  inactive_date: *id039
+- full_name: Jorge C. Bocobo
+  first_name: Jorge
+  last_name: Bocobo
+  gender: male
+  id: 40
+  start_term: 1942-02-05
+  end_term: &id040 1944-01-31
+  birth_date: 1886-10-19
+  retire_date: 1956-10-19
+  inactive_date: *id040
+- full_name: Jose Generoso
+  first_name: Jose
+  last_name: Generoso
+  gender: male
+  id: 41
+  start_term: 1942-05-11
+  end_term: &id041 1948-07-15
+  inactive_date: *id041
+- full_name: Jose Lopez Vito
+  first_name: Jose
+  last_name: Vito
+  gender: male
+  id: 42
+  start_term: 1942-05-11
+  end_term: &id042 1944-01-31
+  birth_date: 1872-05-12
+  retire_date: 1942-05-12
+  inactive_date: *id042
+- full_name: Antonio Horrilleno
+  first_name: Antonio
+  last_name: Horrileno
+  gender: male
+  id: 43
+  start_term: 1943-07-01
+  end_term: &id043 1945-08-17
+  birth_date: 1878-02-13
+  retire_date: 1948-02-13
+  inactive_date: *id043
+- full_name: Delfin Jaranilla
+  first_name: Delfin
+  last_name: Jaranilla
+  gender: male
+  id: 44
+  start_term: 1945-06-06
+  end_term: &id044 1946-06-06
+  birth_date: 1883-12-24
+  retire_date: 1953-12-24
+  inactive_date: *id044
+- full_name: Felicisimo R. Feria
+  first_name: Felicisimo
+  last_name: Feria
+  gender: male
+  id: 45
+  start_term: 1945-06-06
+  end_term: &id045 1953-08-06
+  birth_date: 1883-08-06
+  retire_date: 1953-08-06
+  inactive_date: *id045
+- full_name: Mariano H. De Joya
+  first_name: Mariano
+  last_name: De Joya
+  gender: male
+  id: 46
+  start_term: 1945-06-06
+  end_term: &id046 1945-06-25
+  birth_date: 1887-09-08
+  retire_date: 1957-09-08
+  inactive_date: *id046
+- full_name: Guillermo Pablo
+  first_name: Guillermo
+  last_name: Pablo
+  gender: male
+  id: 47
+  start_term: 1945-06-06
+  end_term: &id047 1955-06-04
+  birth_date: 1886-06-25
+  retire_date: 1956-06-25
+  inactive_date: *id047
+- full_name: Gregorio Perfecto
+  first_name: Gregorio
+  last_name: Perfecto
+  gender: male
+  id: 48
+  start_term: 1945-06-06
+  end_term: &id048 1949-08-17
+  birth_date: 1891-11-28
+  retire_date: 1961-11-28
+  inactive_date: *id048
+- full_name: Emilio Y. Hilado
+  first_name: Emilio
+  last_name: Hilado
+  gender: male
+  id: 49
+  start_term: 1945-06-06
+  end_term: &id049 1948-05-31
+  birth_date: 1891-11-01
+  retire_date: 1961-11-01
+  inactive_date: *id049
+- full_name: Jose A. Espiritu
+  first_name: Jose
+  last_name: Espiritu
+  gender: male
+  id: 50
+  start_term: 1945-06-06
+  end_term: &id050 1945-08-15
+  birth_date: 1886-04-10
+  retire_date: 1956-04-10
+  inactive_date: *id050
+- full_name: Manuel C. Briones
+  first_name: Manuel
+  last_name: Briones
+  gender: male
+  id: 51
+  start_term: 1945-09-15
+  end_term: &id051 1949-05-24
+  birth_date: 1894-01-01
+  retire_date: 1964-01-01
+  inactive_date: *id051
+- full_name: Cesar Bengzon
+  first_name: Cesar
+  last_name: Bengzon
+  gender: male
+  id: 52
+  start_term: 1945-09-15
+  end_term: &id052 1966-05-29
+  chief_date: 1961-04-28
+  birth_date: 1896-05-29
+  retire_date: 1966-05-29
+  inactive_date: *id052
+- full_name: Sabino B. Padilla
+  first_name: Sabino
+  last_name: Padilla
+  gender: male
+  id: 53
+  start_term: 1946-06-25
+  end_term: &id053 1964-08-21
+  birth_date: 1894-08-21
+  retire_date: 1964-08-21
+  inactive_date: *id053
+- full_name: Pedro Tuason
+  first_name: Pedro
+  last_name: Tuason
+  gender: male
+  id: 54
+  start_term: 1946-06-25
+  end_term: &id054 1954-01-04
+  birth_date: 1884-09-15
+  retire_date: 1954-09-15
+  inactive_date: *id054
+- full_name: Jose Hontiveros
+  first_name: Jose
+  last_name: Hontiveros
+  gender: male
+  id: 55
+  start_term: 1946-06-25
+  end_term: &id055 1947-10-16
+  birth_date: 1889-03-19
+  retire_date: 1959-03-19
+  inactive_date: *id055
+- full_name: Alejandro A. Reyes
+  first_name: Alejandro
+  last_name: Reyes
+  gender: male
+  id: 56
+  alias: reyes, a.
+  start_term: 1948-08-06
+  end_term: &id056 1959-06-03
+  birth_date: 1899-06-04
+  retire_date: 1969-06-04
+  inactive_date: *id056
+- full_name: Marcelino R. Montemayor
+  first_name: Marcelino
+  last_name: Montemayor
+  gender: male
+  id: 57
+  start_term: 1948-08-21
+  end_term: &id057 1960-07-27
+  birth_date: 1890-07-27
+  retire_date: 1960-07-27
+  inactive_date: *id057
+- full_name: Luis P. Torres
+  first_name: Luis
+  last_name: Torres
+  gender: male
+  id: 58
+  start_term: 1949-08-20
+  end_term: &id058 1950-04-01
+  birth_date: 1880-04-08
+  retire_date: 1950-04-08
+  inactive_date: *id058
+- full_name: Felix Angelo Bautista
+  first_name: Felix
+  last_name: Angelo Bautista
+  gender: male
+  id: 59
+  alias: bautista angelo
+  start_term: 1950-10-20
+  end_term: &id059 1956-05-20
+  birth_date: 1896-05-20
+  retire_date: 1966-05-20
+  inactive_date: *id059
+- full_name: Fernando Jugo
+  first_name: Fernando
+  last_name: Jugo
+  gender: male
+  id: 60
+  start_term: 1950-10-20
+  end_term: &id060 1956-06-03
+  birth_date: 1891-05-14
+  retire_date: 1961-05-14
+  inactive_date: *id060
+- full_name: Alejo Labrador
+  first_name: Alejo
+  last_name: Labrador
+  gender: male
+  id: 61
+  start_term: 1952-04-22
+  end_term: &id061 1964-07-17
+  birth_date: 1894-07-17
+  retire_date: 1964-07-17
+  inactive_date: *id061
+- full_name: Roberto Concepcion
+  first_name: Roberto
+  last_name: Concepcion
+  gender: male
+  id: 62
+  start_term: 1954-02-09
+  end_term: &id062 1973-04-18
+  chief_date: 1966-06-17
+  birth_date: 1903-06-07
+  retire_date: 1973-06-07
+  inactive_date: *id062
+- full_name: Ramon Diokno
+  first_name: Ramon
+  last_name: Diokno
+  gender: male
+  id: 63
+  start_term: 1954-02-10
+  end_term: &id063 1954-04-21
+  birth_date: 1886-03-28
+  retire_date: 1956-03-28
+  inactive_date: *id063
+- full_name: Jose B. L. Reyes
+  first_name: Jose
+  last_name: Reyes
+  gender: male
+  id: 64
+  alias: reyes, j.b.l.
+  start_term: 1954-06-30
+  end_term: &id064 1972-08-19
+  birth_date: 1902-08-19
+  retire_date: 1972-08-19
+  inactive_date: *id064
+- full_name: Pastor M. Endencia
+  first_name: Pastor
+  last_name: Endencia
+  gender: male
+  id: 65
+  start_term: 1955-12-20
+  end_term: &id065 1960-07-26
+  birth_date: 1890-07-26
+  retire_date: 1960-07-26
+  inactive_date: *id065
+- full_name: Alfonso Felix
+  first_name: Alfonso
+  last_name: Felix
+  gender: male
+  id: 66
+  start_term: 1956-07-24
+  end_term: &id066 1958-09-17
+  birth_date: 1888-09-17
+  retire_date: 1958-09-17
+  inactive_date: *id066
+- full_name: Jesus G. Barrera
+  first_name: Jesus
+  last_name: Barrera
+  gender: male
+  id: 67
+  start_term: 1959-06-05
+  end_term: &id067 1966-12-18
+  birth_date: 1896-12-18
+  retire_date: 1966-12-18
+  inactive_date: *id067
+- full_name: Jose Gutierrez David
+  first_name: Jose
+  last_name: Gutierrez David
+  gender: male
+  id: 68
+  start_term: 1959-08-28
+  end_term: &id068 1961-01-29
+  birth_date: 1891-01-29
+  retire_date: 1961-01-29
+  inactive_date: *id068
+- full_name: Arsenio Dizon
+  first_name: Arsenio
+  last_name: Dizon
+  gender: male
+  id: 69
+  start_term: 1960-07-26
+  end_term: &id069 1971-10-05
+  birth_date: 1901-10-05
+  retire_date: 1971-10-05
+  inactive_date: *id069
+- full_name: Jose Ma. Paredes
+  first_name: Jose
+  last_name: Paredes
+  gender: male
+  id: 70
+  start_term: 1960-08-18
+  end_term: &id070 1965-08-15
+  birth_date: 1895-08-15
+  retire_date: 1965-08-15
+  inactive_date: *id070
+- full_name: Dionisio De Leon
+  first_name: Dionisio
+  last_name: Dionisio
+  gender: male
+  id: 71
+  start_term: 1961-04-28
+  end_term: &id071 1962-04-08
+  birth_date: 1892-04-08
+  retire_date: 1962-04-08
+  inactive_date: *id071
+- full_name: Felipe Natividad
+  first_name: Felipe
+  last_name: Natividad
+  gender: male
+  id: 72
+  start_term: 1962-04-08
+  end_term: &id072 1962-09-20
+  birth_date: 1891-09-20
+  retire_date: 1961-09-20
+  inactive_date: *id072
+- full_name: Roberto Regala
+  first_name: Roberto
+  last_name: Regala
+  gender: male
+  id: 73
+  start_term: 1962-05-23
+  end_term: &id073 1975-12-22
+  birth_date: 1897-06-07
+  retire_date: 1967-06-07
+  inactive_date: *id073
+- full_name: Querube Makalintal
+  first_name: Querube
+  last_name: Makalintal
+  gender: male
+  id: 74
+  start_term: 1962-05-23
+  end_term: &id074 1975-12-22
+  chief_date: 1973-10-21
+  birth_date: 1910-12-22
+  retire_date: 1980-12-22
+  inactive_date: *id074
+- full_name: Calixto Zaldivar
+  first_name: Calixto
+  last_name: Zaldivar
+  gender: male
+  id: 75
+  start_term: 1964-09-12
+  end_term: &id075 1974-09-13
+  birth_date: 1904-09-13
+  retire_date: 1974-09-13
+  inactive_date: *id075
+- full_name: Jose P. Bengzon
+  first_name: Jose
+  last_name: Bengzon
+  gender: male
+  id: 76
+  start_term: 1964-09-12
+  end_term: &id076 1968-05-05
+  birth_date: 1898-05-05
+  retire_date: 1968-05-05
+  inactive_date: *id076
+- full_name: Conrado V. Sanchez
+  first_name: Conrado
+  last_name: Sanchez
+  gender: male
+  id: 77
+  start_term: 1966-05-29
+  end_term: &id077 1970-02-19
+  birth_date: 1900-02-19
+  retire_date: 1970-02-19
+  inactive_date: *id077
+- full_name: Fred Ruiz Castro
+  first_name: Fred
+  last_name: Ruiz Castro
+  gender: male
+  id: 78
+  alias: castro
+  start_term: 1966-05-29
+  end_term: &id078 1979-04-19
+  chief_date: 1976-01-05
+  birth_date: 1914-09-02
+  retire_date: 1984-09-02
+  inactive_date: *id078
+- full_name: Eugenio Angeles
+  first_name: Eugenio
+  last_name: Angeles
+  gender: male
+  id: 79
+  start_term: 1967-06-30
+  end_term: &id079 1968-11-02
+  birth_date: 1868-11-02
+  retire_date: 1938-11-02
+  inactive_date: *id079
+- full_name: Enrique Fernando
+  first_name: Enrique
+  last_name: Fernando
+  gender: male
+  id: 80
+  start_term: 1967-06-30
+  end_term: &id080 1985-07-24
+  chief_date: 1979-07-02
+  birth_date: 1915-07-25
+  retire_date: 1985-07-25
+  inactive_date: *id080
+- full_name: Francisco Capistrano
+  first_name: Francisco
+  last_name: Capistrano
+  gender: male
+  id: 81
+  start_term: 1968-09-16
+  end_term: &id081 1969-10-06
+  birth_date: 1899-10-06
+  retire_date: 1969-10-06
+  inactive_date: *id081
+- full_name: Claudio Teehankee, Sr.
+  first_name: Claudio
+  last_name: Teehankee
+  suffix: Sr.
+  gender: male
+  id: 82
+  alias: teehankee sr.
+  start_term: 1968-12-17
+  end_term: &id082 1988-04-18
+  chief_date: 1987-05-02
+  birth_date: 1918-04-18
+  retire_date: 1988-04-18
+  inactive_date: *id082
+- full_name: Antonio P. Barredo
+  first_name: Antonio
+  last_name: Barredo
+  gender: male
+  id: 83
+  start_term: 1968-12-17
+  end_term: &id083 1982-10-04
+  birth_date: 1912-10-01
+  retire_date: 1982-10-01
+  inactive_date: *id083
+- full_name: Julio Villamor
+  first_name: Julio
+  last_name: Villamor
+  gender: male
+  id: 84
+  start_term: 1970-01-24
+  end_term: &id084 1972-04-12
+  birth_date: 1902-04-12
+  retire_date: 1972-04-12
+  inactive_date: *id084
+- full_name: Felix Makasiar
+  first_name: Felix
+  last_name: Makasiar
+  gender: male
+  id: 85
+  start_term: 1970-08-02
+  end_term: &id085 1985-11-19
+  chief_date: 1985-07-25
+  birth_date: 1915-11-20
+  retire_date: 1985-11-20
+  inactive_date: *id085
+- full_name: Felix Q. Antonio
+  first_name: Felix
+  last_name: Antonio
+  gender: male
+  id: 86
+  start_term: 1972-06-01
+  end_term: &id086 1980-05-18
+  birth_date: 1911-05-18
+  retire_date: 1981-05-18
+  inactive_date: *id086
+- full_name: Salvador V. Esguerra
+  first_name: Salvador
+  last_name: Esguerra
+  gender: male
+  id: 87
+  start_term: 1972-06-01
+  end_term: &id087 1976-06-19
+  birth_date: 1906-06-19
+  retire_date: 1976-06-19
+  inactive_date: *id087
+- full_name: Estanislao A. Fernandez
+  first_name: Estanislao
+  last_name: Fernandez
+  gender: male
+  id: 88
+  start_term: 1973-10-19
+  end_term: &id088 1975-03-28
+  birth_date: 1910-03-28
+  retire_date: 1980-03-28
+  inactive_date: *id088
+- full_name: Cecilia Munoz-Palma
+  first_name: Cecilia
+  last_name: Munoz-Palma
+  gender: female
+  id: 89
+  start_term: 1973-10-29
+  end_term: &id089 1978-11-22
+  birth_date: 1913-11-22
+  retire_date: 1983-11-22
+  inactive_date: *id089
+- full_name: Ramon Aquino
+  first_name: Ramon
+  last_name: Aquino
+  gender: male
+  id: 90
+  start_term: 1973-10-29
+  end_term: &id090 1986-05-06
+  chief_date: 1985-11-20
+  birth_date: 1917-08-31
+  retire_date: 1987-08-31
+  inactive_date: *id090
+- full_name: Hermogenes Concepcion Jr.
+  first_name: Hermogenes
+  last_name: Concepcion
+  suffix: Jr.
+  gender: male
+  id: 91
+  alias: concepcion jr.
+  start_term: 1975-04-18
+  end_term: &id091 1986-04-16
+  birth_date: 1920-04-07
+  retire_date: 1990-04-07
+  inactive_date: *id091
+- full_name: Ruperto G. Martin
+  first_name: Ruperto
+  last_name: Martin
+  gender: male
+  id: 92
+  start_term: 1975-04-18
+  end_term: &id092 1978-01-10
+  birth_date: 1913-03-27
+  retire_date: 1983-03-27
+  inactive_date: *id092
+- full_name: Guillermo S. Santos
+  first_name: Guillermo
+  last_name: Santos
+  gender: male
+  id: 93
+  start_term: 1977-05-27
+  end_term: &id093 1980-01-23
+  birth_date: 1915-01-23
+  retire_date: 1985-01-23
+  inactive_date: *id093
+- full_name: Ramon C. Fernandez
+  first_name: Ramon
+  last_name: Fernandez
+  gender: male
+  id: 94
+  start_term: 1977-05-27
+  end_term: &id094 1982-05-11
+  birth_date: 1916-02-16
+  retire_date: 1986-02-16
+  inactive_date: *id094
+- full_name: Juvenal K. Guerrero
+  first_name: Juvenal
+  last_name: Guerrero
+  gender: male
+  id: 95
+  start_term: 1977-05-11
+  end_term: &id095 1984-11-04
+  birth_date: 1916-11-04
+  retire_date: 1986-11-04
+  inactive_date: *id095
+- full_name: Vicente Abad Santos
+  first_name: Vicente
+  last_name: Abad Santos
+  gender: male
+  id: 96
+  start_term: 1979-01-17
+  end_term: &id096 1986-07-12
+  birth_date: 1916-07-12
+  retire_date: 1986-07-12
+  inactive_date: *id096
+- full_name: Pacifico P. De Castro
+  first_name: Pacifico
+  last_name: De Castro
+  gender: male
+  id: 97
+  start_term: 1979-01-17
+  end_term: &id097 1984-05-31
+  birth_date: 1915-07-16
+  retire_date: 1985-07-16
+  inactive_date: *id097
+- full_name: Ameurfina Melencio-Herrera
+  first_name: Ameurfina
+  last_name: Melencio-Herrera
+  gender: female
+  id: 98
+  start_term: 1979-01-17
+  end_term: &id098 1992-05-11
+  birth_date: 1922-05-11
+  retire_date: 1992-05-11
+  inactive_date: *id098
+- full_name: Vicente G. Ericta
+  first_name: Vicente
+  last_name: Ericta
+  gender: male
+  id: 99
+  start_term: 1981-11-20
+  end_term: &id099 1982-05-11
+  birth_date: 1915-02-03
+  retire_date: 1985-02-03
+  inactive_date: *id099
+- full_name: Efren I. Plana
+  first_name: Efren
+  last_name: Plana
+  gender: male
+  id: 100
+  start_term: 1981-11-20
+  end_term: &id100 1986-04-16
+  birth_date: 1928-06-28
+  retire_date: 1998-06-28
+  inactive_date: *id100
+- full_name: Venicio T. Escolin
+  first_name: Venicio
+  last_name: Escolin
+  gender: male
+  id: 101
+  start_term: 1981-11-20
+  end_term: &id101 1986-04-15
+  birth_date: 1921-02-13
+  retire_date: 1991-02-13
+  inactive_date: *id101
+- full_name: Conrado M. Vasquez
+  first_name: Conrado
+  last_name: Vasquez
+  gender: male
+  id: 102
+  start_term: 1982-05-14
+  end_term: &id102 1983-09-30
+  birth_date: 1913-09-13
+  retire_date: 1983-09-13
+  inactive_date: *id102
+- full_name: Lorenzo Relova
+  first_name: Lorenzo
+  last_name: Relova
+  gender: male
+  id: 103
+  start_term: 1982-05-14
+  end_term: &id103 1986-01-19
+  birth_date: 1916-01-20
+  retire_date: 1986-01-20
+  inactive_date: *id103
+- full_name: Hugo Gutierrez Jr.
+  first_name: Hugo
+  last_name: Gutierrez
+  suffix: Jr.
+  gender: male
+  id: 104
+  alias: gutierrez jr.
+  start_term: 1982-05-14
+  end_term: &id104 1993-03-31
+  birth_date: 1927-01-29
+  retire_date: 1997-01-29
+  inactive_date: *id104
+- full_name: Buenaventura S. De La Fuente
+  first_name: Buenaventura
+  last_name: De La Fuente
+  gender: male
+  id: 105
+  start_term: 1984-02-28
+  end_term: &id105 1986-03-06
+  birth_date: 1922-07-14
+  retire_date: 1992-07-14
+  inactive_date: *id105
+- full_name: Serafin R. Cuevas
+  first_name: Serafin
+  last_name: Cuevas
+  gender: male
+  id: 106
+  start_term: 1984-06-01
+  end_term: &id106 1986-04-16
+  birth_date: 1928-06-25
+  retire_date: 1998-06-25
+  inactive_date: *id106
+- full_name: Nestor B. Alampay
+  first_name: Nestor
+  last_name: Alampay
+  gender: male
+  id: 107
+  start_term: 1985-01-24
+  end_term: &id107 1986-03-17
+  birth_date: 1920-02-17
+  retire_date: 1990-02-17
+  inactive_date: *id107
+- full_name: Lino M. Patajo
+  first_name: Lino
+  last_name: Patajo
+  gender: male
+  id: 108
+  start_term: 1985-07-31
+  end_term: &id108 1986-04-16
+  birth_date: 1916-09-23
+  retire_date: 1986-09-23
+  inactive_date: *id108
+- full_name: Jose Feria
+  first_name: Jose
+  last_name: Feria
+  gender: male
+  id: 109
+  start_term: 1986-04-07
+  end_term: &id109 1987-01-10
+  birth_date: 1917-01-11
+  retire_date: 1987-01-11
+  inactive_date: *id109
+- full_name: Pedro Yap
+  first_name: Pedro
+  last_name: Yap
+  gender: male
+  id: 110
+  start_term: 1986-04-08
+  end_term: &id110 1988-06-30
+  chief_date: 1988-04-19
+  birth_date: 1918-07-01
+  retire_date: 1988-07-01
+  inactive_date: *id110
+- full_name: Marcelo Fernan
+  first_name: Marcelo
+  last_name: Fernan
+  gender: male
+  id: 111
+  start_term: 1986-04-09
+  end_term: &id111 1991-12-06
+  chief_date: 1988-07-01
+  birth_date: 1927-10-24
+  retire_date: 1997-10-24
+  inactive_date: *id111
+- full_name: Andres Narvasa
+  first_name: Andres
+  last_name: Narvasa
+  gender: male
+  id: 112
+  start_term: 1986-04-10
+  end_term: &id112 1998-11-30
+  chief_date: 1991-12-08
+  birth_date: 1928-11-30
+  retire_date: 1998-11-30
+  inactive_date: *id112
+- full_name: Isagani A. Cruz
+  first_name: Isagani
+  last_name: Cruz
+  gender: male
+  id: 113
+  start_term: 1986-04-16
+  end_term: &id113 1994-10-11
+  birth_date: 1924-10-11
+  retire_date: 1994-10-11
+  inactive_date: *id113
+- full_name: Edgardo L. Paras
+  first_name: Edgardo
+  last_name: Paras
+  gender: male
+  id: 114
+  start_term: 1986-04-16
+  end_term: &id114 1992-07-04
+  birth_date: 1922-07-04
+  retire_date: 1992-07-04
+  inactive_date: *id114
+- full_name: Florentino P. Feliciano
+  first_name: Florentino
+  last_name: Feliciano
+  gender: male
+  id: 115
+  start_term: 1986-08-08
+  end_term: &id115 1995-12-13
+  birth_date: 1928-03-14
+  retire_date: 1998-03-14
+  inactive_date: *id115
+- full_name: Teodoro R. Padilla
+  first_name: Teodoro
+  last_name: Padilla
+  gender: male
+  id: 116
+  start_term: 1987-01-12
+  end_term: &id116 1997-08-22
+  birth_date: 1927-08-24
+  retire_date: 1997-08-24
+  inactive_date: *id116
+- full_name: Abdulwahid A. Bidin
+  first_name: Abdulwahid
+  last_name: Bidin
+  gender: male
+  id: 117
+  start_term: 1987-01-12
+  end_term: &id117 1995-04-07
+  birth_date: 1925-04-07
+  retire_date: 1995-04-07
+  inactive_date: *id117
+- full_name: Emilio A. Gancayco
+  first_name: Emilio
+  last_name: Gancayco
+  gender: male
+  id: 118
+  start_term: 1987-01-12
+  end_term: &id118 1991-08-20
+  birth_date: 1921-08-20
+  retire_date: 1991-08-20
+  inactive_date: *id118
+- full_name: Abraham F. Sarmiento
+  first_name: Abraham
+  last_name: Sarmiento
+  gender: male
+  id: 119
+  start_term: 1987-01-25
+  end_term: &id119 1991-10-08
+  birth_date: 1921-10-08
+  retire_date: 1991-10-08
+  inactive_date: *id119
+- full_name: Irene R. Cortes
+  first_name: Irene
+  last_name: Cortes
+  gender: female
+  id: 120
+  start_term: 1987-02-01
+  end_term: &id120 1990-10-20
+  birth_date: 1921-10-20
+  retire_date: 1991-10-20
+  inactive_date: *id120
+- full_name: Carolina Grino-Aquino
+  first_name: Carolina
+  last_name: Grino-Aquino
+  gender: female
+  id: 121
+  start_term: 1988-02-02
+  end_term: &id121 1993-10-22
+  birth_date: 1923-10-22
+  retire_date: 1993-10-22
+  inactive_date: *id121
+- full_name: Leo D. Medialdea
+  first_name: Leo
+  last_name: Medialdea
+  gender: male
+  id: 122
+  start_term: 1988-05-02
+  end_term: &id122 1992-11-07
+  birth_date: 1927-08-17
+  retire_date: 1997-08-17
+  inactive_date: *id122
+- full_name: Florenz D. Regalado
+  first_name: Florenz
+  last_name: Regalado
+  gender: male
+  id: 123
+  start_term: 1988-07-29
+  end_term: &id123 1998-10-13
+  birth_date: 1928-10-13
+  retire_date: 1998-10-13
+  inactive_date: *id123
+- full_name: Hilario Davide Jr.
+  first_name: Hilario
+  last_name: Davide
+  suffix: Jr.
+  gender: male
+  id: 124
+  alias: davide jr.
+  start_term: 1991-01-24
+  end_term: &id124 2005-12-20
+  chief_date: 1998-11-30
+  birth_date: 1935-12-20
+  retire_date: 2005-12-20
+  inactive_date: *id124
+- full_name: Flerida Ruth Pineda-Romero
+  first_name: Flerida
+  last_name: Romero
+  gender: female
+  id: 125
+  start_term: 1991-10-21
+  end_term: &id125 1999-08-01
+  birth_date: 1929-08-01
+  retire_date: 1999-08-01
+  inactive_date: *id125
+- full_name: Rodolfo A. Nocon
+  first_name: Rodolfo
+  last_name: Nocon
+  gender: male
+  id: 126
+  start_term: 1991-12-02
+  end_term: &id126 1994-03-15
+  birth_date: 1924-03-15
+  retire_date: 1994-03-15
+  inactive_date: *id126
+- full_name: Josue N. Bellosillo
+  first_name: Josue
+  last_name: Bellosillo
+  gender: male
+  id: 127
+  start_term: 1992-03-03
+  end_term: &id127 2003-11-13
+  birth_date: 1933-11-13
+  retire_date: 2003-11-13
+  inactive_date: *id127
+- full_name: Jose Melo
+  first_name: Jose
+  last_name: Melo
+  gender: male
+  id: 128
+  start_term: 1992-08-10
+  end_term: &id128 2002-05-30
+  birth_date: 1932-05-30
+  retire_date: 2002-05-30
+  inactive_date: *id128
+- full_name: Jose C. Campos Jr.
+  first_name: Jose
+  last_name: Campos
+  suffix: Jr.
+  gender: male
+  id: 129
+  alias: campos jr.
+  start_term: 1992-09-03
+  end_term: &id129 1993-04-09
+  birth_date: 1923-04-09
+  retire_date: 1993-04-09
+  inactive_date: *id129
+- full_name: Camilo D. Quiason
+  first_name: Camilo
+  last_name: Quiason
+  gender: male
+  id: 130
+  start_term: 1993-02-01
+  end_term: &id130 1995-07-18
+  birth_date: 1925-07-18
+  retire_date: 1995-07-18
+  inactive_date: *id130
+- full_name: Reynato Puno
+  first_name: Reynato
+  last_name: Puno
+  gender: male
+  id: 131
+  start_term: 1993-06-28
+  end_term: &id131 2010-05-17
+  chief_date: 2007-12-08
+  birth_date: 1940-05-17
+  retire_date: 2010-05-17
+  inactive_date: *id131
+- full_name: Jose C. Vitug
+  first_name: Jose
+  last_name: Vitug
+  gender: male
+  id: 132
+  start_term: 1993-06-28
+  end_term: &id132 2004-07-15
+  birth_date: 1934-07-15
+  retire_date: 2004-07-15
+  inactive_date: *id132
+- full_name: Santiago M. Kapunan
+  first_name: Santiago
+  last_name: Kapunan
+  gender: male
+  id: 133
+  start_term: 1994-01-05
+  end_term: &id133 2002-08-12
+  birth_date: 1932-08-12
+  retire_date: 2002-08-12
+  inactive_date: *id133
+- full_name: Vicente V. Mendoza
+  first_name: Vicente
+  last_name: Mendoza
+  gender: male
+  id: 134
+  start_term: 1994-06-07
+  end_term: &id134 2003-04-05
+  birth_date: 1933-04-05
+  retire_date: 2003-04-05
+  inactive_date: *id134
+- full_name: Ricardo J. Francisco
+  first_name: Ricardo
+  last_name: Francisco
+  gender: male
+  id: 135
+  start_term: 1995-01-05
+  end_term: &id135 1998-02-13
+  birth_date: 1928-02-13
+  retire_date: 1998-02-13
+  inactive_date: *id135
+- full_name: Regino C. Hermosisima Jr.
+  first_name: Regino
+  last_name: Hermosisima
+  suffix: Jr.
+  gender: male
+  id: 136
+  alias: hermosisima jr.
+  start_term: 1995-01-10
+  end_term: &id136 1997-10-18
+  birth_date: 1929-02-02
+  retire_date: 1999-02-02
+  inactive_date: *id136
+- full_name: Artemio V. Panganiban
+  first_name: Artemio
+  last_name: Panganiban
+  gender: male
+  id: 137
+  start_term: 1995-10-05
+  end_term: &id137 2006-12-06
+  chief_date: 2005-12-20
+  birth_date: 1937-12-07
+  retire_date: 2007-12-07
+  inactive_date: *id137
+- full_name: Justo P. Torres Jr.
+  first_name: Justo
+  last_name: Torres
+  suffix: Jr.
+  gender: male
+  id: 138
+  alias: torres jr.
+  start_term: 1996-03-11
+  end_term: &id138 1997-11-01
+  birth_date: 1927-11-01
+  retire_date: 1997-11-01
+  inactive_date: *id138
+- full_name: Antonio M. Martinez
+  first_name: Antonio
+  last_name: Martinez
+  gender: male
+  id: 139
+  start_term: 1997-11-10
+  end_term: &id139 1999-02-02
+  birth_date: 1929-02-02
+  retire_date: 1999-02-02
+  inactive_date: *id139
+- full_name: Leonardo A. Quisumbing
+  first_name: Leonardo
+  last_name: Quisumbing
+  gender: male
+  id: 140
+  start_term: 1998-01-15
+  end_term: &id140 2009-11-06
+  birth_date: 1939-11-06
+  retire_date: 2009-11-06
+  inactive_date: *id140
+- full_name: Fidel P. Purisima
+  first_name: Fidel
+  last_name: Purisima
+  gender: male
+  id: 141
+  start_term: 1998-01-20
+  end_term: &id141 2000-10-28
+  birth_date: 1930-10-28
+  retire_date: 2000-10-28
+  inactive_date: *id141
+- full_name: Bernardo P. Pardo
+  first_name: Bernardo
+  last_name: Pardo
+  gender: male
+  id: 142
+  start_term: 1998-09-30
+  end_term: &id142 2002-02-11
+  birth_date: 1932-02-11
+  retire_date: 2002-02-11
+  inactive_date: *id142
+- full_name: Arturo B. Buena
+  first_name: Arturo
+  last_name: Buena
+  gender: male
+  id: 143
+  start_term: 1999-01-05
+  end_term: &id143 2002-03-25
+  birth_date: 1932-03-25
+  retire_date: 2002-03-25
+  inactive_date: *id143
+- full_name: Minerva P. Gonzaga-Reyes
+  first_name: Minerva
+  last_name: Gonzaga-Reyes
+  gender: female
+  id: 144
+  start_term: 1999-01-05
+  end_term: &id144 2001-09-25
+  birth_date: 1931-09-25
+  retire_date: 2001-09-25
+  inactive_date: *id144
+- full_name: Consuelo Ynares-Santiago
+  first_name: Consuelo
+  last_name: Ynares-Santiago
+  gender: female
+  id: 145
+  start_term: 1999-04-06
+  end_term: &id145 2009-10-05
+  birth_date: 1939-10-05
+  retire_date: 2009-10-05
+  inactive_date: *id145
+- full_name: Sabino R. De Leon Jr.
+  first_name: Sabino
+  last_name: De Leon
+  suffix: Jr.
+  gender: male
+  id: 146
+  alias: de leon jr.
+  start_term: 1999-10-12
+  end_term: &id146 2002-06-09
+  birth_date: 1932-06-09
+  retire_date: 2002-06-09
+  inactive_date: *id146
+- full_name: Angelina Sandoval-Gutierrez
+  first_name: Angelina
+  last_name: Sandoval-Gutierrez
+  gender: female
+  id: 147
+  start_term: 2000-12-22
+  end_term: &id147 2008-02-28
+  birth_date: 1938-02-28
+  retire_date: 2008-02-28
+  inactive_date: *id147
+- full_name: Antonio T. Carpio
+  first_name: Antonio
+  last_name: Carpio
+  gender: male
+  id: 148
+  start_term: 2001-10-26
+  end_term: &id148 2019-10-26
+  birth_date: 1949-10-26
+  retire_date: 2019-10-26
+  inactive_date: *id148
+- full_name: Ma. Alicia Austria-Martinez
+  first_name: Ma.
+  last_name: Austria-Martinez
+  gender: female
+  id: 149
+  start_term: 2002-04-09
+  end_term: &id149 2009-04-30
+  birth_date: 1940-12-19
+  retire_date: 2010-12-19
+  inactive_date: *id149
+- full_name: Renato C. Corona
+  first_name: Renato
+  last_name: Corona
+  gender: male
+  id: 150
+  start_term: 2002-04-09
+  end_term: &id150 2012-05-29
+  chief_date: 2010-05-17
+  birth_date: 1948-10-15
+  retire_date: 2018-10-15
+  inactive_date: *id150
+- full_name: Conchita Carpio-Morales
+  first_name: Conchita
+  last_name: Carpio-Morales
+  gender: female
+  id: 151
+  start_term: 2002-08-26
+  end_term: &id151 2011-06-19
+  birth_date: 1941-06-19
+  retire_date: 2011-06-19
+  inactive_date: *id151
+- full_name: Romeo J. Callejo
+  first_name: Romeo
+  last_name: Callejo
+  suffix: Sr.
+  gender: male
+  id: 152
+  alias: callejo sr.
+  start_term: 2002-08-26
+  end_term: &id152 2007-04-28
+  birth_date: 1937-04-28
+  retire_date: 2007-04-28
+  inactive_date: *id152
+- full_name: Adolfo S. Azcuna
+  first_name: Adolfo
+  last_name: Azcuna
+  gender: male
+  id: 153
+  start_term: 2002-10-17
+  end_term: &id153 2009-02-16
+  birth_date: 1939-02-16
+  retire_date: 2009-02-16
+  inactive_date: *id153
+- full_name: Dante O. Tinga
+  first_name: Dante
+  last_name: Tinga
+  gender: male
+  id: 154
+  start_term: 2003-07-04
+  end_term: &id154 2009-05-11
+  birth_date: 1939-05-11
+  retire_date: 2009-05-11
+  inactive_date: *id154
+- full_name: Minita V. Chico-Nazario
+  first_name: Minita
+  last_name: Chico-Nazario
+  gender: female
+  id: 155
+  start_term: 2004-02-10
+  end_term: &id155 2009-12-05
+  birth_date: 1939-12-05
+  retire_date: 2009-12-05
+  inactive_date: *id155
+- full_name: Cancio C. Garcia
+  first_name: Cancio
+  last_name: Garcia
+  gender: male
+  id: 156
+  start_term: 2004-10-07
+  end_term: &id156 2007-10-30
+  birth_date: 1937-10-30
+  retire_date: 2007-10-30
+  inactive_date: *id156
+- full_name: Presbitero Velasco Jr.
+  first_name: Presbitero
+  last_name: Velasco
+  suffix: Jr.
+  gender: male
+  id: 157
+  alias: velasco jr.
+  start_term: 2006-03-31
+  end_term: &id157 2018-08-08
+  birth_date: 1948-08-08
+  retire_date: 2018-08-08
+  inactive_date: *id157
+- full_name: Antonio Eduardo B. Nachura
+  first_name: Antonio
+  last_name: Nachura
+  gender: male
+  id: 158
+  start_term: 2007-02-07
+  end_term: &id158 2011-06-13
+  birth_date: 1941-06-13
+  retire_date: 2011-06-13
+  inactive_date: *id158
+- full_name: Ruben T. Reyes
+  first_name: Ruben
+  last_name: Reyes
+  gender: male
+  id: 159
+  alias: reyes, r.t.
+  start_term: 2007-08-02
+  end_term: &id159 2009-01-03
+  birth_date: 1939-01-03
+  retire_date: 2009-01-03
+  inactive_date: *id159
+- full_name: Teresita Leonardo-De Castro
+  first_name: Teresita
+  last_name: Leonardo-De Castro
+  gender: female
+  id: 160
+  start_term: 2007-12-03
+  end_term: &id160 2018-10-08
+  chief_date: 2018-08-28
+  birth_date: 1948-10-08
+  retire_date: 2018-10-08
+  inactive_date: *id160
+- full_name: Arturo D. Brion
+  first_name: Arturo
+  last_name: Brion
+  gender: male
+  id: 161
+  start_term: 2008-03-17
+  end_term: &id161 2016-12-29
+  birth_date: 1946-12-29
+  retire_date: 2016-12-29
+  inactive_date: *id161
+- full_name: Diosdado M. Peralta
+  first_name: Diosdado
+  last_name: Peralta
+  gender: male
+  id: 162
+  start_term: 2009-01-14
+  end_term: &id162 2021-03-27
+  chief_date: 2019-10-23
+  birth_date: 1952-03-27
+  retire_date: 2022-03-27
+  inactive_date: *id162
+- full_name: Lucas P. Bersamin
+  first_name: Lucas
+  last_name: Bersamin
+  gender: male
+  id: 163
+  start_term: 2009-04-03
+  end_term: &id163 2019-10-18
+  chief_date: 2018-11-26
+  birth_date: 1949-10-18
+  retire_date: 2019-10-18
+  inactive_date: *id163
+- full_name: Mariano C. del Castillo
+  first_name: Mariano
+  last_name: del Castillo
+  gender: male
+  id: 164
+  start_term: 2009-07-29
+  end_term: &id164 2019-07-29
+  birth_date: 1949-07-29
+  retire_date: 2019-07-29
+  inactive_date: *id164
+- full_name: Roberto A. Abad
+  first_name: Roberto
+  last_name: Abad
+  gender: male
+  id: 165
+  start_term: 2009-08-07
+  end_term: &id165 2014-05-22
+  birth_date: 1944-05-22
+  retire_date: 2014-05-22
+  inactive_date: *id165
+- full_name: Martin Villarama Jr.
+  first_name: Martin
+  last_name: Villarama
+  suffix: Jr.
+  gender: male
+  id: 166
+  alias: villarama jr.
+  start_term: 2009-11-06
+  end_term: &id166 2016-01-16
+  birth_date: 1946-04-14
+  retire_date: 2016-04-14
+  inactive_date: *id166
+- full_name: Jose P. Perez
+  first_name: Jose
+  last_name: Perez
+  gender: male
+  id: 167
+  start_term: 2009-12-26
+  end_term: &id167 2016-12-14
+  birth_date: 1946-12-14
+  retire_date: 2016-12-14
+  inactive_date: *id167
+- full_name: Jose C. Mendoza
+  first_name: Jose
+  last_name: Mendoza
+  gender: male
+  id: 168
+  start_term: 2010-01-04
+  end_term: &id168 2017-08-13
+  birth_date: 1947-08-13
+  retire_date: 2017-08-13
+  inactive_date: *id168
+- full_name: Maria Lourdes Sereno
+  first_name: Maria
+  last_name: Sereno
+  gender: female
+  id: 169
+  start_term: 2010-08-13
+  end_term: &id169 2018-05-11
+  chief_date: 2012-08-25
+  birth_date: 1960-07-02
+  retire_date: 2030-07-02
+  inactive_date: *id169
+- full_name: Bienvenido L. Reyes
+  first_name: Bienvenido
+  last_name: Reyes
+  gender: male
+  id: 170
+  start_term: 2011-08-20
+  end_term: &id170 2017-07-06
+  birth_date: 1947-07-06
+  retire_date: 2017-07-06
+  inactive_date: *id170
+- full_name: Estela Perlas-Bernabe
+  first_name: Estela
+  last_name: Perlas-Bernabe
+  gender: female
+  id: 171
+  start_term: 2011-09-16
+  end_term: &id171 2022-05-14
+  birth_date: 1952-05-14
+  retire_date: 2022-05-14
+  inactive_date: *id171
+- full_name: Marvic Mario Victor F. Leonen
+  first_name: Marvic
+  last_name: Leonen
+  gender: male
+  id: 172
+  start_term: 2012-11-21
+  end_term: &id172 2032-12-29
+  birth_date: 1962-12-29
+  retire_date: 2032-12-29
+  inactive_date: *id172
+- full_name: Francis H. Jardeleza
+  first_name: Francis
+  last_name: Jardeleza
+  gender: male
+  id: 173
+  start_term: 2014-08-19
+  end_term: &id173 2019-09-26
+  birth_date: 1949-09-26
+  retire_date: 2019-09-26
+  inactive_date: *id173
+- full_name: Alfredo Benjamin Caguioa
+  first_name: Alfredo
+  last_name: Caguioa
+  gender: male
+  id: 174
+  start_term: 2016-01-22
+  end_term: &id174 2029-09-30
+  birth_date: 1959-09-30
+  retire_date: 2029-09-30
+  inactive_date: *id174
+- full_name: Samuel R. Martires
+  first_name: Samuel
+  last_name: Martires
+  gender: male
+  id: 175
+  start_term: 2017-03-02
+  end_term: &id175 2019-01-02
+  birth_date: 1949-01-02
+  retire_date: 2019-01-02
+  inactive_date: *id175
+- full_name: Noel G. Tijam
+  first_name: Noel
+  last_name: Tijam
+  gender: male
+  id: 176
+  start_term: 2017-03-08
+  end_term: &id176 2019-01-05
+  birth_date: 1949-01-05
+  retire_date: 2019-01-05
+  inactive_date: *id176
+- full_name: Andres Reyes Jr.
+  first_name: Andres
+  last_name: Reyes
+  suffix: Jr.
+  gender: male
+  id: 177
+  alias: reyes, a. jr.
+  start_term: 2017-07-12
+  end_term: &id177 2020-05-11
+  birth_date: 1950-05-11
+  retire_date: 2020-05-11
+  inactive_date: *id177
+- full_name: Alexander G. Gesmundo
+  first_name: Alexander
+  last_name: Gesmundo
+  gender: male
+  id: 178
+  start_term: 2017-08-14
+  end_term: &id178 2026-11-06
+  chief_date: 2021-04-05
+  birth_date: 1956-11-06
+  retire_date: 2026-11-06
+  inactive_date: *id178
+- full_name: Jose B. Reyes Jr.
+  first_name: Jose
+  last_name: Reyes
+  suffix: Jr.
+  gender: male
+  id: 179
+  alias: reyes, j. jr.
+  start_term: 2018-08-09
+  end_term: &id179 2020-09-18
+  birth_date: 1950-09-18
+  retire_date: 2020-09-18
+  inactive_date: *id179
+- full_name: Ramon Paul Hernando
+  first_name: Ramon
+  last_name: Hernando
+  gender: male
+  id: 180
+  start_term: 2018-11-26
+  birth_date: 1966-08-27
+  retire_date: &id180 2036-08-27
+  inactive_date: *id180
+- full_name: Rosmari Carandang
+  first_name: Rosmari
+  last_name: Carandang
+  gender: female
+  id: 181
+  start_term: 2019-03-06
+  birth_date: 1952-01-09
+  retire_date: &id181 2022-01-09
+  inactive_date: *id181
+- full_name: Amy Lazaro-Javier
+  first_name: Amy
+  last_name: Lazaro-Javier
+  gender: female
+  id: 182
+  start_term: 2019-05-06
+  birth_date: 1956-11-16
+  retire_date: &id182 2026-11-16
+  inactive_date: *id182
+- full_name: Henri Jean Paul B. Inting
+  first_name: Henri
+  last_name: Inting
+  gender: male
+  id: 183
+  start_term: 2019-05-27
+  birth_date: 1957-11-04
+  retire_date: &id183 2027-11-04
+  inactive_date: *id183
+- full_name: Rodil V. Zalameda
+  first_name: Rodil
+  last_name: Zalameda
+  gender: male
+  id: 184
+  start_term: 2019-08-05
+  birth_date: 1963-08-02
+  retire_date: &id184 2033-08-02
+  inactive_date: *id184
+- full_name: Mario V. Lopez
+  first_name: Mario
+  last_name: Lopez
+  gender: male
+  id: 185
+  alias: lopez, m
+  start_term: 2019-12-03
+  birth_date: 1955-06-04
+  retire_date: &id185 2025-06-04
+  inactive_date: *id185
+- full_name: Edgardo L. Delos Santos
+  first_name: Edgardo
+  last_name: Delos Santos
+  gender: male
+  id: 186
+  start_term: 2019-12-03
+  end_term: &id186 2021-06-30
+  birth_date: 1952-06-12
+  retire_date: 2022-06-12
+  inactive_date: *id186
+- full_name: Samuel H. Gaerlan
+  first_name: Samuel
+  last_name: Gaerlan
+  gender: male
+  id: 187
+  start_term: 2020-01-08
+  birth_date: 1958-12-19
+  retire_date: &id187 2028-12-19
+  inactive_date: *id187
+- full_name: Priscilla Baltazar-Padilla
+  first_name: Priscilla
+  last_name: Baltazar-Padilla
+  gender: female
+  id: 188
+  start_term: 2020-07-16
+  end_term: &id188 2020-11-03
+  birth_date: 1958-07-02
+  retire_date: 2028-07-02
+  inactive_date: *id188
+- full_name: Ricardo Rosario
+  first_name: Ricardo
+  last_name: Rosario
+  gender: male
+  id: 189
+  start_term: 2020-10-08
+  birth_date: 1958-10-15
+  retire_date: &id189 2028-10-15
+  inactive_date: *id189
+- full_name: Jhosep Lopez
+  first_name: Jhosep
+  last_name: Lopez
+  gender: male
+  id: 190
+  start_term: 2021-01-26
+  birth_date: 1963-02-08
+  retire_date: &id190 2033-02-08
+  inactive_date: *id190
+- full_name: Japar Dimaampao
+  first_name: Japar
+  last_name: Dimaampao
+  gender: male
+  id: 191
+  start_term: 2021-07-02
+  birth_date: 1963-12-27
+  retire_date: &id191 2033-12-27
+  inactive_date: *id191
+- full_name: Midas Marquez
+  first_name: Midas
+  last_name: Marquez
+  gender: male
+  id: 192
+  start_term: 2021-09-27
+  birth_date: 1966-02-16
+  retire_date: &id192 2036-02-16
+  inactive_date: *id192
+- full_name: Antonio Kho Jr.
+  first_name: Antonio
+  last_name: Kho
+  suffix: Jr.
+  gender: male
+  id: 193
+  alias: kho jr.
+  start_term: 2022-02-24
+  birth_date: 1966-06-29
+  retire_date: &id193 2036-06-29
+  inactive_date: *id193
+- full_name: Maria Filomena D. Singh
+  first_name: Maria Filomena
+  last_name: Singh
+  gender: male
+  id: 194
+  start_term: 2022-05-18
+  birth_date: 1966-06-25
+  retire_date: &id194 2036-06-25
+  inactive_date: *id194

@@ -16,7 +16,7 @@ Validator of inputs from raw files for the following sqlite db tables:
 `DB_FILE` .env will be used as the path to create the database, e.g.
 
 ```zsh
-DB_FILE="target_dir/sc.db"  # will create the database file at Path().home() / target_dir / sc.db
+DB_FILE="sc.db"  # will create the database file at Path().cwd() / sc.db
 ```
 
 ### Decision Files

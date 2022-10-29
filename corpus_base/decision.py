@@ -8,10 +8,10 @@ from loguru import logger
 from markdownify import markdownify
 from pydantic import BaseModel, Field, root_validator
 from slugify import slugify
-from sqlpyd import TableConfig
+from sqlpyd import Connection, TableConfig
 
 from .justice import Justice
-from .settings import conn, settings
+from .settings import settings
 from .utils import (
     CourtComposition,
     DecisionCategory,
@@ -84,22 +84,22 @@ class DecisionRow(BaseModel, TableConfig):
         use_enum_values = True
 
     @classmethod
-    def make_table(cls):
+    def make_table(cls, c: Connection):
         return cls.config_tbl(
-            tbl=conn.tbl(cls.__tablename__),
+            tbl=c.tbl(cls.__tablename__),
             cols=cls.__fields__,
             idxs=[
+                ["date", "justice_id", "raw_ponente", "per_curiam"],
                 ["source", "origin", "date"],
                 ["source", "origin"],
                 ["category", "composition"],
                 ["id", "justice_id"],
-                ["date", "justice_id", "raw_ponente", "per_curiam"],
                 ["per_curiam", "raw_ponente"],
             ],
         )
 
     @classmethod
-    def from_path(cls, p: Path):
+    def from_path(cls, c: Connection, p: Path):
         """Requires path be structured, viz.:
 
         - /decisions
@@ -110,7 +110,7 @@ class DecisionRow(BaseModel, TableConfig):
 
         f = p.parent / "fallo.html"
         data = yaml.safe_load(p.read_text())
-        ponente = RawPonente.extract(data.get("ponente"))
+        pon = RawPonente.extract(data.get("ponente"))
         citation = Citation.from_details(data)
         id = cls.get_id_from_citation(
             original_folder_name=p.parent.name,
@@ -130,16 +130,20 @@ class DecisionRow(BaseModel, TableConfig):
             category=DecisionCategory._setter(data.get("category")),
             fallo=markdownify(f.read_text()) if f.exists() else None,
             voting=voteline_clean(data.get("voting")),
-            raw_ponente=ponente.writer if ponente else None,
-            justice_id=cls.get_justice_id(ponente, data.get("date_prom"), p),
-            per_curiam=ponente.per_curiam if ponente else False,
+            raw_ponente=pon.writer if pon else None,
+            justice_id=cls.get_justice_id(c, pon, data.get("date_prom"), p),
+            per_curiam=pon.per_curiam if pon else False,
             citation=citation,
             emails=", ".join(data.get("emails", ["bot@lawsql.com"])),
         )
 
     @classmethod
     def get_justice_id(
-        cls, ponente: RawPonente | None, raw_date: str, path: Path
+        cls,
+        c: Connection,
+        ponente: RawPonente | None,
+        raw_date: str,
+        path: Path,
     ) -> int | None:
         if not ponente:
             return None
@@ -153,7 +157,7 @@ class DecisionRow(BaseModel, TableConfig):
             logger.error(f"Bad {raw_date=}; {e=} {path=}")
             return None
 
-        candidates = conn.db.execute_returning_dicts(
+        candidates = c.db.execute_returning_dicts(
             sql=settings.sc_env.get_template("get_justice_id.sql").render(
                 justice_tbl=Justice.__tablename__,
                 target_name=ponente.writer,
@@ -209,9 +213,9 @@ class CitationRow(Citation, TableConfig):
     )
 
     @classmethod
-    def make_table(cls):
+    def make_table(cls, c: Connection):
         return cls.config_tbl(
-            tbl=conn.tbl(cls.__tablename__),
+            tbl=c.tbl(cls.__tablename__),
             cols=cls.__fields__,
             idxs=[
                 ["id", "decision_id"],
@@ -236,9 +240,9 @@ class VoteLine(BaseModel, TableConfig):
     )
 
     @classmethod
-    def make_table(cls):
+    def make_table(cls, c: Connection):
         return cls.config_tbl(
-            tbl=conn.tbl(cls.__tablename__),
+            tbl=c.tbl(cls.__tablename__),
             cols=cls.__fields__,
             idxs=[["id", "decision_id"]],
         )
@@ -253,7 +257,7 @@ class TitleTagRow(BaseModel, TableConfig):
     tag: str = Field(..., col=str, index=True)
 
     @classmethod
-    def make_table(cls):
+    def make_table(cls, c: Connection):
         return cls.config_tbl(
-            tbl=conn.tbl(cls.__tablename__), cols=cls.__fields__
+            tbl=c.tbl(cls.__tablename__), cols=cls.__fields__
         )

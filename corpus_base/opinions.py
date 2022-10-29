@@ -4,11 +4,10 @@ from typing import Iterator
 import frontmatter
 from loguru import logger
 from pydantic import BaseModel, Field
-from sqlpyd import TableConfig
+from sqlpyd import Connection, TableConfig
 
 from .decision import DecisionRow
 from .justice import Justice
-from .settings import conn
 from .utils import DecisionHTMLConvertMarkdown
 
 
@@ -55,9 +54,9 @@ class OpinionRow(BaseModel, TableConfig):
     )
 
     @classmethod
-    def make_table(cls):
+    def make_table(cls, c: Connection):
         return cls.config_tbl(
-            tbl=conn.tbl(cls.__tablename__),
+            tbl=c.tbl(cls.__tablename__),
             cols=cls.__fields__,
             idxs=[
                 ["id", "title"],

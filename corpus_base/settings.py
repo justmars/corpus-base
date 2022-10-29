@@ -2,23 +2,13 @@ import sys
 from pathlib import Path
 from typing import Iterator
 
-import httpx
 from jinja2 import Environment, PackageLoader, select_autoescape
 from loguru import logger
 from pydantic import BaseSettings, Field
 from sqlite_utils import Database
-from sqlpyd import Connection
 
 
-class JusticeParts(BaseSettings):
-    GithubToken: str = Field(..., repr=False, env="EXPIRING_TOKEN")
-    GithubOwner: str = Field("justmars", env="OWNER")
-    GithubRepo: str = Field("corpus", env="REPOSITORY")
-
-    JusticeTableName: str = Field("justices_tbl")
-
-
-class BaseCaseSettings(JusticeParts):
+class BaseCaseSettings(BaseSettings):
     DatabasePath: str = Field(
         ...,
         env="DB_FILE",
@@ -42,18 +32,6 @@ class BaseCaseSettings(JusticeParts):
         )
         obj.enable_wal()
         return obj
-
-    def call_api(self) -> httpx.Response | None:
-        if all([self.GithubToken, self.GithubOwner, self.GithubRepo]):
-            with httpx.Client() as client:
-                return client.get(
-                    f"https://api.github.com/repos/{self.GithubOwner}/{self.GithubRepo}/contents/justices/sc.yaml",
-                    headers=dict(
-                        Authorization=f"token {self.GithubToken}",
-                        Accept="application/vnd.github.VERSION.raw",
-                    ),
-                )
-        return None
 
     @property
     def local_justice_file(self) -> Path:
@@ -81,7 +59,6 @@ class BaseCaseSettings(JusticeParts):
         )
 
 
-conn = Connection()  # pyright: ignore
 settings = BaseCaseSettings()  # pyright: ignore
 
 
