@@ -1,5 +1,4 @@
 import datetime
-from enum import Enum
 from http import HTTPStatus
 from pathlib import Path
 
@@ -7,40 +6,17 @@ import yaml
 from dateutil.parser import parse
 from dateutil.relativedelta import relativedelta as rd
 from loguru import logger
-from pydantic import BaseModel, Field, validator
+from pydantic import Field, validator
+from sqlpyd import IndividualBio, TableConfig
+from sqlpyd.name import Gender
 
-from .settings import settings
+from .settings import conn, settings
 
 CHIEF_DATES_VIEW = "chief_dates"
 MAX_JUSTICE_AGE = 70
-just_tbl = settings.tbl_justice
 
 
-class Gender(str, Enum):
-    male = "Male"
-    female = "Female"
-    other = "Unspecified"
-
-
-class Suffix(str, Enum):
-    jr = "Jr."
-    sr = "Sr."
-    third = "III"
-    fourth = "IV"
-    fifth = "V"
-    sixth = "VI"
-
-
-class Bio(BaseModel):
-    first_name: str
-    last_name: str
-    suffix: Suffix | None = Field(None)
-    full_name: str
-    gender: Gender = Field(Gender.other)
-
-    class Config:
-        use_enum_values = True
-
+class Bio(IndividualBio):
     @classmethod
     def from_dict(cls, data: dict):
         sfx = data.pop("Suffix")
@@ -50,51 +26,69 @@ class Bio(BaseModel):
             suffix=None if sfx == "" else sfx,
             full_name=data.pop("Justice"),
             gender=Gender(data.pop("Gender")),
+            nick_name=None,
         )
 
 
-class Justice(Bio):
+class Justice(Bio, TableConfig):
+    __tablename__ = "sc_justices_tbl"
+
     id: int = Field(
         ...,
         title="Justice ID Identifier",
         description="Starting from 1, the integer represents the order of appointment to the Supreme Court.",
         ge=1,
         lt=1000,
+        col=int,
     )
     alias: str | None = Field(
         None,
         title="Alias",
         description="Means of matching ponente and voting strings to the justice id.",
+        col=str,
+        index=True,
     )
     start_term: datetime.date | None = Field(
         None,
         title="Start Term",
         description="Date of appointment.",
+        col=datetime.date,
+        index=True,
     )
     end_term: datetime.date | None = Field(
         None,
         title="End Term",
         description="Date of termination.",
+        col=datetime.date,
+        index=True,
     )
     chief_date: datetime.date | None = Field(
         None,
         title="Date Appointed As Chief Justice",
         description="When appointed, the extension title of the justice changes from 'J.' to 'C.J'. for cases that are decided after the date of appointment but before the date of retirement.",
+        col=datetime.date,
+        index=True,
     )
     birth_date: datetime.date | None = Field(
         None,
         title="Date of Birth",
         description=f"The Birth Date is used to determine the retirement age of the justice. Under the 1987 constitution, this is {MAX_JUSTICE_AGE}. There are missing dates: see Jose Generoso 41, Grant Trent 14, Fisher 19, Moir 20.",
+        col=datetime.date,
+        index=True,
     )
     retire_date: datetime.date | None = Field(
         None,
         title="Mandatory Retirement Date",
         description="Based on the Birth Date, if it exists, it is the maximum term of service allowed by law.",
+        col=datetime.date,
+        index=True,
     )
     inactive_date: datetime.date | None = Field(
         None,
         title="Date",
         description="Which date is earliest inactive date of the Justice, the retire date is set automatically but it is not guaranteed to to be the actual inactive date. So the inactive date is either that specified in the `end_term` or the `retire_date`, whichever is earlier.",
+        col=datetime.date,
+        index=True,
     )
 
     @validator("retire_date")
@@ -143,43 +137,15 @@ class Justice(Bio):
 
     @classmethod
     def make_table(cls):
-        just_tbl.create(
-            columns={
-                "id": int,
-                "first_name": str,
-                "last_name": str,
-                "full_name": str,
-                "suffix": str,
-                "alias": str,
-                "gender": str,
-                "birth_date": datetime.date,
-                "start_term": datetime.date,
-                "end_term": datetime.date,
-                "chief_date": datetime.date,
-                "retire_date": datetime.date,
-                "inactive_date": datetime.date,
-            },
-            pk="id",
-            if_not_exists=True,
-        )
-        settings.add_indexes(
-            just_tbl,
-            [
+        return cls.config_tbl(
+            tbl=conn.tbl(cls.__tablename__),
+            cols=cls.__fields__,
+            idxs=[
                 ["last_name", "alias", "start_term", "inactive_date"],
                 ["start_term", "inactive_date"],
                 ["last_name", "alias"],
-                ["alias"],
-                ["last_name"],
-                ["full_name"],
-                ["start_term"],
-                ["end_term"],
-                ["chief_date"],
-                ["retire_date"],
-                ["inactive_date"],
             ],
         )
-        settings.add_fts(just_tbl, ["full_name"])
-        return just_tbl
 
     @classmethod
     def from_api(
@@ -219,7 +185,9 @@ class Justice(Bio):
     @classmethod
     def init_justices_tbl(cls):
         """Add a table containing names and ids of justices; alter the original decision's table for it to include a justice id."""
-        return just_tbl.insert_all(i.dict() for i in Justice.from_local())
+        return conn.tbl(cls.__tablename__).insert_all(
+            i.dict() for i in Justice.from_local()
+        )
 
     @classmethod
     def get_active_on_date(cls, target_date: str) -> list[dict]:
@@ -229,7 +197,7 @@ class Justice(Bio):
         except:
             raise Exception(f"Need {target_date=}")
         return list(
-            just_tbl.rows_where(
+            conn.tbl(cls.__tablename__).rows_where(
                 "inactive_date > :date and :date > start_term",
                 {"date": valid_date},
                 select="id, lower(last_name) surname, alias, start_term, inactive_date, chief_date",
@@ -278,8 +246,8 @@ class Justice(Bio):
             return list(db[view].rows)
         db.create_view(
             view,
-            sql=settings.base_env.get_template("chief_dates.sql").render(
-                justice_table=settings.JusticeTableName
+            sql=settings.sc_env.get_template("chief_dates.sql").render(
+                justice_table=Justice.__tablename__
             ),
         )
         return list(db[view].rows)

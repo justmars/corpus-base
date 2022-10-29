@@ -4,21 +4,26 @@ from typing import Iterator
 import frontmatter
 from loguru import logger
 from pydantic import BaseModel, Field
+from sqlpyd import TableConfig
 
-from .settings import settings
+from .decision import DecisionRow
+from .justice import Justice
+from .settings import conn
 from .utils import DecisionHTMLConvertMarkdown
 
-op_tbl = settings.tbl_opinion
 
+class OpinionRow(BaseModel, TableConfig):
+    __tablename__ = "sc_decisions_opinions_tbl"
 
-class OpinionRow(BaseModel):
     id: str = Field(
         ...,
         description="The opinion pk is based on combining the decision_id with the justice_id",
+        col=str,
     )
     title: str | None = Field(
         ...,
         description="How is the opinion called, e.g. Ponencia, Concurring Opinion, Separate Opinion",
+        col=str,
     )
     tags: list[str] | None = Field(
         None,
@@ -27,49 +32,40 @@ class OpinionRow(BaseModel):
     decision_id: str = Field(
         ...,
         description="Each opinion belongs to a decision id",
+        col=str,
+        index=True,
+        fk=(DecisionRow.__tablename__, "id"),
     )
     justice_id: int | None = Field(
         None,
         description="The writer of the opinion; when not supplied could mean a Per Curiam opinion, or unable to detect the proper justice.",
+        col=int,
+        index=True,
+        fk=(Justice.__tablename__, "id"),
     )
     remark: str | None = Field(
         None,
         description="Short description of the opinion, when available, i.e. 'I reserve my right, etc.', 'On leave.', etc.",
+        col=str,
+        fts=True,
     )
     concurs: list[dict] | None
-    text: str = Field(..., description="Text proper of the opinion.")
+    text: str = Field(
+        ..., description="Text proper of the opinion.", col=str, fts=True
+    )
 
     @classmethod
     def make_table(cls):
-        op_tbl.create(
-            columns={
-                "id": str,
-                "decision_id": str,
-                "justice_id": int,
-                "title": str,
-                "text": str,
-                "remark": str,
-            },
-            pk="id",
-            foreign_keys=[
-                ("decision_id", settings.DecisionTableName, "id"),
-                ("justice_id", settings.JusticeTableName, "id"),
-            ],
-            if_not_exists=True,
-        )
-        settings.add_indexes(
-            op_tbl,
-            [
+        return cls.config_tbl(
+            tbl=conn.tbl(cls.__tablename__),
+            cols=cls.__fields__,
+            idxs=[
                 ["id", "title"],
                 ["id", "justice_id"],
                 ["id", "decision_id"],
                 ["decision_id", "title"],
             ],
         )
-        op_tbl.enable_fts(
-            ["text"], create_triggers=True, replace=True, tokenize="porter"
-        )
-        return op_tbl
 
     @classmethod
     def get_opinions(

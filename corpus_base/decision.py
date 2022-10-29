@@ -8,8 +8,10 @@ from loguru import logger
 from markdownify import markdownify
 from pydantic import BaseModel, Field, root_validator
 from slugify import slugify
+from sqlpyd import TableConfig
 
-from .settings import settings
+from .justice import Justice
+from .settings import conn, settings
 from .utils import (
     CourtComposition,
     DecisionCategory,
@@ -18,39 +20,45 @@ from .utils import (
     voteline_clean,
 )
 
-case_tbl = settings.tbl_decision
 
+class DecisionRow(BaseModel, TableConfig):
+    __tablename__ = "sc_decisions_tbl"
 
-class DecisionRow(BaseModel):
-    id: str
-    created: float
-    modified: float
-    origin: str
-    source: DecisionSource
+    id: str = Field(col=str)
+    created: float = Field(col=float)
+    modified: float = Field(col=float)
+    origin: str = Field(col=str, index=True)
+    source: DecisionSource = Field(col=str, index=True)
     citation: Citation = Field(exclude=True)
-    emails: str
-    title: str
-    description: str
-    date: datetime.date
+    emails: str = Field(col=str)
+    title: str = Field(col=str, index=True, fts=True)
+    description: str = Field(col=str, index=True, fts=True)
+    date: datetime.date = Field(col=datetime.date, index=True)
     raw_ponente: str | None = Field(
         None,
         title="Ponente",
         description="After going through a cleaning process, this should be in lowercase and be suitable for matching a justice id.",
+        col=str,
+        index=True,
     )
     justice_id: int | None = Field(
         None,
         title="Justice ID",
         description="Using the raw_ponente, determine the appropriate justice_id using the `update_justice_ids.sql` template.",
+        col=int,
+        index=True,
     )
     per_curiam: bool = Field(
         False,
         title="Is Per Curiam",
         description="If true, decision was penned anonymously.",
+        col=bool,
+        index=True,
     )
-    composition: CourtComposition = Field(None)
-    category: DecisionCategory = Field(None)
-    fallo: str | None = Field(None)
-    voting: str | None = Field(None)
+    composition: CourtComposition = Field(None, col=str, index=True)
+    category: DecisionCategory = Field(None, col=str, index=True)
+    fallo: str | None = Field(None, col=str, index=True, fts=True)
+    voting: str | None = Field(None, col=str, index=True, fts=True)
 
     @root_validator()
     def citation_date_is_object_date(cls, values):
@@ -77,44 +85,18 @@ class DecisionRow(BaseModel):
 
     @classmethod
     def make_table(cls):
-        case_tbl.create(
-            columns={
-                "id": str,
-                "created": str,
-                "modified": str,
-                "emails": str,  # comma separated emails for later use
-                "origin": str,
-                "source": str,
-                "title": str,
-                "description": str,
-                "date": datetime.date,
-                "fallo": str,
-                "voting": str,
-                "category": str,
-                "composition": str,
-                "per_curiam": bool,
-                "raw_ponente": str,  # what appears on file
-                "justice_id": int,  # initially null
-            },
-            pk="id",
-            if_not_exists=True,
-        )
-        settings.add_indexes(
-            case_tbl,
-            [
+        return cls.config_tbl(
+            tbl=conn.tbl(cls.__tablename__),
+            cols=cls.__fields__,
+            idxs=[
                 ["source", "origin", "date"],
-                ["date"],
                 ["source", "origin"],
                 ["category", "composition"],
                 ["id", "justice_id"],
                 ["date", "justice_id", "raw_ponente", "per_curiam"],
                 ["per_curiam", "raw_ponente"],
-                ["raw_ponente"],
-                ["per_curiam"],
             ],
         )
-        settings.add_fts(case_tbl, ["voting", "title", "fallo"])
-        return case_tbl
 
     @classmethod
     def from_path(cls, p: Path):
@@ -171,9 +153,9 @@ class DecisionRow(BaseModel):
             logger.error(f"Bad {raw_date=}; {e=} {path=}")
             return None
 
-        candidates = settings.db.execute_returning_dicts(
-            sql=settings.base_env.get_template("get_justice_id.sql").render(
-                justice_tbl=settings.JusticeTableName,
+        candidates = conn.db.execute_returning_dicts(
+            sql=settings.sc_env.get_template("get_justice_id.sql").render(
+                justice_tbl=Justice.__tablename__,
                 target_name=ponente.writer,
                 target_date=converted_date,
             )
@@ -217,3 +199,61 @@ class DecisionRow(BaseModel):
     @property
     def citation_fk(self) -> dict:
         return self.citation.dict() | {"decision_id": self.id}
+
+
+class CitationRow(Citation, TableConfig):
+    __tablename__ = "sc_decisions_citations_tbl"
+
+    decision_id: str = Field(
+        ..., col=str, fk=(DecisionRow.__tablename__, "id")
+    )
+
+    @classmethod
+    def make_table(cls):
+        return cls.config_tbl(
+            tbl=conn.tbl(cls.__tablename__),
+            cols=cls.__fields__,
+            idxs=[
+                ["id", "decision_id"],
+                ["docket_category", "docket_serial", "docket_date"],
+                ["scra", "phil", "offg", "docket"],
+            ],
+        )
+
+
+class VoteLine(BaseModel, TableConfig):
+    __tablename__ = "sc_decisions_votelines_tbl"
+
+    decision_id: str = Field(
+        ..., col=str, fk=(DecisionRow.__tablename__, "id")
+    )
+    text: str = Field(
+        ...,
+        title="Voteline Text",
+        description="Each decision may contain a vote line, e.g. a summary of which justice voted for the main opinion and those who dissented, etc.",
+        col=str,
+        index=True,
+    )
+
+    @classmethod
+    def make_table(cls):
+        return cls.config_tbl(
+            tbl=conn.tbl(cls.__tablename__),
+            cols=cls.__fields__,
+            idxs=[["id", "decision_id"]],
+        )
+
+
+class TitleTagRow(BaseModel, TableConfig):
+    __tablename__ = "sc_decisions_titletags_tbl"
+
+    decision_id: str = Field(
+        ..., col=str, fk=(DecisionRow.__tablename__, "id")
+    )
+    tag: str = Field(..., col=str, index=True)
+
+    @classmethod
+    def make_table(cls):
+        return cls.config_tbl(
+            tbl=conn.tbl(cls.__tablename__), cols=cls.__fields__
+        )

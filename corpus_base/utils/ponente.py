@@ -571,6 +571,36 @@ class CommonTypos(Enum):
         "sandoval-gutierrez",
     )
 
+    PABLO_M = (
+        re.compile(
+            r"""
+            ^pablo[,\s]+m\.?
+            """,
+            re.I | re.X,
+        ),
+        "pablo",
+    )
+
+    HORRILENO_M = (
+        re.compile(
+            r"""
+            ^horrilleno[,\s]+m\.?
+            """,
+            re.I | re.X,
+        ),
+        "horrilleno",
+    )
+
+    DIOKNO_M = (
+        re.compile(
+            r"""
+            ^diokno[,\s]+m\.?
+            """,
+            re.I | re.X,
+        ),
+        "diokno",
+    )
+
     @classmethod
     def replace_value(cls, candidate: str):
         """If one of the members matches, return the replacement that is specified in the value."""

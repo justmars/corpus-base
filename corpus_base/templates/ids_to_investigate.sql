@@ -3,7 +3,7 @@ WITH justice_data AS (
         start_term,
         inactive_date
     FROM
-        justices_tbl
+        sc_justices_tbl
     WHERE
         (
             dtl.raw_ponente = alias
@@ -32,7 +32,7 @@ SELECT
     ),
     COUNT(*) num
 FROM
-    main.decisions_tbl dtl
+    sc_decisions_tbl dtl
 WHERE
     justice_id IS NULL
     AND per_curiam IS 0

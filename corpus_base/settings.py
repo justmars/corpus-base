@@ -7,7 +7,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from loguru import logger
 from pydantic import BaseSettings, Field
 from sqlite_utils import Database
-from sqlite_utils.db import Table
+from sqlpyd import Connection
 
 
 class JusticeParts(BaseSettings):
@@ -18,25 +18,21 @@ class JusticeParts(BaseSettings):
     JusticeTableName: str = Field("justices_tbl")
 
 
-class DecisionParts(BaseSettings):
-    DecisionSourceFiles: str = Field(
-        "code/corpus/decisions",
-        env="DecisionSourceFiles",
-        description="String that represents the path to the decisions.",
-    )
-    CitationTableName: str = Field("decision_citations_tbl")
-    VotelineTableName: str = Field("decision_votelines_tbl")
-    TitleTagTableName: str = Field("decision_titletags_tbl")
-
-
-class BaseCaseSettings(DecisionParts, JusticeParts):
+class BaseCaseSettings(JusticeParts):
     DatabasePath: str = Field(
         ...,
         env="DB_FILE",
         description="Intended / existing path to the database.",
     )
-    DecisionTableName: str = Field("decisions_tbl")
-    OpinionTableName: str = Field("opinions_tbl")
+    DecisionSourceFiles: str = Field(
+        "code/corpus/decisions",
+        env="DecisionSourceFiles",
+        description="String that represents the path to the decisions.",
+    )
+
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
 
     @property
     def db(self) -> Database:
@@ -46,10 +42,6 @@ class BaseCaseSettings(DecisionParts, JusticeParts):
         )
         obj.enable_wal()
         return obj
-
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
 
     def call_api(self) -> httpx.Response | None:
         if all([self.GithubToken, self.GithubOwner, self.GithubRepo]):
@@ -79,7 +71,7 @@ class BaseCaseSettings(DecisionParts, JusticeParts):
         )
 
     @property
-    def base_env(self):
+    def sc_env(self):
         """The Jinja2 environment to yield various sql files."""
         return Environment(
             loader=PackageLoader(
@@ -88,52 +80,8 @@ class BaseCaseSettings(DecisionParts, JusticeParts):
             autoescape=select_autoescape(),
         )
 
-    def set_table(self, table_name: str) -> Table:
-        tbl = self.db[table_name]
-        if isinstance(tbl, Table):
-            return tbl
-        raise Exception(f"Missing {table_name=}")
 
-    @property
-    def tbl_justice(self) -> Table:
-        return self.set_table(self.JusticeTableName)
-
-    @property
-    def tbl_decision(self) -> Table:
-        return self.set_table(self.DecisionTableName)
-
-    @property
-    def tbl_decision_citation(self) -> Table:
-        return self.set_table(self.CitationTableName)
-
-    @property
-    def tbl_decision_voteline(self) -> Table:
-        return self.set_table(self.VotelineTableName)
-
-    @property
-    def tbl_decision_titletags(self) -> Table:
-        return self.set_table(self.TitleTagTableName)
-
-    @property
-    def tbl_opinion(self) -> Table:
-        return self.set_table(self.OpinionTableName)
-
-    @classmethod
-    def add_indexes(cls, tbl: Table, indexes: list[list[str]]):
-        for i in indexes:
-            idx_name = "_".join(["idx", tbl.name, "_".join(i)])
-            tbl.create_index(i, idx_name, if_not_exists=True)
-
-    @classmethod
-    def add_fts(cls, tbl: Table, columns: list[str]):
-        tbl.enable_fts(
-            columns=columns,
-            create_triggers=True,
-            replace=True,
-            tokenize="porter",
-        )
-
-
+conn = Connection()  # pyright: ignore
 settings = BaseCaseSettings()  # pyright: ignore
 
 
