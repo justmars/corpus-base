@@ -22,8 +22,8 @@ def create_if_not_exist(kls, c: Connection):
         return None
 
 
-def add_sc_tables(c: Connection) -> None:
-    Justice.from_api()
+def build_sc_tables(c: Connection) -> None:
+    Justice.set_local_from_api()
     Justice.init_justices_tbl(c)
     create_if_not_exist(DecisionRow, c)
     create_if_not_exist(CitationRow, c)
@@ -83,7 +83,7 @@ def setup_case(c: Connection, path: Path) -> None:
         opin_tbl.insert(op.dict(exclude={"concurs", "tags"}))
 
 
-def init(c: Connection, test_only: int = 0):
+def init_sc_cases(c: Connection, test_only: int = 0):
     for counter, details_file in enumerate(CASE_FOLDERS):
         if test_only and counter == test_only:
             break

@@ -1,5 +1,6 @@
 import datetime
 from pathlib import Path
+from typing import Iterator
 
 import yaml
 from dateutil.parser import parse
@@ -149,17 +150,25 @@ class Justice(Bio, TableConfig):
         )
 
     @classmethod
-    def from_api(
-        cls, local: Path = JUSTICE_LOCAL, recent: bool = False
-    ) -> Path:
+    def validate_from_api(cls) -> Iterator["Justice"]:
+        return (cls.from_data(i) for i in get_justices_from_api())
+
+    @classmethod
+    def extract_as_list(cls) -> list[dict]:
+        return [i.dict(exclude_none=True) for i in cls.validate_from_api()]
+
+    @classmethod
+    def set_local_from_api(cls, local: Path = JUSTICE_LOCAL) -> Path:
+        """Create a local .yaml file containing the list of validated Justices."""
         if local.exists():
-            if not recent:
-                return local
             local.unlink()
-        justices = get_justices_from_api()
-        res = (cls.from_data(i).dict(exclude_none=True) for i in justices)
-        with open(local, "w") as f:
-            yaml.safe_dump(res, f, sort_keys=False, default_flow_style=False)
+        with open(local, "w") as writefile:
+            yaml.safe_dump(
+                data=cls.extract_as_list(),
+                stream=writefile,
+                sort_keys=False,
+                default_flow_style=False,
+            )
             return local
 
     @classmethod
