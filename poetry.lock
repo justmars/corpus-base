@@ -260,7 +260,7 @@ test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
 
 [[package]]
 name = "corpus-pax"
-version = "0.0.1"
+version = "0.0.2"
 description = "Generic individuals and organizations profiles."
 category = "main"
 optional = false
@@ -1709,7 +1709,7 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "2101dd8ef06e90658bf04c8ae7c17a2e2b9b89623b703eff6acd1684f96c1e69"
+content-hash = "feb691425404d71ca9f793764493d24fcfa624046a606ed379e9f9b33fee881e"
 
 [metadata.files]
 anyio = [
@@ -1897,8 +1897,8 @@ commonmark = [
     {file = "commonmark-0.9.1.tar.gz", hash = "sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60"},
 ]
 corpus-pax = [
-    {file = "corpus_pax-0.0.1-py3-none-any.whl", hash = "sha256:3f1c08668aaeb7ac270eb8dffe8ff9266ebd4c44110caf43487b1b801bededae"},
-    {file = "corpus_pax-0.0.1.tar.gz", hash = "sha256:7de4ff8d34a1e118de16914356abcd68ee5b96713699ecd73a67bf0969e66a84"},
+    {file = "corpus_pax-0.0.2-py3-none-any.whl", hash = "sha256:d81568d57ab334a59dcefcaeb216a44203d4a560f9dc66b30e53db8e905a19b5"},
+    {file = "corpus_pax-0.0.2.tar.gz", hash = "sha256:bc65d55926a18bb6072dcae29ba12f99a2b71ace63283fd0aa7d237fb9b0a0e4"},
 ]
 coverage = [
     {file = "coverage-6.5.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:ef8674b0ee8cc11e2d574e3e2998aea5df5ab242e012286824ea3c6970580e53"},
