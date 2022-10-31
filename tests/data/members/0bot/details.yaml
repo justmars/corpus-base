@@ -1,0 +1,13 @@
+email: bot@lawsql.com
+join_date: '2022-09-01'
+search_rank: 0
+display_name: Malcolm Lex
+display_url: null
+caption: A Bot for Legalese
+first_name: Malcolm
+last_name: Lex
+nick_name: null
+gender: unspecified
+suffix: null
+description: |
+  A bot to auto-generate and set default metadata on pre-existing legal content. Since content is unedited, manual formatting may be required.

@@ -140,7 +140,7 @@ class Justice(Bio, TableConfig):
     @classmethod
     def make_table(cls, c: Connection):
         return cls.config_tbl(
-            tbl=c.tbl(cls.__tablename__),
+            tbl=c.table(cls),
             cols=cls.__fields__,
             idxs=[
                 ["last_name", "alias", "start_term", "inactive_date"],
@@ -161,7 +161,7 @@ class Justice(Bio, TableConfig):
     def set_local_from_api(cls, local: Path = JUSTICE_LOCAL) -> Path:
         """Create a local .yaml file containing the list of validated Justices."""
         if local.exists():
-            local.unlink()
+            return local
         with open(local, "w") as writefile:
             yaml.safe_dump(
                 data=cls.extract_as_list(),
@@ -174,9 +174,7 @@ class Justice(Bio, TableConfig):
     @classmethod
     def init_justices_tbl(cls, c: Connection, p: Path | None = None):
         """Add a table containing names and ids of justices; alter the original decision's table for it to include a justice id."""
-        return c.tbl(cls.__tablename__).insert_all(
-            yaml.safe_load(JUSTICE_LOCAL.read_bytes())
-        )
+        return c.add_records(cls, yaml.safe_load(JUSTICE_LOCAL.read_bytes()))
 
     @classmethod
     def get_active_on_date(cls, c: Connection, target_date: str) -> list[dict]:
@@ -186,7 +184,7 @@ class Justice(Bio, TableConfig):
         except:
             raise Exception(f"Need {target_date=}")
         return list(
-            c.tbl(cls.__tablename__).rows_where(
+            c.table(cls).rows_where(
                 "inactive_date > :date and :date > start_term",
                 {"date": valid_date},
                 select="id, lower(last_name) surname, alias, start_term, inactive_date, chief_date",

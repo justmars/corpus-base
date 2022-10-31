@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Iterator
 
 import yaml
-from corpus_persons._api import GithubAccess
+from corpus_pax._api import GithubAccess
 from jinja2 import Environment, PackageLoader, select_autoescape
 from loguru import logger
 

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from corpus_persons import Individual
+from corpus_pax import Individual
 from loguru import logger
 from sqlpyd import Connection
 
@@ -15,39 +15,20 @@ from .justice import Justice
 from .utils import CASE_FOLDERS, extract_votelines, tags_from_title
 
 
-def create_if_not_exist(kls, c: Connection):
-    tbl = c.tbl(kls.__tablename__)
-    if not tbl.exists():
-        kls.make_table(c)
-        return None
-
-
-def build_sc_tables(c: Connection) -> None:
+def build_sc_tables(c: Connection) -> Connection:
     Justice.set_local_from_api()
     Justice.init_justices_tbl(c)
-    create_if_not_exist(DecisionRow, c)
-    create_if_not_exist(CitationRow, c)
-    create_if_not_exist(OpinionRow, c)
-    create_if_not_exist(VoteLine, c)
-    create_if_not_exist(TitleTagRow, c)
+    c.create_table(DecisionRow)
+    c.create_table(CitationRow)
+    c.create_table(OpinionRow)
+    c.create_table(VoteLine)
+    c.create_table(TitleTagRow)
     c.db.index_foreign_keys()
+    return c
 
 
 def setup_case(c: Connection, path: Path) -> None:
-    """
-    1. Adds a decision row
-    2. Updates the decision row's justice id
-    3. Adds a citation row
-    4. Adds voteline rows
-    5. Adds opinion rows
-    """
-    case_tbl = c.tbl(DecisionRow.__tablename__)
-    cite_tbl = c.tbl(CitationRow.__tablename__)
-    opin_tbl = c.tbl(OpinionRow.__tablename__)
-    vote_tbl = c.tbl(VoteLine.__tablename__)
-    tags_tbl = c.tbl(TitleTagRow.__tablename__)
-    authors_tbl = c.tbl(Individual.__tablename__)
-
+    case_tbl = c.table(DecisionRow)
     obj = DecisionRow.from_path(c, path)
 
     try:  # add decision row
@@ -58,29 +39,25 @@ def setup_case(c: Connection, path: Path) -> None:
     if not decision_id:
         return
 
-    for email in obj.emails:  # assign an author row to a joined m2m table
+    for email in obj.emails:  # assign author row to a joined m2m table
         case_tbl.update(obj.id).m2m(
-            other_table=authors_tbl, lookup={"email": email}, pk="id"
+            other_table=c.table(Individual), lookup={"email": email}, pk="id"
         )
 
-    # add associated citation of decision
     if obj.citation and obj.citation.has_citation:
-        cite_tbl.insert(CitationRow(**obj.citation_fk).dict())
+        c.add_record(CitationRow, obj.citation_fk)  # add associated citation
 
-    # process votelines of voting text in decision
-    if obj.voting:
+    if obj.voting:  # process votelines of voting text in decision
         for item in extract_votelines(decision_id, obj.voting):
-            vote_tbl.insert(VoteLine(**item).dict())
+            c.add_record(VoteLine, item)
 
-    # add tags based on the title of decision
-    if obj.title:
+    if obj.title:  # add tags based on the title of decision
         for item in tags_from_title(decision_id, obj.title):
-            tags_tbl.insert(TitleTagRow(**item).dict())
+            c.add_record(TitleTagRow, item)
 
-    # add opinions
-    justice_id = case_tbl.get(decision_id).get("justice_id")
+    justice_id = case_tbl.get(decision_id).get("justice_id")  # add opinions
     for op in OpinionRow.get_opinions(path.parent, justice_id):
-        opin_tbl.insert(op.dict(exclude={"concurs", "tags"}))
+        c.add_record(OpinionRow, op.dict(exclude={"concurs", "tags"}))
 
 
 def init_sc_cases(c: Connection, test_only: int = 0):

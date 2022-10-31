@@ -26,7 +26,6 @@ from .utils import (
 
 class DecisionRow(BaseModel, TableConfig):
     __tablename__ = "sc_decisions_tbl"
-
     id: str = Field(col=str)
     created: float = Field(col=float)
     modified: float = Field(col=float)
@@ -89,7 +88,7 @@ class DecisionRow(BaseModel, TableConfig):
     @classmethod
     def make_table(cls, c: Connection):
         return cls.config_tbl(
-            tbl=c.tbl(cls.__tablename__),
+            tbl=c.table(cls),
             cols=cls.__fields__,
             idxs=[
                 ["date", "justice_id", "raw_ponente", "per_curiam"],
@@ -116,7 +115,7 @@ class DecisionRow(BaseModel, TableConfig):
         pon = RawPonente.extract(data.get("ponente"))
         citation = Citation.from_details(data)
         id = cls.get_id_from_citation(
-            original_folder_name=p.parent.name,
+            folder_name=p.parent.name,
             source=p.parent.parent.stem,
             citation=citation,
         )
@@ -148,14 +147,13 @@ class DecisionRow(BaseModel, TableConfig):
         raw_date: str,
         path: Path,
     ) -> int | None:
-        if not ponente:
+        if not ponente or not raw_date:
             return None
         if not ponente.writer:
             return None
-        if not raw_date:
-            return None
+
         try:
-            converted_date = parse(raw_date).date().isoformat()
+            conv_date = parse(raw_date).date().isoformat()
         except Exception as e:
             logger.error(f"Bad {raw_date=}; {e=} {path=}")
             return None
@@ -164,44 +162,37 @@ class DecisionRow(BaseModel, TableConfig):
             sql=sc_jinja_env.get_template("get_justice_id.sql").render(
                 justice_tbl=Justice.__tablename__,
                 target_name=ponente.writer,
-                target_date=converted_date,
+                target_date=conv_date,
             )
         )
 
         if not candidates:
-            msg = f"No id: {ponente.writer=}; {converted_date=}; {path=}"
-            logger.error(msg)
+            logger.error(f"No id: {ponente.writer=}; {conv_date=}; {path=}")
             return None
 
         elif len(candidates) > 1:
-            msg = f"Multiple ids; similarity {candidates=}; {path=}"
-            logger.error(msg)
+            logger.error(f"Multiple ids; similarity {candidates=}; {path=}")
             return None
 
         return candidates[0]["id"]
 
     @classmethod
     def get_id_from_citation(
-        cls,
-        original_folder_name: str,
-        source: str,
-        citation: Citation,
+        cls, folder_name: str, source: str, citation: Citation
     ) -> str:
         """The decision id to be used as a url slug ought to be unique, based on citation paramters if possible."""
         if not citation.slug:
-            msg = f"Citation absent: {source=}; {original_folder_name=}"
-            logger.debug(msg)
-            return original_folder_name
+            logger.debug(f"Citation absent: {source=}; {folder_name=}")
+            return folder_name
 
         if source == "legacy":
-            return citation.slug or original_folder_name
+            return citation.slug or folder_name
 
         elif citation.docket:
             if report := citation.scra or citation.phil:
                 return slugify("-".join([citation.docket, report]))
             return slugify(citation.docket)
-
-        return original_folder_name
+        return folder_name
 
     @property
     def citation_fk(self) -> dict:
@@ -209,8 +200,6 @@ class DecisionRow(BaseModel, TableConfig):
 
 
 class DecisionFK(BaseModel):
-    """Common foreign key used in component tables."""
-
     decision_id: str = Field(
         ..., col=str, fk=(DecisionRow.__tablename__, "id")
     )
@@ -222,7 +211,7 @@ class CitationRow(DecisionFK, Citation, TableConfig):
     @classmethod
     def make_table(cls, c: Connection):
         return cls.config_tbl(
-            tbl=c.tbl(cls.__tablename__),
+            tbl=c.table(cls),
             cols=cls.__fields__,
             idxs=[
                 ["id", "decision_id"],
@@ -234,7 +223,6 @@ class CitationRow(DecisionFK, Citation, TableConfig):
 
 class VoteLine(DecisionFK, TableConfig):
     __tablename__ = "sc_decisions_votelines_tbl"
-
     text: str = Field(
         ...,
         title="Voteline Text",
@@ -246,27 +234,21 @@ class VoteLine(DecisionFK, TableConfig):
     @classmethod
     def make_table(cls, c: Connection):
         return cls.config_tbl(
-            tbl=c.tbl(cls.__tablename__),
-            cols=cls.__fields__,
-            idxs=[["id", "decision_id"]],
+            tbl=c.table(cls), cols=cls.__fields__, idxs=[["id", "decision_id"]]
         )
 
 
 class TitleTagRow(DecisionFK, TableConfig):
     __tablename__ = "sc_decisions_titletags_tbl"
-
     tag: str = Field(..., col=str, index=True)
 
     @classmethod
     def make_table(cls, c: Connection):
-        return cls.config_tbl(
-            tbl=c.tbl(cls.__tablename__), cols=cls.__fields__
-        )
+        return cls.config_tbl(tbl=c.table(cls), cols=cls.__fields__)
 
 
 class OpinionRow(DecisionFK, TableConfig):
     __tablename__ = "sc_decisions_opinions_tbl"
-
     id: str = Field(
         ...,
         description="The opinion pk is based on combining the decision_id with the justice_id",
@@ -302,7 +284,7 @@ class OpinionRow(DecisionFK, TableConfig):
     @classmethod
     def make_table(cls, c: Connection):
         return cls.config_tbl(
-            tbl=c.tbl(cls.__tablename__),
+            tbl=c.table(cls),
             cols=cls.__fields__,
             idxs=[
                 ["id", "title"],
