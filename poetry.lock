@@ -260,7 +260,7 @@ test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
 
 [[package]]
 name = "corpus-pax"
-version = "0.0.2"
+version = "0.0.4"
 description = "Generic individuals and organizations profiles."
 category = "main"
 optional = false
@@ -270,7 +270,7 @@ python-versions = ">=3.10,<4.0"
 email-validator = ">=1.3.0,<2.0.0"
 httpx = ">=0.23.0,<0.24.0"
 jinja2 = ">=3.1.2,<4.0.0"
-sqlpyd = ">=0.0.9,<0.0.10"
+sqlpyd = ">=0.0.12,<0.0.13"
 
 [[package]]
 name = "coverage"
@@ -471,11 +471,11 @@ python-versions = "*"
 
 [[package]]
 name = "ipykernel"
-version = "6.16.2"
+version = "6.17.0"
 description = "IPython Kernel for Jupyter"
 category = "dev"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 
 [package.dependencies]
 appnope = {version = "*", markers = "platform_system == \"Darwin\""}
@@ -1479,7 +1479,7 @@ test = ["black", "cogapp", "hypothesis", "pytest"]
 
 [[package]]
 name = "sqlpyd"
-version = "0.0.9"
+version = "0.0.12"
 description = "A simplistic ORM via sqlite-utils + pydantic."
 category = "main"
 optional = false
@@ -1709,7 +1709,7 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "feb691425404d71ca9f793764493d24fcfa624046a606ed379e9f9b33fee881e"
+content-hash = "181ba73d9b1276e3796bd5949fa13901dd8e6283cf588d52da846e2c8fab3cc1"
 
 [metadata.files]
 anyio = [
@@ -1897,8 +1897,8 @@ commonmark = [
     {file = "commonmark-0.9.1.tar.gz", hash = "sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60"},
 ]
 corpus-pax = [
-    {file = "corpus_pax-0.0.2-py3-none-any.whl", hash = "sha256:d81568d57ab334a59dcefcaeb216a44203d4a560f9dc66b30e53db8e905a19b5"},
-    {file = "corpus_pax-0.0.2.tar.gz", hash = "sha256:bc65d55926a18bb6072dcae29ba12f99a2b71ace63283fd0aa7d237fb9b0a0e4"},
+    {file = "corpus_pax-0.0.4-py3-none-any.whl", hash = "sha256:968ea7b9b0348397a5e3fa222cd52d6d7917b47e15c78f77ebc9ac305d2e5cb6"},
+    {file = "corpus_pax-0.0.4.tar.gz", hash = "sha256:ec1edf2a595d6d209969d972979b87f2b1eb72e68b6a8112c35f21b170ad2875"},
 ]
 coverage = [
     {file = "coverage-6.5.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:ef8674b0ee8cc11e2d574e3e2998aea5df5ab242e012286824ea3c6970580e53"},
@@ -2037,8 +2037,8 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 ipykernel = [
-    {file = "ipykernel-6.16.2-py3-none-any.whl", hash = "sha256:67daf93e5b52456cd8eea87a8b59405d2bb80ae411864a1ea206c3631d8179af"},
-    {file = "ipykernel-6.16.2.tar.gz", hash = "sha256:463f3d87a92e99969b1605cb7a5b4d7b36b7145a0e72d06e65918a6ddefbe630"},
+    {file = "ipykernel-6.17.0-py3-none-any.whl", hash = "sha256:301fdb487587c9bf277025001da97b53697aab73ae1268d9d1ba972a2c5fc801"},
+    {file = "ipykernel-6.17.0.tar.gz", hash = "sha256:e195cf6d8c3dd5d41f3cf8ad831d9891f95d7d18fa6d5fb4d30a713df99b26a4"},
 ]
 ipython = [
     {file = "ipython-8.6.0-py3-none-any.whl", hash = "sha256:91ef03016bcf72dd17190f863476e7c799c6126ec7e8be97719d1bc9a78a59a4"},
@@ -2604,8 +2604,8 @@ sqlite-utils = [
     {file = "sqlite_utils-3.30-py3-none-any.whl", hash = "sha256:e2113e5ce8e9c69822fff419145d7144034b0bd7bb6bf9b8bf92bcc6de859705"},
 ]
 sqlpyd = [
-    {file = "sqlpyd-0.0.9-py3-none-any.whl", hash = "sha256:d693b1ba9506532c91059045612e1cad549459d1eca04067bdcfe799c6ded61a"},
-    {file = "sqlpyd-0.0.9.tar.gz", hash = "sha256:78728c31445067786d6b825c830fc4da588c316283c04a8e53461be8fcd3eb1e"},
+    {file = "sqlpyd-0.0.12-py3-none-any.whl", hash = "sha256:eef4060e55ec7087c0a880732614ffd7ff28c972116edbc4f9016ae21e59ad48"},
+    {file = "sqlpyd-0.0.12.tar.gz", hash = "sha256:8741e4b50322bc6212b52eab5f8e5797e7b37b6b2964b416612c02ad3580cfe2"},
 ]
 stack-data = [
     {file = "stack_data-0.6.0-py3-none-any.whl", hash = "sha256:b92d206ef355a367d14316b786ab41cb99eb453a21f2cb216a4204625ff7bc07"},

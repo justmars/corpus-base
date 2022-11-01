@@ -18,7 +18,11 @@ from .utils import (
 )
 
 
-class Bio(IndividualBio):
+class SC:
+    __prefix__ = "sc"
+
+
+class Bio(SC, IndividualBio):
     @classmethod
     def from_dict(cls, data: dict):
         sfx = data.pop("Suffix")
@@ -32,8 +36,13 @@ class Bio(IndividualBio):
         )
 
 
-class Justice(Bio, TableConfig):
-    __tablename__ = "sc_justices_tbl"
+class Justice(Bio):
+    __tablename__ = "justices"
+    __indexes__ = [
+        ["last_name", "alias", "start_term", "inactive_date"],
+        ["start_term", "inactive_date"],
+        ["last_name", "alias"],
+    ]
 
     id: int = Field(
         ...,
@@ -138,18 +147,6 @@ class Justice(Bio, TableConfig):
         )
 
     @classmethod
-    def make_table(cls, c: Connection):
-        return cls.config_tbl(
-            tbl=c.table(cls),
-            cols=cls.__fields__,
-            idxs=[
-                ["last_name", "alias", "start_term", "inactive_date"],
-                ["start_term", "inactive_date"],
-                ["last_name", "alias"],
-            ],
-        )
-
-    @classmethod
     def validate_from_api(cls) -> Iterator["Justice"]:
         return (cls.from_data(i) for i in get_justices_from_api())
 
@@ -174,7 +171,9 @@ class Justice(Bio, TableConfig):
     @classmethod
     def init_justices_tbl(cls, c: Connection, p: Path | None = None):
         """Add a table containing names and ids of justices; alter the original decision's table for it to include a justice id."""
-        return c.add_records(cls, yaml.safe_load(JUSTICE_LOCAL.read_bytes()))
+        return c.add_records(
+            Justice, yaml.safe_load(JUSTICE_LOCAL.read_bytes())
+        )
 
     @classmethod
     def get_active_on_date(cls, c: Connection, target_date: str) -> list[dict]:

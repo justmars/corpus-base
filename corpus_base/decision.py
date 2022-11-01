@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field, root_validator
 from slugify import slugify
 from sqlpyd import Connection, TableConfig
 
-from .justice import Justice
+from .justice import SC, Justice
 from .utils import (
     CourtComposition,
     DecisionCategory,
@@ -24,8 +24,17 @@ from .utils import (
 )
 
 
-class DecisionRow(BaseModel, TableConfig):
-    __tablename__ = "sc_decisions_tbl"
+class DecisionRow(SC, TableConfig):
+    __tablename__ = "decisions"
+    __indexes__ = [
+        ["date", "justice_id", "raw_ponente", "per_curiam"],
+        ["source", "origin", "date"],
+        ["source", "origin"],
+        ["category", "composition"],
+        ["id", "justice_id"],
+        ["per_curiam", "raw_ponente"],
+    ]
+
     id: str = Field(col=str)
     created: float = Field(col=float)
     modified: float = Field(col=float)
@@ -84,21 +93,6 @@ class DecisionRow(BaseModel, TableConfig):
 
     class Config:
         use_enum_values = True
-
-    @classmethod
-    def make_table(cls, c: Connection):
-        return cls.config_tbl(
-            tbl=c.table(cls),
-            cols=cls.__fields__,
-            idxs=[
-                ["date", "justice_id", "raw_ponente", "per_curiam"],
-                ["source", "origin", "date"],
-                ["source", "origin"],
-                ["category", "composition"],
-                ["id", "justice_id"],
-                ["per_curiam", "raw_ponente"],
-            ],
-        )
 
     @classmethod
     def from_path(cls, c: Connection, p: Path):
@@ -199,30 +193,24 @@ class DecisionRow(BaseModel, TableConfig):
         return self.citation.dict() | {"decision_id": self.id}
 
 
-class DecisionFK(BaseModel):
+class DecisionFK(SC, BaseModel):
     decision_id: str = Field(
         ..., col=str, fk=(DecisionRow.__tablename__, "id")
     )
 
 
 class CitationRow(DecisionFK, Citation, TableConfig):
-    __tablename__ = "sc_decisions_citations_tbl"
-
-    @classmethod
-    def make_table(cls, c: Connection):
-        return cls.config_tbl(
-            tbl=c.table(cls),
-            cols=cls.__fields__,
-            idxs=[
-                ["id", "decision_id"],
-                ["docket_category", "docket_serial", "docket_date"],
-                ["scra", "phil", "offg", "docket"],
-            ],
-        )
+    __tablename__ = "citations"
+    __indexes__ = [
+        ["id", "decision_id"],
+        ["docket_category", "docket_serial", "docket_date"],
+        ["scra", "phil", "offg", "docket"],
+    ]
 
 
 class VoteLine(DecisionFK, TableConfig):
-    __tablename__ = "sc_decisions_votelines_tbl"
+    __tablename__ = "votelines"
+    __indexes__ = [["id", "decision_id"]]
     text: str = Field(
         ...,
         title="Voteline Text",
@@ -231,24 +219,20 @@ class VoteLine(DecisionFK, TableConfig):
         index=True,
     )
 
-    @classmethod
-    def make_table(cls, c: Connection):
-        return cls.config_tbl(
-            tbl=c.table(cls), cols=cls.__fields__, idxs=[["id", "decision_id"]]
-        )
-
 
 class TitleTagRow(DecisionFK, TableConfig):
-    __tablename__ = "sc_decisions_titletags_tbl"
+    __tablename__ = "titletags"
     tag: str = Field(..., col=str, index=True)
-
-    @classmethod
-    def make_table(cls, c: Connection):
-        return cls.config_tbl(tbl=c.table(cls), cols=cls.__fields__)
 
 
 class OpinionRow(DecisionFK, TableConfig):
-    __tablename__ = "sc_decisions_opinions_tbl"
+    __tablename__ = "opinions"
+    __indexes__ = [
+        ["id", "title"],
+        ["id", "justice_id"],
+        ["id", "decision_id"],
+        ["decision_id", "title"],
+    ]
     id: str = Field(
         ...,
         description="The opinion pk is based on combining the decision_id with the justice_id",
@@ -280,19 +264,6 @@ class OpinionRow(DecisionFK, TableConfig):
     text: str = Field(
         ..., description="Text proper of the opinion.", col=str, fts=True
     )
-
-    @classmethod
-    def make_table(cls, c: Connection):
-        return cls.config_tbl(
-            tbl=c.table(cls),
-            cols=cls.__fields__,
-            idxs=[
-                ["id", "title"],
-                ["id", "justice_id"],
-                ["id", "decision_id"],
-                ["decision_id", "title"],
-            ],
-        )
 
     @classmethod
     def get_opinions(
