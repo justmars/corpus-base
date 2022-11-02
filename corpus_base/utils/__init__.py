@@ -1,8 +1,8 @@
 from .convertor import DecisionHTMLConvertMarkdown, add_markdown_file
 from .ponente import RawPonente
 from .resources import (
-    CASE_FOLDERS,
     CHIEF_DATES_VIEW,
+    DECISION_PATH,
     JUSTICE_LOCAL,
     MAX_JUSTICE_AGE,
     CourtComposition,

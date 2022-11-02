@@ -12,15 +12,19 @@ from corpus_base import build_sc_tables, setup_case
 temppath = "tests/test.db"
 
 
-@pytest.fixture
-def individual_records(shared_datadir):  # same as corpus-pax
-    details = shared_datadir.glob("members/**/details.yaml")
+def extract_files(shared_datadir, folder):
+    details = shared_datadir.glob(f"{folder}/**/details.yaml")
     items = [yaml.safe_load(i.read_bytes()) for i in details]
     t = datetime.datetime.now().timestamp()
     return [
         {"id": f"id-{ctx}", "created": t, "modified": t} | i
         for ctx, i in enumerate(items)
     ]
+
+
+@pytest.fixture
+def individual_records(shared_datadir):
+    return extract_files(shared_datadir, "members")
 
 
 @pytest.fixture

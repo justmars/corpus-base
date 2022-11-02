@@ -19,6 +19,8 @@ from .utils import (
 
 
 class SC:
+    """See: `TableConfig`; just adds a speciifc database tablename prefix to inheriting classes."""
+
     __prefix__ = "sc"
 
 
@@ -169,11 +171,9 @@ class Justice(Bio):
             return local
 
     @classmethod
-    def init_justices_tbl(cls, c: Connection, p: Path | None = None):
+    def init_justices_tbl(cls, c: Connection, p: Path = JUSTICE_LOCAL):
         """Add a table containing names and ids of justices; alter the original decision's table for it to include a justice id."""
-        return c.add_records(
-            Justice, yaml.safe_load(JUSTICE_LOCAL.read_bytes())
-        )
+        return c.add_records(Justice, yaml.safe_load(p.read_bytes()))
 
     @classmethod
     def get_active_on_date(cls, c: Connection, target_date: str) -> list[dict]:

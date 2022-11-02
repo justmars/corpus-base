@@ -12,7 +12,7 @@ from .decision import (
     VoteLine,
 )
 from .justice import Justice
-from .utils import CASE_FOLDERS, extract_votelines, tags_from_title
+from .utils import DECISION_PATH, extract_votelines, tags_from_title
 
 
 def build_sc_tables(c: Connection) -> Connection:
@@ -61,8 +61,9 @@ def setup_case(c: Connection, path: Path) -> None:
 
 
 def init_sc_cases(c: Connection, test_only: int = 0):
-    for counter, details_file in enumerate(CASE_FOLDERS):
-        if test_only and counter == test_only:
+    case_details = DECISION_PATH.glob("**/*/details.yaml")
+    for idx, details_file in enumerate(case_details):
+        if test_only and idx == test_only:
             break
         try:
             setup_case(c, details_file)

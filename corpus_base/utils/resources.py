@@ -12,10 +12,13 @@ from loguru import logger
 
 CHIEF_DATES_VIEW = "chief_dates"
 MAX_JUSTICE_AGE = 70
+
 _DECISIONS = "code/corpus/decisions"
-PATH_DECISIONS = Path().home().joinpath(_DECISIONS)
-CASE_FOLDERS = PATH_DECISIONS.glob("**/*/details.yaml")
+DECISION_PATH = Path().home().joinpath(_DECISIONS)
+
 JUSTICE_LOCAL = Path(__file__).parent / "sc.yaml"
+
+
 sc_jinja_env = Environment(
     loader=PackageLoader(package_name="corpus_base"),
     autoescape=select_autoescape(),

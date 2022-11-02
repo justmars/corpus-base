@@ -9,4 +9,4 @@ from .decision import (
     VoteLine,
 )
 from .justice import Justice
-from .utils import RawPonente
+from .utils import DECISION_PATH, RawPonente
