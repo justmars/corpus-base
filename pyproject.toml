@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "corpus-base"
-version = "0.0.9"
+version = "0.0.10"
 description = "Initialize justice, decision, citation, voting, and opinion tables."
 authors = ["Marcelino G. Veloso III <mars@veloso.one>"]
 readme = "README.md"
