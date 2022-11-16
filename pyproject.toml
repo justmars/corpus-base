@@ -31,9 +31,11 @@ types-python-slugify = "^5.0.4"
 notebook = "^6.4.11"
 jupyter = "^1.0.0"
 
+[tool.pytest.ini_options]
+filterwarnings = ['ignore::DeprecationWarning']
 
 [tool.pytest]
-minversion = "7.1"
+minversion = "7.2"
 addopts = "-ra -q --cov=corpus_base tests/"
 testpaths = ["tests"]
 

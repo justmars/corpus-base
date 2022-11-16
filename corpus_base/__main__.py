@@ -40,7 +40,7 @@ def setup_case(c: Connection, path: Path) -> None:
         return
 
     for email in obj.emails:  # assign author row to a joined m2m table
-        case_tbl.update(obj.id).m2m(
+        case_tbl.update(decision_id).m2m(
             other_table=c.table(Individual), lookup={"email": email}, pk="id"
         )
 
@@ -56,7 +56,7 @@ def setup_case(c: Connection, path: Path) -> None:
             c.add_record(TitleTagRow, item)
 
     justice_id = case_tbl.get(decision_id).get("justice_id")  # add opinions
-    for op in OpinionRow.get_opinions(path.parent, justice_id):
+    for op in OpinionRow.get_opinions(path.parent, decision_id, justice_id):
         c.add_record(OpinionRow, op.dict(exclude={"concurs", "tags"}))
 
 

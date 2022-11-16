@@ -8,11 +8,11 @@ from citation_utils import Citation
 from dateutil.parser import parse
 from loguru import logger
 from markdownify import markdownify
-from pydantic import BaseModel, Field, root_validator
+from pydantic import Field, root_validator
 from slugify import slugify
 from sqlpyd import Connection, TableConfig
 
-from .justice import SC, Justice
+from .justice import Justice
 from .utils import (
     CourtComposition,
     DecisionCategory,
@@ -24,7 +24,8 @@ from .utils import (
 )
 
 
-class DecisionRow(SC, TableConfig):
+class DecisionRow(TableConfig):
+    __prefix__ = "sc"
     __tablename__ = "decisions"
     __indexes__ = [
         ["date", "justice_id", "raw_ponente", "per_curiam"],
@@ -193,24 +194,26 @@ class DecisionRow(SC, TableConfig):
         return self.citation.dict() | {"decision_id": self.id}
 
 
-class DecisionFK(SC, BaseModel):
-    decision_id: str = Field(
-        ..., col=str, fk=(DecisionRow.__tablename__, "id")
-    )
-
-
-class CitationRow(DecisionFK, Citation, TableConfig):
+class CitationRow(Citation, TableConfig):
+    __prefix__ = "sc"
     __tablename__ = "citations"
     __indexes__ = [
         ["id", "decision_id"],
         ["docket_category", "docket_serial", "docket_date"],
         ["scra", "phil", "offg", "docket"],
     ]
+    decision_id: str = Field(
+        ..., col=str, fk=(DecisionRow.__tablename__, "id")
+    )
 
 
-class VoteLine(DecisionFK, TableConfig):
+class VoteLine(TableConfig):
+    __prefix__ = "sc"
     __tablename__ = "votelines"
     __indexes__ = [["id", "decision_id"]]
+    decision_id: str = Field(
+        ..., col=str, fk=(DecisionRow.__tablename__, "id")
+    )
     text: str = Field(
         ...,
         title="Voteline Text",
@@ -220,12 +223,17 @@ class VoteLine(DecisionFK, TableConfig):
     )
 
 
-class TitleTagRow(DecisionFK, TableConfig):
+class TitleTagRow(TableConfig):
+    __prefix__ = "sc"
     __tablename__ = "titletags"
+    decision_id: str = Field(
+        ..., col=str, fk=(DecisionRow.__tablename__, "id")
+    )
     tag: str = Field(..., col=str, index=True)
 
 
-class OpinionRow(DecisionFK, TableConfig):
+class OpinionRow(TableConfig):
+    __prefix__ = "sc"
     __tablename__ = "opinions"
     __indexes__ = [
         ["id", "title"],
@@ -233,6 +241,9 @@ class OpinionRow(DecisionFK, TableConfig):
         ["id", "decision_id"],
         ["decision_id", "title"],
     ]
+    decision_id: str = Field(
+        ..., col=str, fk=(DecisionRow.__tablename__, "id")
+    )
     id: str = Field(
         ...,
         description="The opinion pk is based on combining the decision_id with the justice_id",
@@ -267,24 +278,26 @@ class OpinionRow(DecisionFK, TableConfig):
 
     @classmethod
     def get_opinions(
-        cls, case_path: Path, justice_id: int | None = None
+        cls, case_path: Path, decision_id: str, justice_id: int | None = None
     ) -> Iterator:
         """Each opinion of a decision, except the ponencia, should be added separately. The format of the opinion should follow the form in test_data/legacy/tanada1."""
         ops = case_path / "opinions"
         for op in ops.glob("[!ponencia]*.md"):
-            opinion = cls.extract_separate(case_path, op)
+            opinion = cls.extract_separate(case_path, decision_id, op)
             yield opinion
-        if main := cls.extract_main(case_path, justice_id):
+        if main := cls.extract_main(case_path, decision_id, justice_id):
             yield main
 
     @classmethod
-    def extract_separate(cls, case_path: Path, opinion_path: Path):
+    def extract_separate(
+        cls, case_path: Path, decision_id: str, opinion_path: Path
+    ):
         data = frontmatter.loads(opinion_path.read_text())
         return cls(
             id=f"{case_path.stem}-{opinion_path.stem}",
             title=data.get("title", None),
             tags=data.get("tags", []),
-            decision_id=case_path.stem,
+            decision_id=decision_id,
             justice_id=int(opinion_path.stem),
             remark=data.get("remark", None),
             concurs=data.get("concur", None),
@@ -292,13 +305,15 @@ class OpinionRow(DecisionFK, TableConfig):
         )
 
     @classmethod
-    def extract_main(cls, case_path: Path, justice_id: int | None = None):
+    def extract_main(
+        cls, case_path: Path, decision_id: str, justice_id: int | None = None
+    ):
         try:  # option: add_markdown_file(case_path, md_txt.result)
             return cls(
                 id=f"{case_path.stem}-main",
                 title="Ponencia",
                 tags=["main"],
-                decision_id=case_path.stem,
+                decision_id=decision_id,
                 justice_id=justice_id,
                 remark=None,
                 concurs=None,

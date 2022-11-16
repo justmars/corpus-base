@@ -7,7 +7,7 @@ from dateutil.parser import parse
 from dateutil.relativedelta import relativedelta as rd
 from loguru import logger
 from pydantic import Field, validator
-from sqlpyd import Connection, IndividualBio, TableConfig
+from sqlpyd import Connection, IndividualBio
 
 from .utils import (
     CHIEF_DATES_VIEW,
@@ -18,13 +18,7 @@ from .utils import (
 )
 
 
-class SC:
-    """See: `TableConfig`; just adds a speciifc database tablename prefix to inheriting classes."""
-
-    __prefix__ = "sc"
-
-
-class Bio(SC, IndividualBio):
+class Bio(IndividualBio):
     @classmethod
     def from_dict(cls, data: dict):
         sfx = data.pop("Suffix")
@@ -39,6 +33,7 @@ class Bio(SC, IndividualBio):
 
 
 class Justice(Bio):
+    __prefix__ = "sc"
     __tablename__ = "justices"
     __indexes__ = [
         ["last_name", "alias", "start_term", "inactive_date"],
