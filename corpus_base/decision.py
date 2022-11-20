@@ -4,7 +4,7 @@ from typing import Iterator
 
 import frontmatter
 import yaml
-from citation_utils import Citation
+from citation_utils import Citation, extract_citation_from_data
 from dateutil.parser import parse
 from loguru import logger
 from markdownify import markdownify
@@ -108,7 +108,7 @@ class DecisionRow(TableConfig):
         f = p.parent / "fallo.html"
         data = yaml.safe_load(p.read_text())
         pon = RawPonente.extract(data.get("ponente"))
-        citation = Citation.from_details(data)
+        citation = extract_citation_from_data(data)
         id = cls.get_id_from_citation(
             folder_name=p.parent.name,
             source=p.parent.parent.stem,
