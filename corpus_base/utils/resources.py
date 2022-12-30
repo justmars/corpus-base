@@ -1,9 +1,9 @@
 import re
 import sys
+from collections.abc import Iterator
 from enum import Enum
 from http import HTTPStatus
 from pathlib import Path
-from typing import Iterator
 
 import yaml
 from corpus_pax._api import GithubAccess
@@ -78,8 +78,6 @@ class CourtComposition(str, Enum):
                 return cls.enbanc
         return cls.other
 
-
-## Logger
 
 logger.configure(
     handlers=[

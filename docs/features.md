@@ -4,7 +4,7 @@
 
 Can add all pydantic validated records from the local copy of justices to the database.
 
-```python
+```python shell
 >>> from corpus_base import Justice
 >>> Justice.init_justices_tbl(c) # c = instantiated Connection
 <Table justices_tbl (first_name, last_name, suffix, full_name, gender, id, alias, start_term, end_term, chief_date, birth_date, retire_date, inactive_date)>
@@ -14,7 +14,7 @@ Can add all pydantic validated records from the local copy of justices to the da
 
 Each `ponente` name stored in `decisions_tbl` of the database has been made uniform, e.g.:
 
-```python
+```python shell
 >>> from corpus_base import RawPonente
 >>> RawPonente.clean("REYES , J.B.L, Acting C.J.") # sample name 1
 "reyes, j.b.l."
@@ -24,7 +24,7 @@ Each `ponente` name stored in `decisions_tbl` of the database has been made unif
 
 We can see  most common names in the `ponente` field and the covered dates, e.g. from 1954 to 1972 (dates found in the decisions), there have been 1053 decisions marked with `jbl` (as cleaned):
 
-```python
+```python shell
 >>> from corpus_base.helpers import most_popular
 >>> [i for i in most_popular(c, db)] # excluding per curiams and unidentified cases
 [
@@ -47,7 +47,7 @@ We can see  most common names in the `ponente` field and the covered dates, e.g.
 
 When selecting a ponente or voting members, create a candidate list of justices based on date:
 
-```python
+```python shell
 >>> from corpus_base import Justice
 >>> Justice.get_active_on_date(c, 'Dec. 1, 1995') # target date
 [
@@ -74,7 +74,7 @@ When selecting a ponente or voting members, create a candidate list of justices 
 
 Since we already have candidates, we can cleaning desired option to get the `id` and `designation`:
 
-```python
+```python shell
 >>> from corpus_base import RawPonente
 >>> RawPonente.clean('Panganiban, Acting Cj')
 'panganiban'
@@ -95,7 +95,7 @@ At present we only track 'C.J.' and 'J.' titles.
 
 With a different date, we can get the 'C.J.' designation.:
 
-```python
+```python shell
 >>> Justice.get_justice_on_date('2006-03-30', 'panganiban')
 {
     'id': 137,
@@ -109,7 +109,7 @@ With a different date, we can get the 'C.J.' designation.:
 
 ## View chief justice dates
 
-```python
+```python shell
 >>> from corpus_base import Justice
 >>> Justice.view_chiefs(c)
 [

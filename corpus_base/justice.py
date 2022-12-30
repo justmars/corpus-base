@@ -1,6 +1,6 @@
 import datetime
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
 import yaml
 from dateutil.parser import parse
@@ -175,7 +175,7 @@ class Justice(Bio):
         """Get list of justices that have been appointed before the `target date` and have not yet become inactive."""
         try:
             valid_date = parse(target_date).date().isoformat()
-        except:
+        except Exception:
             raise Exception(f"Need {target_date=}")
         return list(
             c.table(cls).rows_where(
