@@ -43,10 +43,10 @@ from corpus_pax import init_persons, init_person_tables
 from corpus_base import build_sc_tables, setup_case, init_sc_cases
 from sqlpyd import Connection
 
-c = Connection(DatabasePath="test.db")  # type: ignore
+c = Connection(DatabasePath="x.db", WAL=True)  # type: ignore
 init_persons(c)  # for authors
 build_sc_tables(c)
-init_sc_cases(c, test_only=10)
+init_sc_cases(c)
 ```
 
 ## Related features

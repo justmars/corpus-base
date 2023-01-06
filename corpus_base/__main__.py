@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from corpus_pax import Individual
+from corpus_pax import Individual, init_persons
 from loguru import logger
 from sqlpyd import Connection
 
@@ -69,3 +69,9 @@ def init_sc_cases(c: Connection, test_only: int = 0):
             setup_case(c, details_file)
         except Exception as e:
             logger.info(e)
+
+def reset_database(db_path):
+    c = Connection(DatabasePath=db_path, WAL=True)  # type: ignore
+    init_persons(c)
+    build_sc_tables(c)
+    init_sc_cases(c)
