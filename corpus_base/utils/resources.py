@@ -27,8 +27,8 @@ sc_jinja_env = Environment(
 
 def get_justices_from_api() -> Iterator[dict]:
     gh = GithubAccess()  # type: ignore
-    url = f"https://api.github.com/repos/{gh.GithubOwner}/{gh.GithubRepo}/contents/justices/sc.yaml"
-    resp = gh.call_api(url)
+    url = "https://api.github.com/repos/justmars/corpus/contents/justices/sc.yaml"
+    resp = gh.fetch(url)
     if not resp:
         raise Exception(f"No response, check {url=}")
     if not resp.status_code == HTTPStatus.OK:

@@ -44,6 +44,6 @@ jobs:
         env:
           CF_ACCT: ${{secrets.CF_ACCT}}
           CF_TOKEN: ${{secrets.CF_TOKEN}}
-          EXPIRING_TOKEN: ${{secrets.EXPIRING_TOKEN}}
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
           DB_FILE: ${{secrets.DB_FILE}}
         run: poetry run pytest

@@ -2,9 +2,15 @@
 
 ```mermaid
 flowchart LR
-repo(((github/corpus))) --download---> local(local machine)
-local--add corpus-pax tables--->db[(sqlite.db)]
-local--add corpus-base tables-->db
+
+subgraph main
+  local(local machine)--setup corpus-base tables--->db[(db from corpus-pax)]
+end
+subgraph github/corpus
+  folder1(justices)--data via api---local
+  folder2(decisions/sc)--data via local copy---local
+  folder3(decisions/legacy)--data via local copy---local
+end
 ```
 
 With the database used in [corpus-pax](https://github.com/justmars/corpus-pax), create additional tables related to decisions of the Philippine Supreme Court.
