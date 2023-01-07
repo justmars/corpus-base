@@ -209,14 +209,14 @@ test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
 
 [[package]]
 name = "corpus-pax"
-version = "0.1.4"
+version = "0.1.6"
 description = "Using Github API (to pull individuals, orgs, and article content), setup a local sqlite database, syncing images to Cloudflare."
 category = "main"
 optional = false
 python-versions = "==3.11.0"
 files = [
-    {file = "corpus_pax-0.1.4-py3-none-any.whl", hash = "sha256:ee4e6a267774079a0cfd73ef0946609a9747d4f8da7967b0db03098d768c451d"},
-    {file = "corpus_pax-0.1.4.tar.gz", hash = "sha256:91b302d10e5c4b6f3bb4f4e72ac34c69d0311721a3f9ac2dc498195f2df534c4"},
+    {file = "corpus_pax-0.1.6-py3-none-any.whl", hash = "sha256:595df74738a1a73ef7da138bc29babdea2404004e46e17de8d523a4baf0d6ee0"},
+    {file = "corpus_pax-0.1.6.tar.gz", hash = "sha256:18d257ce33d90e42a862b046967062d07f41bfb43875a5c6a5509fc9cce2acbd"},
 ]
 
 [package.dependencies]
@@ -1171,4 +1171,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.0"          # see citation-utils + citation-report why python fixed at 3.11.0
-content-hash = "48a3e71c9faf908cb1eae969fa1ad9f6bc8ac8474892c6a4c5555593355a16fc"
+content-hash = "12f4d0c9c424122a5d4d3179cffa8f8af857999b2a70ff385152d4893dd0adb1"

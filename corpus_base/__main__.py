@@ -1,6 +1,12 @@
 from pathlib import Path
 
-from corpus_pax import Individual, init_persons
+from corpus_pax import (
+    Individual,
+    add_articles_from_api,
+    add_individuals_from_api,
+    add_organizations_from_api,
+    init_person_tables,
+)
 from loguru import logger
 from sqlpyd import Connection
 
@@ -71,7 +77,7 @@ def init_sc_cases(c: Connection, test_only: int = 0):
             logger.info(e)
 
 
-def setup_base_db(db_path: str):
+def setup_base_db(db_path: str) -> Connection:
     """With a path to a database, `db_path`, setup tables
     defined in `corpus-pax` and `corpus-base`.
 
@@ -79,6 +85,10 @@ def setup_base_db(db_path: str):
         db_path (str): sqlite db path
     """
     c = Connection(DatabasePath=db_path, WAL=True)  # type: ignore
-    init_persons(c)
+    init_person_tables(c)
+    add_individuals_from_api(c)
+    add_organizations_from_api(c)
+    add_articles_from_api(c)
     build_sc_tables(c)
     init_sc_cases(c)
+    return c
