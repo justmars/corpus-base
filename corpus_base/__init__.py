@@ -1,6 +1,6 @@
 __version__ = "0.0.1"
 
-from .__main__ import build_sc_tables, init_sc_cases, setup, setup_case
+from .__main__ import build_sc_tables, init_sc_cases, setup_base_db, setup_case
 from .decision import (
     CitationRow,
     DecisionRow,

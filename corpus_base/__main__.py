@@ -71,7 +71,13 @@ def init_sc_cases(c: Connection, test_only: int = 0):
             logger.info(e)
 
 
-def setup(db_path):
+def setup_base_db(db_path: str):
+    """With a path to a database, `db_path`, setup tables
+    defined in `corpus-pax` and `corpus-base`.
+
+    Args:
+        db_path (str): sqlite db path
+    """
     c = Connection(DatabasePath=db_path, WAL=True)  # type: ignore
     init_persons(c)
     build_sc_tables(c)

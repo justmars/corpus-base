@@ -36,18 +36,19 @@ This creates additional tables associated with:
 
 Parse through a locally downloaded repository to populate tables. Since there are thousands of cases, can limit the number of downloads via the `test_only` function attribute. The path location of the downloaded repository is [hard-coded](./corpus_base/utils/resources.py) since this package is intended to be run locally. Instructions for downloading and updating the repository are discussed elsewhere.
 
-## Full steps
+## Build from scratch
 
-```python
-from corpus_pax import init_persons, init_person_tables
-from corpus_base import build_sc_tables, setup_case, init_sc_cases
-from sqlpyd import Connection
-
-c = Connection(DatabasePath="x.db", WAL=True)  # type: ignore
-init_persons(c)  # for authors
-build_sc_tables(c)
-init_sc_cases(c)
+```python shell
+>>> from corpus_base import setup_base_db
+>>> setup_base_db('x.db') # creates the database in present working directory
 ```
+
+## Limited to 3.11.0
+
+See [citation-report](https://github.com/justmars/citation-report) on reason why Python version is limited to `3.11.0` in both:
+
+1. [pyproject.toml](pyproject.toml); and
+2. [github workflow](.github/workflows/main.yml)
 
 ## Related features
 
