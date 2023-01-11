@@ -14,6 +14,9 @@ from sqlpyd import Connection, TableConfig
 
 from .justice import Justice
 from .utils import (
+    END_NOT_ALPHANUM,
+    FOOTNOTES,
+    START_NOT_ALPHANUM,
     CourtComposition,
     DecisionCategory,
     DecisionHTMLConvertMarkdown,
@@ -276,11 +279,32 @@ class OpinionRow(TableConfig):
         ..., description="Text proper of the opinion.", col=str, fts=True
     )
 
+    @property
+    def segments(self) -> Iterator[dict[str, int | str]]:
+        raw_lines = self.text.splitlines()
+        for position, text in enumerate(raw_lines, start=1):
+            text = FOOTNOTES.sub("", text)
+            text = START_NOT_ALPHANUM.sub("", text)
+            text = END_NOT_ALPHANUM.sub("", text)
+
+            if len(text) <= 10 or (  # too short
+                text.startswith("x x x") and text.endswith("x x x")
+            ):  # is filler
+                continue
+            yield {
+                "id": f"{self.id}-{position}",
+                "decision_id": self.decision_id,
+                "opinion_id": self.id,
+                "position": position,
+                "text": text,
+            }
+
     @classmethod
     def get_opinions(
         cls, case_path: Path, decision_id: str, justice_id: int | None = None
     ) -> Iterator:
-        """Each opinion of a decision, except the ponencia, should be added separately. The format of the opinion should follow the form in test_data/legacy/tanada1."""
+        """Each opinion of a decision, except the ponencia, should be added separately.
+        The format of the opinion should follow the form in test_data/legacy/tanada1."""
         ops = case_path / "opinions"
         for op in ops.glob("[!ponencia]*.md"):
             opinion = cls.extract_separate(case_path, decision_id, op)
@@ -322,3 +346,25 @@ class OpinionRow(TableConfig):
         except Exception as e:
             logger.error(f"Could not convert text {case_path.stem=}; see {e=}")
             return None
+
+
+class SegmentRow(TableConfig):
+    __prefix__ = "sc"
+    __tablename__ = "segments"
+    id: str = Field(..., col=str)
+    decision_id: str = Field(
+        ..., col=str, fk=(DecisionRow.__tablename__, "id")
+    )
+    opinion_id: str = Field(..., col=str, fk=(OpinionRow.__tablename__, "id"))
+    position: int = Field(
+        ...,
+        description="The line number of the text.",
+        col=int,
+        index=True,
+    )
+    text: str = Field(
+        ...,
+        description="Text segment of an opinion.",
+        col=str,
+        fts=True,
+    )

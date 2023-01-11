@@ -14,6 +14,7 @@ from .decision import (
     CitationRow,
     DecisionRow,
     OpinionRow,
+    SegmentRow,
     TitleTagRow,
     VoteLine,
 )
@@ -29,6 +30,7 @@ def build_sc_tables(c: Connection) -> Connection:
     c.create_table(OpinionRow)
     c.create_table(VoteLine)
     c.create_table(TitleTagRow)
+    c.create_table(SegmentRow)
     c.db.index_foreign_keys()
     return c
 
@@ -64,6 +66,8 @@ def setup_case(c: Connection, path: Path) -> None:
     justice_id = case_tbl.get(decision_id).get("justice_id")  # add opinions
     for op in OpinionRow.get_opinions(path.parent, decision_id, justice_id):
         c.add_record(OpinionRow, op.dict(exclude={"concurs", "tags"}))
+        for segment_data in op.segments:  # add segments
+            c.add_record(SegmentRow, segment_data)
 
 
 def init_sc_cases(c: Connection, test_only: int = 0):
@@ -77,7 +81,7 @@ def init_sc_cases(c: Connection, test_only: int = 0):
             logger.info(e)
 
 
-def setup_base_db(db_path: str) -> Connection:
+def setup_base_db(db_path: str, test_num: int | None = None) -> Connection:
     """With a path to a database, `db_path`, setup tables
     defined in `corpus-pax` and `corpus-base`.
 
@@ -90,5 +94,8 @@ def setup_base_db(db_path: str) -> Connection:
     add_organizations_from_api(c)
     add_articles_from_api(c)
     build_sc_tables(c)
-    init_sc_cases(c)
+    if test_num:
+        init_sc_cases(c, test_num)
+    else:
+        init_sc_cases(c)
     return c

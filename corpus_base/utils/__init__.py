@@ -3,8 +3,11 @@ from .ponente import RawPonente
 from .resources import (
     CHIEF_DATES_VIEW,
     DECISION_PATH,
+    END_NOT_ALPHANUM,
+    FOOTNOTES,
     JUSTICE_LOCAL,
     MAX_JUSTICE_AGE,
+    START_NOT_ALPHANUM,
     CourtComposition,
     DecisionCategory,
     DecisionSource,
