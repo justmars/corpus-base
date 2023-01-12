@@ -1,12 +1,6 @@
 from pathlib import Path
 
-from corpus_pax import (
-    Individual,
-    add_articles_from_api,
-    add_individuals_from_api,
-    add_organizations_from_api,
-    init_person_tables,
-)
+from corpus_pax import Individual, setup_pax
 from loguru import logger
 from sqlpyd import Connection
 
@@ -20,6 +14,26 @@ from .decision import (
 )
 from .justice import Justice
 from .utils import DECISION_PATH, extract_votelines, tags_from_title
+
+TABLE_LIST = [
+    # delete m2m tables
+    "pax_tbl_individuals_sc_tbl_decisions",
+    # delete all segment related tables
+    "sc_tbl_segments",
+    "sc_tbl_segments_fts",
+    # delete all decision add on tables
+    "sc_tbl_titletags",
+    "sc_tbl_votelines",
+    "sc_tbl_citations",
+    # delete all opinion related tables
+    "sc_tbl_opinions",
+    "sc_tbl_opinions_fts",
+    # delete all article related tables
+    "pax_tbl_articles_pax_tbl_individuals",
+    "pax_tbl_articles_pax_tbl_tags",
+    "pax_tbl_articles",
+    # finally, delete the individual table
+]
 
 
 def build_sc_tables(c: Connection) -> Connection:
@@ -45,6 +59,7 @@ def setup_case(c: Connection, path: Path) -> None:
         logger.error(f"Skipping duplicate {obj=}; {e=}")
         return
     if not decision_id:
+        logger.error(f"Could not find decision_id for {obj=}")
         return
 
     for email in obj.emails:  # assign author row to a joined m2m table
@@ -56,18 +71,19 @@ def setup_case(c: Connection, path: Path) -> None:
         c.add_record(CitationRow, obj.citation_fk)  # add associated citation
 
     if obj.voting:  # process votelines of voting text in decision
-        for item in extract_votelines(decision_id, obj.voting):
-            c.add_record(VoteLine, item)
+        c.add_records(VoteLine, extract_votelines(decision_id, obj.voting))
 
     if obj.title:  # add tags based on the title of decision
-        for item in tags_from_title(decision_id, obj.title):
-            c.add_record(TitleTagRow, item)
+        c.add_records(TitleTagRow, tags_from_title(decision_id, obj.title))
 
-    justice_id = case_tbl.get(decision_id).get("justice_id")  # add opinions
-    for op in OpinionRow.get_opinions(path.parent, decision_id, justice_id):
+    # add opinions
+    for op in OpinionRow.get_opinions(
+        case_path=path.parent,
+        decision_id=decision_id,
+        justice_id=case_tbl.get(decision_id).get("justice_id"),
+    ):
         c.add_record(OpinionRow, op.dict(exclude={"concurs", "tags"}))
-        for segment_data in op.segments:  # add segments
-            c.add_record(SegmentRow, segment_data)
+        c.add_records(SegmentRow, op.segments)  # add segments
 
 
 def init_sc_cases(c: Connection, test_only: int = 0):
@@ -81,21 +97,31 @@ def init_sc_cases(c: Connection, test_only: int = 0):
             logger.info(e)
 
 
-def setup_base_db(db_path: str, test_num: int | None = None) -> Connection:
-    """With a path to a database, `db_path`, setup tables
-    defined in `corpus-pax` and `corpus-base`.
+def setup_base(db_path: str, test_num: int | None = None) -> Connection:
+    """Recreates tables and populates the same.
+
+    Since there are thousands of cases, can limit the number of downloads
+    via the `test_num`.
 
     Args:
-        db_path (str): sqlite db path
+        db_path (str): string path from the cwd
+        test_num (int | None, optional): e.g. how many cases will it
+            add to the database. Defaults to None.
+
+    Returns:
+        Connection: sqlpyd wrapper sqlite.utils Database
     """
     c = Connection(DatabasePath=db_path, WAL=True)  # type: ignore
-    init_person_tables(c)
-    add_individuals_from_api(c)
-    add_organizations_from_api(c)
-    add_articles_from_api(c)
+    for tbl in TABLE_LIST:
+        c.db.execute(f"drop table if exists {tbl}")
     build_sc_tables(c)
     if test_num:
         init_sc_cases(c, test_num)
     else:
         init_sc_cases(c)
     return c
+
+
+def setup_pax_base(db_path: str):
+    setup_pax(db_path)
+    setup_base(db_path)

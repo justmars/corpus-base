@@ -1,7 +1,7 @@
 from collections.abc import Iterator
 
 
-def tags_from_title(decision_pk: str, text: str) -> Iterator[dict]:
+def tags_from_title(decision_pk: str, text: str) -> Iterator[dict[str, str]]:
     def is_contained(target_text: str, matches: list[str]) -> bool:
         return any(m.lower() in target_text.lower() for m in matches)
 

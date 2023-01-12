@@ -42,11 +42,6 @@ CATEGORY_START_RESOLUTION = re.compile(r"r\s*e\s*s", re.I)
 COMPOSITION_START_DIVISION = re.compile(r"div", re.I)
 COMPOSITION_START_ENBANC = re.compile(r"en", re.I)
 
-START_NOT_ALPHANUM = re.compile(r"^\W+")  # start of line is not alphanumeric
-END_NOT_ALPHANUM = re.compile(r"\W+$")  # end of line is not alphanumeric
-
-FOOTNOTES = re.compile(r"\[\^\d+\]")  # e.g. [^1]
-
 
 class DecisionSource(str, Enum):
     sc = "sc"

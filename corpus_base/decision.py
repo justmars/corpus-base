@@ -14,15 +14,13 @@ from sqlpyd import Connection, TableConfig
 
 from .justice import Justice
 from .utils import (
-    END_NOT_ALPHANUM,
-    FOOTNOTES,
-    START_NOT_ALPHANUM,
     CourtComposition,
     DecisionCategory,
     DecisionHTMLConvertMarkdown,
     DecisionSource,
     RawPonente,
     sc_jinja_env,
+    validate_segment,
     voteline_clean,
 )
 
@@ -282,26 +280,23 @@ class OpinionRow(TableConfig):
     @property
     def segments(self) -> Iterator[dict[str, int | str]]:
         raw_lines = self.text.splitlines()
-        for position, text in enumerate(raw_lines, start=1):
-            text = FOOTNOTES.sub("", text)
-            text = START_NOT_ALPHANUM.sub("", text)
-            text = END_NOT_ALPHANUM.sub("", text)
-
-            if len(text) <= 10 or (  # too short
-                text.startswith("x x x") and text.endswith("x x x")
-            ):  # is filler
-                continue
-            yield {
-                "id": f"{self.id}-{position}",
-                "decision_id": self.decision_id,
-                "opinion_id": self.id,
-                "position": position,
-                "text": text,
-            }
+        for position, raw_text in enumerate(raw_lines, start=1):
+            if segment := validate_segment(raw_text):
+                yield {
+                    "id": f"{self.id}-{position}",
+                    "decision_id": self.decision_id,
+                    "opinion_id": self.id,
+                    "position": position,
+                    "segment": segment,
+                    "char_count": len(segment),
+                }
 
     @classmethod
     def get_opinions(
-        cls, case_path: Path, decision_id: str, justice_id: int | None = None
+        cls,
+        case_path: Path,
+        decision_id: str,
+        justice_id: int | None = None,
     ) -> Iterator:
         """Each opinion of a decision, except the ponencia, should be added separately.
         The format of the opinion should follow the form in test_data/legacy/tanada1."""
@@ -351,20 +346,38 @@ class OpinionRow(TableConfig):
 class SegmentRow(TableConfig):
     __prefix__ = "sc"
     __tablename__ = "segments"
+    __indexes__ = [
+        ["opinion_id", "decision_id"],
+    ]
     id: str = Field(..., col=str)
     decision_id: str = Field(
-        ..., col=str, fk=(DecisionRow.__tablename__, "id")
+        ...,
+        col=str,
+        fk=(DecisionRow.__tablename__, "id"),
     )
-    opinion_id: str = Field(..., col=str, fk=(OpinionRow.__tablename__, "id"))
+    opinion_id: str = Field(
+        ...,
+        col=str,
+        fk=(OpinionRow.__tablename__, "id"),
+    )
     position: int = Field(
         ...,
-        description="The line number of the text.",
+        title="Relative Position",
+        description="The line number of the text as stripped from its markdown source.",
         col=int,
         index=True,
     )
-    text: str = Field(
+    char_count: int = Field(
         ...,
-        description="Text segment of an opinion.",
+        title="Character Count",
+        description="The number of characters of the text makes it easier to discover patterns.",
+        col=int,
+        index=True,
+    )
+    segment: str = Field(
+        ...,
+        title="Body Segment",
+        description="A partial text fragment of an opinion, exclusive of footnotes.",
         col=str,
         fts=True,
     )

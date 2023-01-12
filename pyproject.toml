@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "corpus-base"
-version = "0.1.4"
+version = "0.1.5"
 description = "Add justice, decision, citation, voting, and opinion tables to pre-existing corpus-pax database."
 authors = ["Marcelino G. Veloso III <mars@veloso.one>"]
 readme = "README.md"
+license = "MIT"
 homepage = "https://lawdata.xyz"
 repository = "https://github.com/justmars/corpus-base"
 classifiers = [
@@ -15,7 +16,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "3.11.0"          # see citation-utils + citation-report why python fixed at 3.11.0
-corpus-pax = "^0.1.6"      # contains sqlpyd (sqlite-utils, pydantic), email-validator, httpx, frontmatter
+corpus-pax = "^0.1.9"      # contains sqlpyd (sqlite-utils, pydantic), email-validator, httpx, frontmatter
 citation-utils = "^0.0.17" # citation-specific utils + pydantic, python-slugify, loguru
 unidecode = "^1.3.6"
 markdownify = "^0.11.6"
