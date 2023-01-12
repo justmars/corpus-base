@@ -98,6 +98,20 @@ def init_sc_cases(c: Connection, test_only: int = 0):
             logger.info(e)
 
 
+def add_authors_only(c: Connection):
+    case_details = DECISION_PATH.glob("**/*/details.yaml")
+    for detail_path in case_details:
+        obj = DecisionRow.from_path(c, detail_path)
+        for email in obj.emails:  # assign author row to a joined m2m table
+            tbl = c.table(DecisionRow)
+            if tbl.get(obj.id):
+                tbl.update(obj.id).m2m(
+                    other_table=c.table(Individual),
+                    lookup={"email": email},
+                    pk="id",
+                )
+
+
 def setup_base(db_path: str, test_num: int | None = None) -> Connection:
     """Recreates tables and populates the same.
 

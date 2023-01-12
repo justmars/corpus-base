@@ -43,7 +43,7 @@ class DecisionRow(TableConfig):
     origin: str = Field(col=str, index=True)
     source: DecisionSource = Field(col=str, index=True)
     citation: Citation = Field(exclude=True)
-    emails: list[str] = Field(exclude=True)
+    emails: list[str] = Field(col=str)
     title: str = Field(col=str, index=True, fts=True)
     description: str = Field(col=str, index=True, fts=True)
     date: datetime.date = Field(col=datetime.date, index=True)
