@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from corpus_pax import Individual, setup_pax
+from corpus_pax.utils import delete_tables_with_prefix
 from loguru import logger
 from sqlpyd import Connection
 
@@ -112,8 +113,7 @@ def setup_base(db_path: str, test_num: int | None = None) -> Connection:
         Connection: sqlpyd wrapper sqlite.utils Database
     """
     c = Connection(DatabasePath=db_path, WAL=True)  # type: ignore
-    for tbl in TABLE_LIST:
-        c.db.execute(f"drop table if exists {tbl}")
+    delete_tables_with_prefix(c, ["sc"])
     build_sc_tables(c)
     if test_num:
         init_sc_cases(c, test_num)
