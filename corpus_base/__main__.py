@@ -9,32 +9,11 @@ from .decision import (
     CitationRow,
     DecisionRow,
     OpinionRow,
-    SegmentRow,
     TitleTagRow,
     VoteLine,
 )
 from .justice import Justice
 from .utils import DECISION_PATH, extract_votelines, tags_from_title
-
-TABLE_LIST = [
-    # delete m2m tables
-    "pax_tbl_individuals_sc_tbl_decisions",
-    # delete all segment related tables
-    "sc_tbl_segments",
-    "sc_tbl_segments_fts",
-    # delete all decision add on tables
-    "sc_tbl_titletags",
-    "sc_tbl_votelines",
-    "sc_tbl_citations",
-    # delete all opinion related tables
-    "sc_tbl_opinions",
-    "sc_tbl_opinions_fts",
-    # delete all article related tables
-    "pax_tbl_articles_pax_tbl_individuals",
-    "pax_tbl_articles_pax_tbl_tags",
-    "pax_tbl_articles",
-    # finally, delete the individual table
-]
 
 
 def build_sc_tables(c: Connection) -> Connection:
@@ -45,17 +24,30 @@ def build_sc_tables(c: Connection) -> Connection:
     c.create_table(OpinionRow)
     c.create_table(VoteLine)
     c.create_table(TitleTagRow)
-    c.create_table(SegmentRow)
     c.db.index_foreign_keys()
     return c
 
 
 def setup_case(c: Connection, path: Path) -> None:
+    """Parse a case's `details.yaml` found in the `path`
+    to generate rows for various `sc_tbl` prefixed sqlite tables found.
+
+    After creation a decision row, get correlated metadata involving
+    the decision: the citation, voting text, tags from the title, etc.,
+    and then add rows for their respective tables.
+
+    Args:
+        c (Connection): sqlpyd Connection
+        path (Path): path to a case's details.yaml
+    """
+
+    # initialize content from the path
     case_tbl = c.table(DecisionRow)
     obj = DecisionRow.from_path(c, path)
 
-    try:  # add decision row
+    try:
         decision_id = case_tbl.insert(obj.dict(), pk="id").last_pk  # type: ignore
+        logger.debug(f"Added {decision_id=}")
     except Exception as e:
         logger.error(f"Skipping duplicate {obj=}; {e=}")
         return
@@ -63,18 +55,26 @@ def setup_case(c: Connection, path: Path) -> None:
         logger.error(f"Could not find decision_id for {obj=}")
         return
 
-    for email in obj.emails:  # assign author row to a joined m2m table
+    # assign author row to a joined m2m table, note the explicit m2m table name
+    # so that the prefix used is `sc`; the default will start with `pax_`
+    for email in obj.emails:
         case_tbl.update(decision_id).m2m(
-            other_table=c.table(Individual), lookup={"email": email}, pk="id"
+            other_table=c.table(Individual),
+            pk="id",
+            lookup={"email": email},
+            m2m_table="sc_tbl_decisions_pax_tbl_individuals",
         )
 
+    # add associated citation
     if obj.citation and obj.citation.has_citation:
-        c.add_record(CitationRow, obj.citation_fk)  # add associated citation
+        c.add_record(CitationRow, obj.citation_fk)
 
-    if obj.voting:  # process votelines of voting text in decision
+    # process votelines of voting text in decision
+    if obj.voting:
         c.add_records(VoteLine, extract_votelines(decision_id, obj.voting))
 
-    if obj.title:  # add tags based on the title of decision
+    # add tags based on the title of decision
+    if obj.title:
         c.add_records(TitleTagRow, tags_from_title(decision_id, obj.title))
 
     # add opinions
@@ -84,7 +84,6 @@ def setup_case(c: Connection, path: Path) -> None:
         justice_id=case_tbl.get(decision_id).get("justice_id"),
     ):
         c.add_record(OpinionRow, op.dict(exclude={"concurs", "tags"}))
-        c.add_records(SegmentRow, op.segments)  # add segments
 
 
 def init_sc_cases(c: Connection, test_only: int = 0):
@@ -99,6 +98,7 @@ def init_sc_cases(c: Connection, test_only: int = 0):
 
 
 def add_authors_only(c: Connection):
+    """Helper function for just adding the author decision m2m table."""
     case_details = DECISION_PATH.glob("**/*/details.yaml")
     for detail_path in case_details:
         obj = DecisionRow.from_path(c, detail_path)
@@ -109,13 +109,14 @@ def add_authors_only(c: Connection):
                     other_table=c.table(Individual),
                     lookup={"email": email},
                     pk="id",
+                    m2m_table="sc_tbl_decisions_pax_tbl_individuals",
                 )
 
 
 def setup_base(db_path: str, test_num: int | None = None) -> Connection:
     """Recreates tables and populates the same.
 
-    Since there are thousands of cases, can limit the number of downloads
+    Since there are thousands of cases, limit the number of downloads
     via the `test_num`.
 
     Args:

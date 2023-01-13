@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "corpus-base"
-version = "0.1.6"
+version = "0.1.7"
 description = "Add justice, decision, citation, voting, and opinion tables to pre-existing corpus-pax database."
 authors = ["Marcelino G. Veloso III <mars@veloso.one>"]
 readme = "README.md"

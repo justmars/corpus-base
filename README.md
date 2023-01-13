@@ -28,16 +28,13 @@ In tandem with [corpus-pax](https://github.com/justmars/corpus-pax), `corpus-bas
    - Votelines
    - Titletags
    - Opinions
-   - Segments
 
 ## Run
 
 ```python shell
->>> from corpus_pax import setup_pax
->>> from corpus_base import setup_base
->>> db_name = 'test.db' # assume target db to be created/recreated is in the present working directory
->>> setup_pax(db_name)
->>> setup_base(db_name) # with segments, takes 1.5 hours
+>>> from corpus_pax import setup_pax_base
+>>> db_name =  # assume target db to be created/recreated is in the present working directory
+>>> setup_pax_base('test.db') # takes ~20 to 30 minutes to create/recreate in working dir
 ```
 
 ## Caveats
@@ -47,8 +44,6 @@ In tandem with [corpus-pax](https://github.com/justmars/corpus-pax), `corpus-bas
 1. Unlike `corpus-pax` which operates over API calls, `corpus-base` operates locally.
 2. It implies parsing through a locally downloaded repository `corpus` to populate tables.
 3. _Opinions_ are limited. Save for 1 or 2 sample situations, the present `corpus` only includes the Ponencia.
-4. Note that with _Segments_ (fts-enabled relevant text fragments of each _Opinion_) the database size hits ~4.4gb.
-5. Segments exclude footnotes.
 
 ### Data
 
@@ -76,15 +71,6 @@ repository | type | purpose
 [corpus](https://github.com/justmars/corpus) | data source | used by _corpus-base_
 [corpus-pax](https://github.com/justmars/corpus-pax) | sqlite i/o | functions to create pax-related tables
 _corpus-base_ | sqlite i/o | functions to create sc-related tables
-
-### Helper function to do things incrementally
-
-```python shell
->>> from corpus_base import init_sc_cases
->>> init_sc_cases(c, test_only=10)
-```
-
-Since there are thousands of cases, can limit the number of downloads via the `test_only` function attribute.
 
 ## Related features
 
@@ -236,39 +222,11 @@ With a different date, we can get the 'C.J.' designation.:
 ]
 ```
 
-### Segment discovery
+### Helper function to do things incrementally
 
-The [segmenting function](corpus_base/utils/segmentize.py) determines the kind of rows that becomes associated with an opinion and a decision.
-
-#### Search for qualifying segments
-
-The `char_count` can be used to limit the number of segments:
-
-```sql
-select count(id)
-from sc_tbl_segments
-where char_count >= 500
+```python shell
+>>> from corpus_base import init_sc_cases
+>>> init_sc_cases(c, test_only=10)
 ```
 
-`char_count` is the SQL column per segment.
-
-#### Limit input of segments
-
-`MIN_LENGTH_CHARS_IN_LINE` is the python filtering mechanism that determines what goes into the database. Assuming a minimum of only 20 characters, the number of segment rows can be as many as ~2.9m.
-
-`MIN_LENGTH_CHARS_IN_LINE` | Total Num. of Rows | Time to Create from Scratch
-:--:|:--:|:--:
-20 | ~2.9m | 1.5 hours
-500 | ~700k | 40 minutes
-1000 | ~170k | TBD
-
-We will settle with `500` until we come up with a better segmentizing algorithm.
-
-#### Number of segments per decision
-
-```sql
-select decision_id, count(id)
-from sc_tbl_segments
-where char_count >= 500
-group by decision_id
-```
+Since there are thousands of cases, can limit the number of downloads via the `test_only` function attribute.
