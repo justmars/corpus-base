@@ -13,6 +13,7 @@ from .decision import (
     VoteLine,
 )
 from .justice import Justice
+from .segment import SegmentRow
 from .utils import DECISION_PATH, extract_votelines, tags_from_title
 
 
@@ -24,6 +25,7 @@ def build_sc_tables(c: Connection) -> Connection:
     c.create_table(OpinionRow)
     c.create_table(VoteLine)
     c.create_table(TitleTagRow)
+    c.create_table(SegmentRow)
     c.db.index_foreign_keys()
     return c
 
@@ -77,13 +79,14 @@ def setup_case(c: Connection, path: Path) -> None:
     if obj.title:
         c.add_records(TitleTagRow, tags_from_title(decision_id, obj.title))
 
-    # add opinions
+    # add opinions and segments
     for op in OpinionRow.get_opinions(
         case_path=path.parent,
         decision_id=decision_id,
         justice_id=case_tbl.get(decision_id).get("justice_id"),
     ):
         c.add_record(OpinionRow, op.dict(exclude={"concurs", "tags"}))
+        c.add_records(SegmentRow, op.segments)
 
 
 def init_sc_cases(c: Connection, test_only: int = 0):

@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "corpus-base"
 version = "0.1.7"
-description = "Add justice, decision, citation, voting, and opinion tables to pre-existing corpus-pax database."
+description = "Add justice, decision, citation, voting, opinion, and segment tables to pre-existing corpus-pax database."
 authors = ["Marcelino G. Veloso III <mars@veloso.one>"]
 readme = "README.md"
 license = "MIT"
@@ -12,6 +12,8 @@ classifiers = [
   "Typing :: Typed",
   "Development Status :: 4 - Beta",
   "Intended Audience :: Legal Industry",
+  "Framework :: Pydantic",
+  "Framework :: Pytest",
 ]
 
 [tool.poetry.dependencies]
@@ -30,9 +32,13 @@ pre-commit = "^2.21"
 types-Markdown = "^3.4.0"
 types-PyYAML = "^6.0.7"
 types-python-slugify = "^5.0.4"
+jupyter = "^1.0.0"
 
 [tool.pytest.ini_options]
 filterwarnings = ['ignore::DeprecationWarning']
+
+[tool.ruff]
+ignore = ["F401", "E501"]
 
 [tool.pytest]
 minversion = "7.2"

@@ -4,6 +4,7 @@ sc.yaml
 sc.db*
 test.db*
 x.db*
+nb.ipynb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

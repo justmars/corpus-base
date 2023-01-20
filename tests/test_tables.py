@@ -17,4 +17,4 @@ def test_rows_made(session: Connection):
     assert session.table(OpinionRow).count == 3
     assert session.table(TitleTagRow).count == 2
     assert session.table(VoteLine).count == 10
-    assert len(session.db.table_names()) == 41
+    assert len(session.db.table_names()) == 47

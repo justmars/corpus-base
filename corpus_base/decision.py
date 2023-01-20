@@ -1,6 +1,7 @@
 import datetime
 from collections.abc import Iterator
 from pathlib import Path
+from typing import Any
 
 import frontmatter
 import yaml
@@ -175,7 +176,8 @@ class DecisionRow(TableConfig):
     def get_id_from_citation(
         cls, folder_name: str, source: str, citation: Citation
     ) -> str:
-        """The decision id to be used as a url slug ought to be unique, based on citation paramters if possible."""
+        """The decision id to be used as a url slug ought to be unique,
+        based on citation paramters if possible."""
         if not citation.slug:
             logger.debug(f"Citation absent: {source=}; {folder_name=}")
             return folder_name
@@ -326,3 +328,16 @@ class OpinionRow(TableConfig):
         except Exception as e:
             logger.error(f"Could not convert text {case_path.stem=}; see {e=}")
             return None
+
+    @property
+    def segments(self) -> Iterator[dict[str, Any]]:
+        """Validate each segment and output its dict format."""
+        from .segment import SegmentRow
+
+        for extract in SegmentRow.segmentize(self.text):
+            yield SegmentRow(
+                id=f"{self.id}-{extract['position']}",
+                decision_id=self.decision_id,
+                opinion_id=self.id,
+                **extract,
+            ).dict()
