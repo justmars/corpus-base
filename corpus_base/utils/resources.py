@@ -1,5 +1,4 @@
 import re
-import sys
 from collections.abc import Iterator
 from enum import Enum
 from http import HTTPStatus
@@ -83,12 +82,12 @@ class CourtComposition(str, Enum):
 logger.configure(
     handlers=[
         {
-            "sink": sys.stdout,
+            "sink": "logs/error.log",
             "format": "{message}",
             "level": "ERROR",
         },
         {
-            "sink": "logs/base.log",
+            "sink": "logs/warnings.log",
             "format": "{message}",
             "level": "WARNING",
             "serialize": True,

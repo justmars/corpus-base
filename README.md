@@ -230,3 +230,14 @@ With a different date, we can get the 'C.J.' designation.:
 ```
 
 Since there are thousands of cases, can limit the number of downloads via the `test_only` function attribute.
+
+## Segments
+
+### Limit input of segments
+
+`MIN_LENGTH_CHARS_IN_LINE` is the python filtering mechanism that determines what goes into the database. Assuming a minimum of only 10 characters, the number of segment rows can be as many as ~2.9m.
+
+`MIN_LENGTH_CHARS_IN_LINE` | Total Num. of Rows | Time to Create from Scratch
+:--:|:--:|:--:
+10 | ~2.9m | 1.5 hours
+500 | ~700k | 40 minutes
