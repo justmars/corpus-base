@@ -1,6 +1,6 @@
 site_name: Corpus Base Docs
 site_description: Decisions for LawSQL.com
-repo_url: https://github.com/justmars/citation-docket
+repo_url: https://github.com/justmars/corpus-base
 theme:
   name: "material"
   features:
