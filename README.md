@@ -2,7 +2,7 @@
 
 ![Github CI](https://github.com/justmars/corpus-base/actions/workflows/main.yml/badge.svg)
 
-Generic users, organizations, and articles utilized in the [LawSQL dataset](https://lawsql.com).
+Decisions, segments, and justices utilized in the [LawSQL dataset](https://lawsql.com).
 
 ## Documentation
 
