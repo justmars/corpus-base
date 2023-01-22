@@ -33,18 +33,6 @@ In tandem with [corpus-pax](https://github.com/justmars/corpus-pax), `corpus-bas
    - Opinions
    - Segments
 
-## Repositories
-
-To review the different repositories involved so far:
-
-repository | type | purpose
-:--|:--:|:--
-[lawsql-articles](https://github.com/justmars/lawsql-articles) | data source | used by _corpus-pax_
-[corpus-entities](https://github.com/justmars/corpus-entities) | data source | used by _corpus-pax_
-[corpus](https://github.com/justmars/corpus) | data source | used by _corpus-base_
-[corpus-pax](https://github.com/justmars/corpus-pax) | sqlite i/o | functions to create pax-related tables
-_corpus-base_ | sqlite i/o | functions to create sc-related tables
-
 ## Run
 
 ```py
@@ -68,3 +56,28 @@ The path location of the downloaded `corpus` repository is hard-coded since this
 Instructions for downloading and updating the repository are discussed elsewhere.
 
 Now toying with the idea of placing the entire `corpus` in a bucket like AWS S3 or Cloudflare R2. So that all access can be cloud-based.
+
+## Prerequisites
+
+### Repositories
+
+To review the different repositories involved:
+
+repository | status | type | purpose
+:--|:--:|:--:|:--
+[lawsql-articles](https://github.com/justmars/lawsql-articles) | private | data source | used by _corpus-pax_
+[corpus-entities](https://github.com/justmars/corpus-entities) | private | data source | used by _corpus-pax_
+[corpus](https://github.com/justmars/corpus) | private | data source | used by _corpus-base_
+[corpus-pax](https://github.com/justmars/corpus-pax) | public | sqlite i/o | functions to create pax-related tables
+[corpus-base](https://github.com/justmars/corpus-base)| public | sqlite i/o |  functions to create sc-related tables
+
+### .env
+
+Create an .env file to create/populate the database. See `sample .env` highlighting the following variables:
+
+1. Cloudflare `CF_ACCT`
+2. Cloudflare `CF_TOKEN`
+3. Github `GH_TOKEN`
+4. `DB_FILE` (sqlite)
+
+Note the workflow (main.yml) where the secrets are included for Github actions. Ensure these are set in the repository's `<url-to-repo>/settings/secrets/actions`, making the proper replacements when the tokens for Cloudflare and Github expire.
