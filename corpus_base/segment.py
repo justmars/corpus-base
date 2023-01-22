@@ -64,10 +64,16 @@ class SegmentRow(TableConfig):
 
     @classmethod
     def segmentize(cls, full_text: str) -> Iterator[dict]:
-        """Split first by double-spaced breaks `\n\n` and then by
-        single spaced breaks `\n` to get the position of the segment.
+        """Split first by double-spaced breaks `\\n\\n` and then by
+        single spaced breaks `\\n` to get the position of the segment.
 
-        Will exclude footnotes and segments with less than 10 characters
+        Will exclude footnotes and segments with less than 10 characters.
+
+        For comparison:
+
+        Minimum characters | Total Num. of Rows | Time to Create from Scratch
+        :--:|:--:|:--:
+        10 | ~3.2m | 30 minutes
 
         Args:
             full_text (str): The opinion to segment

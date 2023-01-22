@@ -5,7 +5,7 @@ from typing import Any
 
 import frontmatter
 import yaml
-from citation_utils import Citation, extract_citation_from_data
+from citation_utils import Citation
 from dateutil.parser import parse
 from loguru import logger
 from markdownify import markdownify
@@ -100,16 +100,18 @@ class DecisionRow(TableConfig):
     def from_path(cls, c: Connection, p: Path):
         """Requires path be structured, viz.:
 
+        ```yaml
         - /decisions
-            - /source e.g. sc / legacy <-- where the file was scraped from
-                - /folder_name, e.g. 12341 <-- the original id when scraped
-                    - /details.yaml <-- the file containing the metadata that is `p`
+            - /source e.g. sc / legacy # where the file was scraped from
+                - /folder_name, e.g. 12341 # the original id when scraped
+                    - /details.yaml #the file containing the metadata that is `p`
+        ```
         """
 
         f = p.parent / "fallo.html"
         data = yaml.safe_load(p.read_text())
         pon = RawPonente.extract(data.get("ponente"))
-        citation = extract_citation_from_data(data)
+        citation = Citation.extract_citation_from_data(data)
         id = cls.get_id_from_citation(
             folder_name=p.parent.name,
             source=p.parent.parent.stem,

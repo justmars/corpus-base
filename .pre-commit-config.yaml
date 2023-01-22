@@ -12,7 +12,7 @@ repos:
       - id: name-tests-test
         args: ["--django"]
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.228
+    rev: v0.0.229
     hooks:
       - id: ruff
         args: ["--force-exclude"]
@@ -27,7 +27,7 @@ repos:
       - id: black
         language_version: python3
   - repo: https://github.com/asottile/blacken-docs
-    rev: v1.12.1
+    rev: 1.13.0
     hooks:
       - id: blacken-docs
         additional_dependencies:
