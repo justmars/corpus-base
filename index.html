@@ -354,13 +354,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#repositories" class="md-nav__link">
-    Repositories
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#run" class="md-nav__link">
     Run
   </a>
@@ -385,6 +378,33 @@
           <li class="md-nav__item">
   <a href="#data" class="md-nav__link">
     Data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repositories" class="md-nav__link">
+    Repositories
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#env" class="md-nav__link">
+    .env
   </a>
   
 </li>
@@ -498,13 +518,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#repositories" class="md-nav__link">
-    Repositories
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#run" class="md-nav__link">
     Run
   </a>
@@ -529,6 +542,33 @@
           <li class="md-nav__item">
   <a href="#data" class="md-nav__link">
     Data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repositories" class="md-nav__link">
+    Repositories
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#env" class="md-nav__link">
+    .env
   </a>
   
 </li>
@@ -582,44 +622,6 @@ end</code></pre>
 <li>Opinions</li>
 <li>Segments</li>
 </ol>
-<h2 id="repositories">Repositories</h2>
-<p>To review the different repositories involved so far:</p>
-<table>
-<thead>
-<tr>
-<th align="left">repository</th>
-<th align="center">type</th>
-<th align="left">purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><a href="https://github.com/justmars/lawsql-articles">lawsql-articles</a></td>
-<td align="center">data source</td>
-<td align="left">used by <em>corpus-pax</em></td>
-</tr>
-<tr>
-<td align="left"><a href="https://github.com/justmars/corpus-entities">corpus-entities</a></td>
-<td align="center">data source</td>
-<td align="left">used by <em>corpus-pax</em></td>
-</tr>
-<tr>
-<td align="left"><a href="https://github.com/justmars/corpus">corpus</a></td>
-<td align="center">data source</td>
-<td align="left">used by <em>corpus-base</em></td>
-</tr>
-<tr>
-<td align="left"><a href="https://github.com/justmars/corpus-pax">corpus-pax</a></td>
-<td align="center">sqlite i/o</td>
-<td align="left">functions to create pax-related tables</td>
-</tr>
-<tr>
-<td align="left"><em>corpus-base</em></td>
-<td align="center">sqlite i/o</td>
-<td align="left">functions to create sc-related tables</td>
-</tr>
-</tbody>
-</table>
 <h2 id="run">Run</h2>
 <div class="highlight"><span class="filename">Python</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">corpus_pax</span> <span class="kn">import</span> <span class="n">setup_pax_base</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">db_name</span> <span class="o">=</span>  <span class="c1"># assume target db to be created/recreated is in the present working directory</span>
@@ -636,6 +638,60 @@ end</code></pre>
 <p>The path location of the downloaded <code>corpus</code> repository is hard-coded since this package is intended to be run locally.</p>
 <p>Instructions for downloading and updating the repository are discussed elsewhere.</p>
 <p>Now toying with the idea of placing the entire <code>corpus</code> in a bucket like AWS S3 or Cloudflare R2. So that all access can be cloud-based.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="repositories">Repositories</h3>
+<p>Different repositories involved:</p>
+<table>
+<thead>
+<tr>
+<th align="left">repository</th>
+<th align="center">status</th>
+<th align="center">type</th>
+<th align="left">purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><a href="https://github.com/justmars/lawsql-articles">lawsql-articles</a></td>
+<td align="center">private</td>
+<td align="center">data source</td>
+<td align="left">used by <em>corpus-pax</em>; yaml-formatted member and org files</td>
+</tr>
+<tr>
+<td align="left"><a href="https://github.com/justmars/corpus-entities">corpus-entities</a></td>
+<td align="center">private</td>
+<td align="center">data source</td>
+<td align="left">used by <em>corpus-pax</em>; markdown-styled articles with frontmatter</td>
+</tr>
+<tr>
+<td align="left"><a href="https://github.com/justmars/corpus">corpus</a></td>
+<td align="center">private</td>
+<td align="center">data source</td>
+<td align="left">used by <em>corpus-base</em></td>
+</tr>
+<tr>
+<td align="left"><a href="https://github.com/justmars/corpus-pax">corpus-pax</a></td>
+<td align="center">public</td>
+<td align="center">sqlite i/o</td>
+<td align="left">functions to create pax-related tables</td>
+</tr>
+<tr>
+<td align="left"><a href="https://github.com/justmars/corpus-base">corpus-base</a></td>
+<td align="center">public</td>
+<td align="center">sqlite i/o</td>
+<td align="left">functions to create sc-related tables</td>
+</tr>
+</tbody>
+</table>
+<h3 id="env">.env</h3>
+<p>Create an .env file to create/populate the database. See <code>sample .env</code> highlighting the following variables:</p>
+<ol>
+<li>Cloudflare <code>CF_ACCT</code></li>
+<li>Cloudflare <code>CF_TOKEN</code></li>
+<li>Github <code>GH_TOKEN</code></li>
+<li><code>DB_FILE</code> (sqlite)</li>
+</ol>
+<p>Note the workflow (main.yml) where the secrets are included for Github actions. Ensure these are set in the repository's <code>&lt;url-to-repo&gt;/settings/secrets/actions</code>, making the proper replacements when the tokens for Cloudflare and Github expire.</p>
 
 
 
