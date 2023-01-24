@@ -44,7 +44,10 @@ class Justice(Bio):
     id: int = Field(
         ...,
         title="Justice ID Identifier",
-        description="Starting from 1, the integer represents the order of appointment to the Supreme Court.",
+        description=(
+            "Starting from 1, the integer represents the order of appointment"
+            " to the Supreme Court."
+        ),
         ge=1,
         lt=1000,
         col=int,
@@ -52,7 +55,9 @@ class Justice(Bio):
     alias: str | None = Field(
         None,
         title="Alias",
-        description="Means of matching ponente and voting strings to the justice id.",
+        description=(
+            "Means of matching ponente and voting strings to the justice id."
+        ),
         col=str,
         index=True,
     )
@@ -73,28 +78,46 @@ class Justice(Bio):
     chief_date: datetime.date | None = Field(
         None,
         title="Date Appointed As Chief Justice",
-        description="When appointed, the extension title of the justice changes from 'J.' to 'C.J'. for cases that are decided after the date of appointment but before the date of retirement.",
+        description=(
+            "When appointed, the extension title of the justice changes from"
+            " 'J.' to 'C.J'. for cases that are decided after the date of"
+            " appointment but before the date of retirement."
+        ),
         col=datetime.date,
         index=True,
     )
     birth_date: datetime.date | None = Field(
         None,
         title="Date of Birth",
-        description=f"The Birth Date is used to determine the retirement age of the justice. Under the 1987 constitution, this is {MAX_JUSTICE_AGE}. There are missing dates: see Jose Generoso 41, Grant Trent 14, Fisher 19, Moir 20.",
+        description=(
+            "The Birth Date is used to determine the retirement age of the"
+            " justice. Under the 1987 constitution, this is"
+            f" {MAX_JUSTICE_AGE}. There are missing dates: see Jose Generoso"
+            " 41, Grant Trent 14, Fisher 19, Moir 20."
+        ),
         col=datetime.date,
         index=True,
     )
     retire_date: datetime.date | None = Field(
         None,
         title="Mandatory Retirement Date",
-        description="Based on the Birth Date, if it exists, it is the maximum term of service allowed by law.",
+        description=(
+            "Based on the Birth Date, if it exists, it is the maximum term of"
+            " service allowed by law."
+        ),
         col=datetime.date,
         index=True,
     )
     inactive_date: datetime.date | None = Field(
         None,
         title="Date",
-        description="Which date is earliest inactive date of the Justice, the retire date is set automatically but it is not guaranteed to to be the actual inactive date. So the inactive date is either that specified in the `end_term` or the `retire_date`, whichever is earlier.",
+        description=(
+            "Which date is earliest inactive date of the Justice, the retire"
+            " date is set automatically but it is not guaranteed to to be the"
+            " actual inactive date. So the inactive date is either that"
+            " specified in the `end_term` or the `retire_date`, whichever is"
+            " earlier."
+        ),
         col=datetime.date,
         index=True,
     )
@@ -153,7 +176,8 @@ class Justice(Bio):
 
     @classmethod
     def set_local_from_api(cls, local: Path = JUSTICE_LOCAL) -> Path:
-        """Create a local .yaml file containing the list of validated Justices."""
+        """Create a local .yaml file containing the list of validated Justices.
+        """
         if local.exists():
             return local
         with open(local, "w") as writefile:
@@ -167,12 +191,14 @@ class Justice(Bio):
 
     @classmethod
     def init_justices_tbl(cls, c: Connection, p: Path = JUSTICE_LOCAL):
-        """Add a table containing names and ids of justices; alter the original decision's table for it to include a justice id."""
+        """Add a table containing names and ids of justices; alter the original decision's table for it to include a justice id.
+        """
         return c.add_records(Justice, yaml.safe_load(p.read_bytes()))
 
     @classmethod
     def get_active_on_date(cls, c: Connection, target_date: str) -> list[dict]:
-        """Get list of justices that have been appointed before the `target date` and have not yet become inactive."""
+        """Get list of justices that have been appointed before the `target date` and have not yet become inactive.
+        """
         try:
             valid_date = parse(target_date).date().isoformat()
         except Exception:
@@ -181,7 +207,10 @@ class Justice(Bio):
             c.table(cls).rows_where(
                 "inactive_date > :date and :date > start_term",
                 {"date": valid_date},
-                select="id, lower(last_name) surname, alias, start_term, inactive_date, chief_date",
+                select=(
+                    "id, lower(last_name) surname, alias, start_term,"
+                    " inactive_date, chief_date"
+                ),
                 order_by="start_term desc",
             )
         )
@@ -190,7 +219,8 @@ class Justice(Bio):
     def get_justice_on_date(
         cls, c: Connection, target_date: str, cleaned_name: str
     ) -> dict | None:
-        """Based on `get_active_on_date()`, match the cleaned_name to either the alias of the justice or the justice's last name; on match, determine whether the designation should be 'C.J.' or 'J.'"""
+        """Based on `get_active_on_date()`, match the cleaned_name to either the alias of the justice or the justice's last name; on match, determine whether the designation should be 'C.J.' or 'J.'
+        """
         candidate_options = cls.get_active_on_date(c, target_date)
         opts = []
         for candidate in candidate_options:
@@ -220,7 +250,8 @@ class Justice(Bio):
 
     @classmethod
     def view_chiefs(cls, c: Connection) -> list[dict]:
-        """Get general information of the chief justices and their dates of appointment."""
+        """Get general information of the chief justices and their dates of appointment.
+        """
         view = CHIEF_DATES_VIEW
         if view in c.db.view_names():
             return list(c.db[view].rows)

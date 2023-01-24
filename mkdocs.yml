@@ -1,20 +1,16 @@
 site_name: Corpus Base Docs
-site_description: Decisions for LawSQL.com
+site_description: Add justice, decision, citation, voting, opinion, and segment tables to database
+site_url: https://lawsql.com
+site_author: Marcelino Veloso III
 repo_url: https://github.com/justmars/corpus-base
 theme:
   name: "material"
-  features:
-    - navigation.tabs
-    - navigation.tabs.sticky
   palette:
-    # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
-
-    # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       accent: pink
@@ -27,6 +23,12 @@ nav:
   - justice.md
   - segments.md
   - misc.md
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/justmars
+      name: justmars on Github
+copyright: Copyright &copy; Marcelino Veloso III
 plugins:
   - mkdocstrings:
       handlers:
@@ -35,7 +37,7 @@ plugins:
             show_root_toc_entry: false
             show_category_heading: true
             show_source: true
-            heading_level: 2
+            heading_level: 3
   - search:
       lang: en
 markdown_extensions:

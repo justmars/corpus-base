@@ -183,14 +183,14 @@ files = [
 
 [[package]]
 name = "citation-date"
-version = "0.0.8"
+version = "0.1.1"
 description = "Regex date formula and decoder - Philippine Supreme Court Decisions"
 category = "main"
 optional = false
 python-versions = ">=3.11,<4.0"
 files = [
-    {file = "citation_date-0.0.8-py3-none-any.whl", hash = "sha256:b8791ccf64b2271eaf632100d3f2e08e30e39d9a34d314ea501dc70cb4082700"},
-    {file = "citation_date-0.0.8.tar.gz", hash = "sha256:e77c77d50aa52130bc692b06057d688a45945e391693e77b7893b6974e318548"},
+    {file = "citation_date-0.1.1-py3-none-any.whl", hash = "sha256:4382eec1a6c83bf8613b3810ba4cd14907afe0fa5a4833069bfbc456b1f46de5"},
+    {file = "citation_date-0.1.1.tar.gz", hash = "sha256:7e2c7d80b53fa3e8c6e865c443fbbc6a2f265de718dff7bd0403a7e80b402f1d"},
 ]
 
 [package.dependencies]
@@ -199,49 +199,49 @@ types-python-dateutil = ">=2.8.19,<3.0.0"
 
 [[package]]
 name = "citation-docket"
-version = "0.0.18"
-description = "Parse legal citations having the docket format - i.e. GR, AM, AC, BM - referring to Philippine Supreme Court decisions."
+version = "0.1.1"
+description = "Regex formula of Philippine Supreme Court citations in docket format, i.e. GR, AM, AC, BM."
 category = "main"
 optional = false
 python-versions = ">=3.11,<4.0"
 files = [
-    {file = "citation_docket-0.0.18-py3-none-any.whl", hash = "sha256:3a69e5491039b96598b2bae036015e05f4e4650e8c4de6ab0d3c220496f93740"},
-    {file = "citation_docket-0.0.18.tar.gz", hash = "sha256:1928d94adb314059d3d784a03ebb7612df1ab2887dbe046b0e1872a05a58edc4"},
+    {file = "citation_docket-0.1.1-py3-none-any.whl", hash = "sha256:7426359c0482377120f98306cae311e0c72cddf106ea3fdac84effea671b203b"},
+    {file = "citation_docket-0.1.1.tar.gz", hash = "sha256:e4c2da7b4ca852117826fd1d5fe1849c832ad7b55218546cd6bc53f1fd9f4b17"},
 ]
 
 [package.dependencies]
-citation_report = ">=0.0.11,<0.0.12"
+citation_report = ">=0.1.1,<0.2.0"
 
 [[package]]
 name = "citation-report"
-version = "0.0.11"
-description = "Parse legal citations having the publisher format - i.e. SCRA, PHIL, OFFG - referring to Philippine Supreme Court decisions."
+version = "0.1.1"
+description = "Regex formula of Philippine Supreme Court citations in report format, i.e. SCRA, PHIL, OFFG."
 category = "main"
 optional = false
 python-versions = ">=3.11,<4.0"
 files = [
-    {file = "citation_report-0.0.11-py3-none-any.whl", hash = "sha256:2f5409c1b94ac2ea961bcd41d5fb699c1c3ca6044828ec90636fad6e2601a7b5"},
-    {file = "citation_report-0.0.11.tar.gz", hash = "sha256:81eb84217c7f83213837ee098d22f32bf34e52b791bc0c9ae30606487077cc7b"},
+    {file = "citation_report-0.1.1-py3-none-any.whl", hash = "sha256:8ad84458500559b929eb503124bb914a270e61c4624fae47b5758a14842c0e8f"},
+    {file = "citation_report-0.1.1.tar.gz", hash = "sha256:ea3c257b99f454bd05b58209ad09bf3505ce0c55d2ca9e8f6d3788dd485074a8"},
 ]
 
 [package.dependencies]
-citation-date = ">=0.0.8,<0.0.9"
+citation-date = ">=0.1.1,<0.2.0"
 pydantic = ">=1.10.4,<2.0.0"
 
 [[package]]
 name = "citation-utils"
-version = "0.2.0"
-description = "Regex-based Citations in Philippine Supreme Court decisions."
+version = "0.2.3"
+description = "Regex-based docket- and report- styled citations based on Philippine Supreme Court decisions."
 category = "main"
 optional = false
 python-versions = ">=3.11,<4.0"
 files = [
-    {file = "citation_utils-0.2.0-py3-none-any.whl", hash = "sha256:1fcf884b55eb7cc386102f2749c32c0ff050e9420ade67a8a5866e9e8fa95cbb"},
-    {file = "citation_utils-0.2.0.tar.gz", hash = "sha256:87ed77523a5ee99c0f22f2fca4fe7784a6b81156749dc4c1f694fe7ded0694f7"},
+    {file = "citation_utils-0.2.3-py3-none-any.whl", hash = "sha256:2d91325fc912fa9099d4c5986c1839113c1feb43580ea6c302dc504697aa4ebb"},
+    {file = "citation_utils-0.2.3.tar.gz", hash = "sha256:eb325ca29c90f1883f3a0e3e6a8f2d0be522b424d75e26c59f3b8add98ef972b"},
 ]
 
 [package.dependencies]
-citation-docket = ">=0.0.18,<0.0.19"
+citation-docket = ">=0.1.0,<0.2.0"
 loguru = ">=0.6.0,<0.7.0"
 python-slugify = ">=6.1.2,<7.0.0"
 sqlite-utils = ">=3.30,<4.0"
@@ -305,14 +305,14 @@ test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
 
 [[package]]
 name = "corpus-pax"
-version = "0.1.11"
+version = "0.1.12"
 description = "Using Github API (to pull individuals, orgs, and article content), setup a local sqlite database, syncing images to Cloudflare."
 category = "main"
 optional = false
 python-versions = ">=3.11,<4.0"
 files = [
-    {file = "corpus_pax-0.1.11-py3-none-any.whl", hash = "sha256:a0bf0f406a93942377141cc238c99301abe8fc5ecfda8994af102c99a6f86543"},
-    {file = "corpus_pax-0.1.11.tar.gz", hash = "sha256:54307351000ce2925a3681ad44c56f1c1b62e1b104dbac9ac4f203a20fa4881e"},
+    {file = "corpus_pax-0.1.12-py3-none-any.whl", hash = "sha256:ceb3bd9e5dc12ee2f3acfa25cabfc54fa8367fbc7eedd341fc54859e8a078cad"},
+    {file = "corpus_pax-0.1.12.tar.gz", hash = "sha256:204e5098b96b54fd98410d8fa8fd6214acb4bee5d20851f8a39818837f46c2bb"},
 ]
 
 [package.dependencies]
@@ -323,7 +323,7 @@ mkdocs = ">=1.4.2,<2.0.0"
 mkdocs-material = ">=9.0.6,<10.0.0"
 mkdocstrings = {version = ">=0.20.0,<0.21.0", extras = ["python"]}
 python-frontmatter = ">=1.0.0,<2.0.0"
-sqlpyd = ">=0.1.3,<0.2.0"
+sqlpyd = ">=0.1.4,<0.2.0"
 
 [[package]]
 name = "coverage"
@@ -550,14 +550,14 @@ socks = ["socksio (>=1.0.0,<2.0.0)"]
 
 [[package]]
 name = "identify"
-version = "2.5.13"
+version = "2.5.15"
 description = "File identification library for Python"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "identify-2.5.13-py2.py3-none-any.whl", hash = "sha256:8aa48ce56e38c28b6faa9f261075dea0a942dfbb42b341b4e711896cbb40f3f7"},
-    {file = "identify-2.5.13.tar.gz", hash = "sha256:abb546bca6f470228785338a01b539de8a85bbf46491250ae03363956d8ebb10"},
+    {file = "identify-2.5.15-py2.py3-none-any.whl", hash = "sha256:1f4b36c5f50f3f950864b2a047308743f064eaa6f6645da5e5c780d1c7125487"},
+    {file = "identify-2.5.15.tar.gz", hash = "sha256:c22aa206f47cc40486ecf585d27ad5f40adbfc494a3fa41dc3ed0499a23b123f"},
 ]
 
 [package.extras]
@@ -1450,14 +1450,14 @@ test = ["black", "cogapp", "hypothesis", "pytest"]
 
 [[package]]
 name = "sqlpyd"
-version = "0.1.3"
+version = "0.1.4"
 description = "Validate raw content with pydantic for consumption by sqlite-utils."
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "sqlpyd-0.1.3-py3-none-any.whl", hash = "sha256:32acfd639823e836e40a5c1aa377e07259ac84c48b78b93a7067f11b2c13ddcc"},
-    {file = "sqlpyd-0.1.3.tar.gz", hash = "sha256:05fed9cdca0e26e47edaf3fb8025cca28a93f4ea2de94bf7909f4c2a35dfc312"},
+    {file = "sqlpyd-0.1.4-py3-none-any.whl", hash = "sha256:f0ed9664d58d8eccde1da1de5666c3984d73d7f578d08d99a7b38f8cebc59bbb"},
+    {file = "sqlpyd-0.1.4.tar.gz", hash = "sha256:7d5270ee09eef350eab4f13f4357f56064904de5f9d81c7e17ea0b4883c6157b"},
 ]
 
 [package.dependencies]
@@ -1673,4 +1673,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"          #
-content-hash = "1f4437e982e65fe283c1654b9cb9559e6d0603459a06ffb0a959195e14cacc4d"
+content-hash = "b640d1178a4cfcddb657b30c98145d3de1ebfbea61c238102ea363e1f323be21"

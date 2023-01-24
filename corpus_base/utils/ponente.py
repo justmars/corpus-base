@@ -24,7 +24,8 @@ class RawPonente(NamedTuple):
 
     @classmethod
     def clean(cls, text: str) -> str | None:
-        """Since most ponente strings from the case files are not uniform, clean this field by a variety of fixes such"""
+        """Since most ponente strings from the case files are not uniform, clean this field by a variety of fixes such
+        """
 
         no_asterisk = re.sub(r"\[?(\*)+\]?", "", text)
         surname = init_surnames(no_asterisk)
@@ -95,7 +96,6 @@ class TitleSuffixClean(Enum):
 
 
 class CommonTypos(Enum):
-
     AVANC = (
         re.compile(
             r"""
@@ -602,7 +602,8 @@ class CommonTypos(Enum):
 
     @classmethod
     def replace_value(cls, candidate: str):
-        """If one of the members matches, return the replacement that is specified in the value."""
+        """If one of the members matches, return the replacement that is specified in the value.
+        """
         for _, member in cls.__members__.items():
             if member.value[0].search(candidate):
                 return member.value[1]

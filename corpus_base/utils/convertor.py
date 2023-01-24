@@ -33,13 +33,15 @@ MD_FOOTNOTE_AFTER_LEFT_RIGHT = re.compile(
 
 @dataclass
 class DecisionHTMLConvertMarkdown:
-    """Utilizes the `ponencia.html`, `fallo.html`, and `annex.html` to eventually create a formatted markdown file."""
+    """Utilizes the `ponencia.html`, `fallo.html`, and `annex.html` to eventually create a formatted markdown file.
+    """
 
     folder: Path
 
     @property
     def result(self):
-        """Add a header on top of the text, then supply the body of the ponencia, followed by the fallo and the annex of footnotes."""
+        """Add a header on top of the text, then supply the body of the ponencia, followed by the fallo and the annex of footnotes.
+        """
         txt = "# Ponencia\n\n"
 
         if base := self.convert_html_content("ponencia.html"):

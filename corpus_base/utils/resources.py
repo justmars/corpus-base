@@ -54,7 +54,6 @@ class DecisionCategory(str, Enum):
 
     @classmethod
     def _setter(cls, text: str | None):
-
         if text:
             if CATEGORY_START_DECISION.search(text):
                 return cls.decision
@@ -70,7 +69,6 @@ class CourtComposition(str, Enum):
 
     @classmethod
     def _setter(cls, text: str | None):
-
         if text:
             if COMPOSITION_START_DIVISION.search(text):
                 return cls.division

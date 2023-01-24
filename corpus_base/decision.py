@@ -50,14 +50,20 @@ class DecisionRow(TableConfig):
     raw_ponente: str | None = Field(
         None,
         title="Ponente",
-        description="After going through a cleaning process, this should be in lowercase and be suitable for matching a justice id.",
+        description=(
+            "After going through a cleaning process, this should be in"
+            " lowercase and be suitable for matching a justice id."
+        ),
         col=str,
         index=True,
     )
     justice_id: int | None = Field(
         None,
         title="Justice ID",
-        description="Using the raw_ponente, determine the appropriate justice_id using the `update_justice_ids.sql` template.",
+        description=(
+            "Using the raw_ponente, determine the appropriate justice_id using"
+            " the `update_justice_ids.sql` template."
+        ),
         col=int,
         index=True,
     )
@@ -221,7 +227,10 @@ class VoteLine(TableConfig):
     text: str = Field(
         ...,
         title="Voteline Text",
-        description="Each decision may contain a vote line, e.g. a summary of which justice voted for the main opinion and those who dissented, etc.",
+        description=(
+            "Each decision may contain a vote line, e.g. a summary of which"
+            " justice voted for the main opinion and those who dissented, etc."
+        ),
         col=str,
         index=True,
     )
@@ -250,12 +259,18 @@ class OpinionRow(TableConfig):
     )
     id: str = Field(
         ...,
-        description="The opinion pk is based on combining the decision_id with the justice_id",
+        description=(
+            "The opinion pk is based on combining the decision_id with the"
+            " justice_id"
+        ),
         col=str,
     )
     title: str | None = Field(
         ...,
-        description="How is the opinion called, e.g. Ponencia, Concurring Opinion, Separate Opinion",
+        description=(
+            "How is the opinion called, e.g. Ponencia, Concurring Opinion,"
+            " Separate Opinion"
+        ),
         col=str,
     )
     tags: list[str] | None = Field(
@@ -264,14 +279,20 @@ class OpinionRow(TableConfig):
     )
     justice_id: int | None = Field(
         None,
-        description="The writer of the opinion; when not supplied could mean a Per Curiam opinion, or unable to detect the proper justice.",
+        description=(
+            "The writer of the opinion; when not supplied could mean a Per"
+            " Curiam opinion, or unable to detect the proper justice."
+        ),
         col=int,
         index=True,
         fk=(Justice.__tablename__, "id"),
     )
     remark: str | None = Field(
         None,
-        description="Short description of the opinion, when available, i.e. 'I reserve my right, etc.', 'On leave.', etc.",
+        description=(
+            "Short description of the opinion, when available, i.e. 'I reserve"
+            " my right, etc.', 'On leave.', etc."
+        ),
         col=str,
         fts=True,
     )
@@ -288,7 +309,8 @@ class OpinionRow(TableConfig):
         justice_id: int | None = None,
     ) -> Iterator:
         """Each opinion of a decision, except the ponencia, should be added separately.
-        The format of the opinion should follow the form in test_data/legacy/tanada1."""
+        The format of the opinion should follow the form in test_data/legacy/tanada1.
+        """
         ops = case_path / "opinions"
         for op in ops.glob("[!ponencia]*.md"):
             opinion = cls.extract_separate(case_path, decision_id, op)

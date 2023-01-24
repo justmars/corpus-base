@@ -43,21 +43,28 @@ class SegmentRow(TableConfig):
     position: str = Field(
         ...,
         title="Relative Position",
-        description="The line number of the text as stripped from its markdown source.",
+        description=(
+            "The line number of the text as stripped from its markdown source."
+        ),
         col=int,
         index=True,
     )
     char_count: int = Field(
         ...,
         title="Character Count",
-        description="The number of characters of the text makes it easier to discover patterns.",
+        description=(
+            "The number of characters of the text makes it easier to discover"
+            " patterns."
+        ),
         col=int,
         index=True,
     )
     segment: str = Field(
         ...,
         title="Body Segment",
-        description="A partial text fragment of an opinion, exclusive of footnotes.",
+        description=(
+            "A partial text fragment of an opinion, exclusive of footnotes."
+        ),
         col=str,
         fts=True,
     )
