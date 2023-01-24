@@ -6,9 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Decisions for LawSQL.com">
+        <meta name="description" content="Add justice, decision, citation, voting, opinion, and segment tables to database">
       
       
+        <meta name="author" content="Marcelino Veloso III">
+      
+      
+        <link rel="canonical" href="https://lawsql.com/justice/">
       
       
         <link rel="prev" href="../decision/">
@@ -87,9 +91,7 @@
     
       
 
-  
-
-<header class="md-header md-header--lifted" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="Corpus Base Docs" class="md-header__button md-logo" aria-label="Corpus Base Docs" data-md-component="logo">
       
@@ -187,84 +189,13 @@
     
   </nav>
   
-    
-      
-<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
-  <div class="md-tabs__inner md-grid">
-    <ul class="md-tabs__list">
-      
-        
-  
-  
-
-
-  <li class="md-tabs__item">
-    <a href=".." class="md-tabs__link">
-      Overview
-    </a>
-  </li>
-
-      
-        
-  
-  
-
-
-  <li class="md-tabs__item">
-    <a href="../decision/" class="md-tabs__link">
-      Decisions
-    </a>
-  </li>
-
-      
-        
-  
-  
-    
-  
-
-
-  <li class="md-tabs__item">
-    <a href="./" class="md-tabs__link md-tabs__link--active">
-      Justice
-    </a>
-  </li>
-
-      
-        
-  
-  
-
-
-  <li class="md-tabs__item">
-    <a href="../segments/" class="md-tabs__link">
-      Segments
-    </a>
-  </li>
-
-      
-        
-  
-  
-
-
-  <li class="md-tabs__item">
-    <a href="../misc/" class="md-tabs__link">
-      Misc
-    </a>
-  </li>
-
-      
-    </ul>
-  </div>
-</nav>
-    
-  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -279,10 +210,8 @@
                   <div class="md-sidebar__inner">
                     
 
-  
 
-
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Corpus Base Docs" class="md-nav__button md-logo" aria-label="Corpus Base Docs" data-md-component="logo">
       
@@ -711,17 +640,17 @@
 
 
 
-<h2 id="corpus_base.justice-classes">Classes</h2>
+<h3 id="corpus_base.justice-classes">Classes</h3>
 
 <div class="doc doc-object doc-class">
 
 
 
-<h3 id="corpus_base.justice.Justice" class="doc doc-heading">
+<h4 id="corpus_base.justice.Justice" class="doc doc-heading">
         <code>Justice</code>
 
 
-</h3>
+</h4>
 
 
   <div class="doc doc-contents ">
@@ -930,7 +859,38 @@
 <span class="normal"><a href="#__codelineno-0-230">230</a></span>
 <span class="normal"><a href="#__codelineno-0-231">231</a></span>
 <span class="normal"><a href="#__codelineno-0-232">232</a></span>
-<span class="normal"><a href="#__codelineno-0-233">233</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="k">class</span> <span class="nc">Justice</span><span class="p">(</span><span class="n">Bio</span><span class="p">):</span>
+<span class="normal"><a href="#__codelineno-0-233">233</a></span>
+<span class="normal"><a href="#__codelineno-0-234">234</a></span>
+<span class="normal"><a href="#__codelineno-0-235">235</a></span>
+<span class="normal"><a href="#__codelineno-0-236">236</a></span>
+<span class="normal"><a href="#__codelineno-0-237">237</a></span>
+<span class="normal"><a href="#__codelineno-0-238">238</a></span>
+<span class="normal"><a href="#__codelineno-0-239">239</a></span>
+<span class="normal"><a href="#__codelineno-0-240">240</a></span>
+<span class="normal"><a href="#__codelineno-0-241">241</a></span>
+<span class="normal"><a href="#__codelineno-0-242">242</a></span>
+<span class="normal"><a href="#__codelineno-0-243">243</a></span>
+<span class="normal"><a href="#__codelineno-0-244">244</a></span>
+<span class="normal"><a href="#__codelineno-0-245">245</a></span>
+<span class="normal"><a href="#__codelineno-0-246">246</a></span>
+<span class="normal"><a href="#__codelineno-0-247">247</a></span>
+<span class="normal"><a href="#__codelineno-0-248">248</a></span>
+<span class="normal"><a href="#__codelineno-0-249">249</a></span>
+<span class="normal"><a href="#__codelineno-0-250">250</a></span>
+<span class="normal"><a href="#__codelineno-0-251">251</a></span>
+<span class="normal"><a href="#__codelineno-0-252">252</a></span>
+<span class="normal"><a href="#__codelineno-0-253">253</a></span>
+<span class="normal"><a href="#__codelineno-0-254">254</a></span>
+<span class="normal"><a href="#__codelineno-0-255">255</a></span>
+<span class="normal"><a href="#__codelineno-0-256">256</a></span>
+<span class="normal"><a href="#__codelineno-0-257">257</a></span>
+<span class="normal"><a href="#__codelineno-0-258">258</a></span>
+<span class="normal"><a href="#__codelineno-0-259">259</a></span>
+<span class="normal"><a href="#__codelineno-0-260">260</a></span>
+<span class="normal"><a href="#__codelineno-0-261">261</a></span>
+<span class="normal"><a href="#__codelineno-0-262">262</a></span>
+<span class="normal"><a href="#__codelineno-0-263">263</a></span>
+<span class="normal"><a href="#__codelineno-0-264">264</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="k">class</span> <span class="nc">Justice</span><span class="p">(</span><span class="n">Bio</span><span class="p">):</span>
 <a id="__codelineno-0-36" name="__codelineno-0-36"></a>    <span class="n">__prefix__</span> <span class="o">=</span> <span class="s2">&quot;sc&quot;</span>
 <a id="__codelineno-0-37" name="__codelineno-0-37"></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;justices&quot;</span>
 <a id="__codelineno-0-38" name="__codelineno-0-38"></a>    <span class="n">__indexes__</span> <span class="o">=</span> <span class="p">[</span>
@@ -942,193 +902,224 @@
 <a id="__codelineno-0-44" name="__codelineno-0-44"></a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
 <a id="__codelineno-0-45" name="__codelineno-0-45"></a>        <span class="o">...</span><span class="p">,</span>
 <a id="__codelineno-0-46" name="__codelineno-0-46"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Justice ID Identifier&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-47" name="__codelineno-0-47"></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Starting from 1, the integer represents the order of appointment to the Supreme Court.&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-48" name="__codelineno-0-48"></a>        <span class="n">ge</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<a id="__codelineno-0-49" name="__codelineno-0-49"></a>        <span class="n">lt</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-<a id="__codelineno-0-50" name="__codelineno-0-50"></a>        <span class="n">col</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
-<a id="__codelineno-0-51" name="__codelineno-0-51"></a>    <span class="p">)</span>
-<a id="__codelineno-0-52" name="__codelineno-0-52"></a>    <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-<a id="__codelineno-0-53" name="__codelineno-0-53"></a>        <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-54" name="__codelineno-0-54"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Alias&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-55" name="__codelineno-0-55"></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Means of matching ponente and voting strings to the justice id.&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-56" name="__codelineno-0-56"></a>        <span class="n">col</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-<a id="__codelineno-0-57" name="__codelineno-0-57"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-58" name="__codelineno-0-58"></a>    <span class="p">)</span>
-<a id="__codelineno-0-59" name="__codelineno-0-59"></a>    <span class="n">start_term</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-<a id="__codelineno-0-60" name="__codelineno-0-60"></a>        <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-61" name="__codelineno-0-61"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Start Term&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-62" name="__codelineno-0-62"></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Date of appointment.&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-63" name="__codelineno-0-63"></a>        <span class="n">col</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
-<a id="__codelineno-0-64" name="__codelineno-0-64"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-65" name="__codelineno-0-65"></a>    <span class="p">)</span>
-<a id="__codelineno-0-66" name="__codelineno-0-66"></a>    <span class="n">end_term</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-<a id="__codelineno-0-67" name="__codelineno-0-67"></a>        <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-68" name="__codelineno-0-68"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;End Term&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-69" name="__codelineno-0-69"></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Date of termination.&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-70" name="__codelineno-0-70"></a>        <span class="n">col</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
-<a id="__codelineno-0-71" name="__codelineno-0-71"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-72" name="__codelineno-0-72"></a>    <span class="p">)</span>
-<a id="__codelineno-0-73" name="__codelineno-0-73"></a>    <span class="n">chief_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-<a id="__codelineno-0-74" name="__codelineno-0-74"></a>        <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-75" name="__codelineno-0-75"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Date Appointed As Chief Justice&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-76" name="__codelineno-0-76"></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;When appointed, the extension title of the justice changes from &#39;J.&#39; to &#39;C.J&#39;. for cases that are decided after the date of appointment but before the date of retirement.&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-77" name="__codelineno-0-77"></a>        <span class="n">col</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
-<a id="__codelineno-0-78" name="__codelineno-0-78"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-79" name="__codelineno-0-79"></a>    <span class="p">)</span>
-<a id="__codelineno-0-80" name="__codelineno-0-80"></a>    <span class="n">birth_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-<a id="__codelineno-0-81" name="__codelineno-0-81"></a>        <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-82" name="__codelineno-0-82"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Date of Birth&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-83" name="__codelineno-0-83"></a>        <span class="n">description</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;The Birth Date is used to determine the retirement age of the justice. Under the 1987 constitution, this is </span><span class="si">{</span><span class="n">MAX_JUSTICE_AGE</span><span class="si">}</span><span class="s2">. There are missing dates: see Jose Generoso 41, Grant Trent 14, Fisher 19, Moir 20.&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-84" name="__codelineno-0-84"></a>        <span class="n">col</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
-<a id="__codelineno-0-85" name="__codelineno-0-85"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-86" name="__codelineno-0-86"></a>    <span class="p">)</span>
-<a id="__codelineno-0-87" name="__codelineno-0-87"></a>    <span class="n">retire_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-<a id="__codelineno-0-88" name="__codelineno-0-88"></a>        <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-89" name="__codelineno-0-89"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Mandatory Retirement Date&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-90" name="__codelineno-0-90"></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Based on the Birth Date, if it exists, it is the maximum term of service allowed by law.&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-91" name="__codelineno-0-91"></a>        <span class="n">col</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
-<a id="__codelineno-0-92" name="__codelineno-0-92"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-93" name="__codelineno-0-93"></a>    <span class="p">)</span>
-<a id="__codelineno-0-94" name="__codelineno-0-94"></a>    <span class="n">inactive_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-<a id="__codelineno-0-95" name="__codelineno-0-95"></a>        <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-96" name="__codelineno-0-96"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-97" name="__codelineno-0-97"></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Which date is earliest inactive date of the Justice, the retire date is set automatically but it is not guaranteed to to be the actual inactive date. So the inactive date is either that specified in the `end_term` or the `retire_date`, whichever is earlier.&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a>        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>            <span class="s2">&quot;Starting from 1, the integer represents the order of appointment&quot;</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>            <span class="s2">&quot; to the Supreme Court.&quot;</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a>        <span class="p">),</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>        <span class="n">ge</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>        <span class="n">lt</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53"></a>        <span class="n">col</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54"></a>    <span class="p">)</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55"></a>    <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a>        <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Alias&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58"></a>        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59"></a>            <span class="s2">&quot;Means of matching ponente and voting strings to the justice id.&quot;</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60"></a>        <span class="p">),</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61"></a>        <span class="n">col</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63"></a>    <span class="p">)</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64"></a>    <span class="n">start_term</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65"></a>        <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Start Term&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67"></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Date of appointment.&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-68" name="__codelineno-0-68"></a>        <span class="n">col</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-70" name="__codelineno-0-70"></a>    <span class="p">)</span>
+<a id="__codelineno-0-71" name="__codelineno-0-71"></a>    <span class="n">end_term</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72"></a>        <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;End Term&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-74" name="__codelineno-0-74"></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Date of termination.&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75"></a>        <span class="n">col</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+<a id="__codelineno-0-76" name="__codelineno-0-76"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-77" name="__codelineno-0-77"></a>    <span class="p">)</span>
+<a id="__codelineno-0-78" name="__codelineno-0-78"></a>    <span class="n">chief_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+<a id="__codelineno-0-79" name="__codelineno-0-79"></a>        <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-80" name="__codelineno-0-80"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Date Appointed As Chief Justice&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-81" name="__codelineno-0-81"></a>        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+<a id="__codelineno-0-82" name="__codelineno-0-82"></a>            <span class="s2">&quot;When appointed, the extension title of the justice changes from&quot;</span>
+<a id="__codelineno-0-83" name="__codelineno-0-83"></a>            <span class="s2">&quot; &#39;J.&#39; to &#39;C.J&#39;. for cases that are decided after the date of&quot;</span>
+<a id="__codelineno-0-84" name="__codelineno-0-84"></a>            <span class="s2">&quot; appointment but before the date of retirement.&quot;</span>
+<a id="__codelineno-0-85" name="__codelineno-0-85"></a>        <span class="p">),</span>
+<a id="__codelineno-0-86" name="__codelineno-0-86"></a>        <span class="n">col</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+<a id="__codelineno-0-87" name="__codelineno-0-87"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-88" name="__codelineno-0-88"></a>    <span class="p">)</span>
+<a id="__codelineno-0-89" name="__codelineno-0-89"></a>    <span class="n">birth_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+<a id="__codelineno-0-90" name="__codelineno-0-90"></a>        <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-91" name="__codelineno-0-91"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Date of Birth&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-92" name="__codelineno-0-92"></a>        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+<a id="__codelineno-0-93" name="__codelineno-0-93"></a>            <span class="s2">&quot;The Birth Date is used to determine the retirement age of the&quot;</span>
+<a id="__codelineno-0-94" name="__codelineno-0-94"></a>            <span class="s2">&quot; justice. Under the 1987 constitution, this is&quot;</span>
+<a id="__codelineno-0-95" name="__codelineno-0-95"></a>            <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">MAX_JUSTICE_AGE</span><span class="si">}</span><span class="s2">. There are missing dates: see Jose Generoso&quot;</span>
+<a id="__codelineno-0-96" name="__codelineno-0-96"></a>            <span class="s2">&quot; 41, Grant Trent 14, Fisher 19, Moir 20.&quot;</span>
+<a id="__codelineno-0-97" name="__codelineno-0-97"></a>        <span class="p">),</span>
 <a id="__codelineno-0-98" name="__codelineno-0-98"></a>        <span class="n">col</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
 <a id="__codelineno-0-99" name="__codelineno-0-99"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <a id="__codelineno-0-100" name="__codelineno-0-100"></a>    <span class="p">)</span>
-<a id="__codelineno-0-101" name="__codelineno-0-101"></a>
-<a id="__codelineno-0-102" name="__codelineno-0-102"></a>    <span class="nd">@validator</span><span class="p">(</span><span class="s2">&quot;retire_date&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-103" name="__codelineno-0-103"></a>    <span class="k">def</span> <span class="nf">retire_date_70_years</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-<a id="__codelineno-0-104" name="__codelineno-0-104"></a>        <span class="k">if</span> <span class="n">v</span> <span class="ow">and</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;birth_date&quot;</span><span class="p">]:</span>
-<a id="__codelineno-0-105" name="__codelineno-0-105"></a>            <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;birth_date&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">rd</span><span class="p">(</span><span class="n">years</span><span class="o">=</span><span class="n">MAX_JUSTICE_AGE</span><span class="p">)</span> <span class="o">!=</span> <span class="n">v</span><span class="p">:</span>
-<a id="__codelineno-0-106" name="__codelineno-0-106"></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must be 70 years from birth date.&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-107" name="__codelineno-0-107"></a>        <span class="k">return</span> <span class="n">v</span>
-<a id="__codelineno-0-108" name="__codelineno-0-108"></a>
-<a id="__codelineno-0-109" name="__codelineno-0-109"></a>    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-<a id="__codelineno-0-110" name="__codelineno-0-110"></a>        <span class="n">use_enum_values</span> <span class="o">=</span> <span class="kc">True</span>
-<a id="__codelineno-0-111" name="__codelineno-0-111"></a>
-<a id="__codelineno-0-112" name="__codelineno-0-112"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-0-113" name="__codelineno-0-113"></a>    <span class="k">def</span> <span class="nf">from_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
-<a id="__codelineno-0-114" name="__codelineno-0-114"></a>        <span class="k">def</span> <span class="nf">extract_date</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-115" name="__codelineno-0-115"></a>            <span class="k">return</span> <span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="k">if</span> <span class="n">text</span> <span class="k">else</span> <span class="kc">None</span>
-<a id="__codelineno-0-116" name="__codelineno-0-116"></a>
-<a id="__codelineno-0-117" name="__codelineno-0-117"></a>        <span class="n">bio</span> <span class="o">=</span> <span class="n">Bio</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<a id="__codelineno-0-118" name="__codelineno-0-118"></a>
-<a id="__codelineno-0-119" name="__codelineno-0-119"></a>        <span class="c1"># Not all have aliases; default needed</span>
-<a id="__codelineno-0-120" name="__codelineno-0-120"></a>        <span class="n">alias</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;Alias&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<a id="__codelineno-0-121" name="__codelineno-0-121"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">alias</span><span class="p">:</span>
-<a id="__codelineno-0-122" name="__codelineno-0-122"></a>            <span class="k">if</span> <span class="n">bio</span><span class="o">.</span><span class="n">last_name</span> <span class="ow">and</span> <span class="n">bio</span><span class="o">.</span><span class="n">suffix</span><span class="p">:</span>
-<a id="__codelineno-0-123" name="__codelineno-0-123"></a>                <span class="n">alias</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bio</span><span class="o">.</span><span class="n">last_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">bio</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<a id="__codelineno-0-101" name="__codelineno-0-101"></a>    <span class="n">retire_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+<a id="__codelineno-0-102" name="__codelineno-0-102"></a>        <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-103" name="__codelineno-0-103"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Mandatory Retirement Date&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-104" name="__codelineno-0-104"></a>        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+<a id="__codelineno-0-105" name="__codelineno-0-105"></a>            <span class="s2">&quot;Based on the Birth Date, if it exists, it is the maximum term of&quot;</span>
+<a id="__codelineno-0-106" name="__codelineno-0-106"></a>            <span class="s2">&quot; service allowed by law.&quot;</span>
+<a id="__codelineno-0-107" name="__codelineno-0-107"></a>        <span class="p">),</span>
+<a id="__codelineno-0-108" name="__codelineno-0-108"></a>        <span class="n">col</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+<a id="__codelineno-0-109" name="__codelineno-0-109"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-110" name="__codelineno-0-110"></a>    <span class="p">)</span>
+<a id="__codelineno-0-111" name="__codelineno-0-111"></a>    <span class="n">inactive_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+<a id="__codelineno-0-112" name="__codelineno-0-112"></a>        <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-113" name="__codelineno-0-113"></a>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-114" name="__codelineno-0-114"></a>        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+<a id="__codelineno-0-115" name="__codelineno-0-115"></a>            <span class="s2">&quot;Which date is earliest inactive date of the Justice, the retire&quot;</span>
+<a id="__codelineno-0-116" name="__codelineno-0-116"></a>            <span class="s2">&quot; date is set automatically but it is not guaranteed to to be the&quot;</span>
+<a id="__codelineno-0-117" name="__codelineno-0-117"></a>            <span class="s2">&quot; actual inactive date. So the inactive date is either that&quot;</span>
+<a id="__codelineno-0-118" name="__codelineno-0-118"></a>            <span class="s2">&quot; specified in the `end_term` or the `retire_date`, whichever is&quot;</span>
+<a id="__codelineno-0-119" name="__codelineno-0-119"></a>            <span class="s2">&quot; earlier.&quot;</span>
+<a id="__codelineno-0-120" name="__codelineno-0-120"></a>        <span class="p">),</span>
+<a id="__codelineno-0-121" name="__codelineno-0-121"></a>        <span class="n">col</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+<a id="__codelineno-0-122" name="__codelineno-0-122"></a>        <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-123" name="__codelineno-0-123"></a>    <span class="p">)</span>
 <a id="__codelineno-0-124" name="__codelineno-0-124"></a>
-<a id="__codelineno-0-125" name="__codelineno-0-125"></a>        <span class="n">retire_date</span> <span class="o">=</span> <span class="kc">None</span>
-<a id="__codelineno-0-126" name="__codelineno-0-126"></a>        <span class="k">if</span> <span class="n">dob</span> <span class="o">:=</span> <span class="n">extract_date</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;Born&quot;</span><span class="p">)):</span>
-<a id="__codelineno-0-127" name="__codelineno-0-127"></a>            <span class="n">retire_date</span> <span class="o">=</span> <span class="n">dob</span> <span class="o">+</span> <span class="n">rd</span><span class="p">(</span><span class="n">years</span><span class="o">=</span><span class="n">MAX_JUSTICE_AGE</span><span class="p">)</span>
-<a id="__codelineno-0-128" name="__codelineno-0-128"></a>
-<a id="__codelineno-0-129" name="__codelineno-0-129"></a>        <span class="c1"># Assume that the retire_date is latest possible date of inactivity but if end_date is present, use this instead</span>
-<a id="__codelineno-0-130" name="__codelineno-0-130"></a>        <span class="n">inactive_date</span> <span class="o">=</span> <span class="n">retire_date</span>
-<a id="__codelineno-0-131" name="__codelineno-0-131"></a>        <span class="k">if</span> <span class="n">end_date</span> <span class="o">:=</span> <span class="n">extract_date</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;End of term&quot;</span><span class="p">)):</span>
-<a id="__codelineno-0-132" name="__codelineno-0-132"></a>            <span class="n">inactive_date</span> <span class="o">=</span> <span class="n">end_date</span> <span class="ow">or</span> <span class="n">retire_date</span>
-<a id="__codelineno-0-133" name="__codelineno-0-133"></a>
-<a id="__codelineno-0-134" name="__codelineno-0-134"></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
-<a id="__codelineno-0-135" name="__codelineno-0-135"></a>            <span class="o">**</span><span class="n">bio</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-<a id="__codelineno-0-136" name="__codelineno-0-136"></a>            <span class="nb">id</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">),</span>
-<a id="__codelineno-0-137" name="__codelineno-0-137"></a>            <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">,</span>
-<a id="__codelineno-0-138" name="__codelineno-0-138"></a>            <span class="n">birth_date</span><span class="o">=</span><span class="n">dob</span><span class="p">,</span>
-<a id="__codelineno-0-139" name="__codelineno-0-139"></a>            <span class="n">start_term</span><span class="o">=</span><span class="n">extract_date</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;Start of term&quot;</span><span class="p">)),</span>
-<a id="__codelineno-0-140" name="__codelineno-0-140"></a>            <span class="n">end_term</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span>
-<a id="__codelineno-0-141" name="__codelineno-0-141"></a>            <span class="n">chief_date</span><span class="o">=</span><span class="n">extract_date</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;Appointed chief&quot;</span><span class="p">)),</span>
-<a id="__codelineno-0-142" name="__codelineno-0-142"></a>            <span class="n">retire_date</span><span class="o">=</span><span class="n">retire_date</span><span class="p">,</span>
-<a id="__codelineno-0-143" name="__codelineno-0-143"></a>            <span class="n">inactive_date</span><span class="o">=</span><span class="n">inactive_date</span><span class="p">,</span>
-<a id="__codelineno-0-144" name="__codelineno-0-144"></a>        <span class="p">)</span>
-<a id="__codelineno-0-145" name="__codelineno-0-145"></a>
-<a id="__codelineno-0-146" name="__codelineno-0-146"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-0-147" name="__codelineno-0-147"></a>    <span class="k">def</span> <span class="nf">validate_from_api</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s2">&quot;Justice&quot;</span><span class="p">]:</span>
-<a id="__codelineno-0-148" name="__codelineno-0-148"></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">from_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">get_justices_from_api</span><span class="p">())</span>
-<a id="__codelineno-0-149" name="__codelineno-0-149"></a>
-<a id="__codelineno-0-150" name="__codelineno-0-150"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-0-151" name="__codelineno-0-151"></a>    <span class="k">def</span> <span class="nf">extract_as_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
-<a id="__codelineno-0-152" name="__codelineno-0-152"></a>        <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">validate_from_api</span><span class="p">()]</span>
-<a id="__codelineno-0-153" name="__codelineno-0-153"></a>
-<a id="__codelineno-0-154" name="__codelineno-0-154"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-0-155" name="__codelineno-0-155"></a>    <span class="k">def</span> <span class="nf">set_local_from_api</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">local</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">JUSTICE_LOCAL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
-<a id="__codelineno-0-156" name="__codelineno-0-156"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a local .yaml file containing the list of validated Justices.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-157" name="__codelineno-0-157"></a>        <span class="k">if</span> <span class="n">local</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-<a id="__codelineno-0-158" name="__codelineno-0-158"></a>            <span class="k">return</span> <span class="n">local</span>
-<a id="__codelineno-0-159" name="__codelineno-0-159"></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writefile</span><span class="p">:</span>
-<a id="__codelineno-0-160" name="__codelineno-0-160"></a>            <span class="n">yaml</span><span class="o">.</span><span class="n">safe_dump</span><span class="p">(</span>
-<a id="__codelineno-0-161" name="__codelineno-0-161"></a>                <span class="n">data</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">extract_as_list</span><span class="p">(),</span>
-<a id="__codelineno-0-162" name="__codelineno-0-162"></a>                <span class="n">stream</span><span class="o">=</span><span class="n">writefile</span><span class="p">,</span>
-<a id="__codelineno-0-163" name="__codelineno-0-163"></a>                <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<a id="__codelineno-0-164" name="__codelineno-0-164"></a>                <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<a id="__codelineno-0-165" name="__codelineno-0-165"></a>            <span class="p">)</span>
-<a id="__codelineno-0-166" name="__codelineno-0-166"></a>            <span class="k">return</span> <span class="n">local</span>
-<a id="__codelineno-0-167" name="__codelineno-0-167"></a>
-<a id="__codelineno-0-168" name="__codelineno-0-168"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-0-169" name="__codelineno-0-169"></a>    <span class="k">def</span> <span class="nf">init_justices_tbl</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">JUSTICE_LOCAL</span><span class="p">):</span>
-<a id="__codelineno-0-170" name="__codelineno-0-170"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a table containing names and ids of justices; alter the original decision&#39;s table for it to include a justice id.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-171" name="__codelineno-0-171"></a>        <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">add_records</span><span class="p">(</span><span class="n">Justice</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()))</span>
+<a id="__codelineno-0-125" name="__codelineno-0-125"></a>    <span class="nd">@validator</span><span class="p">(</span><span class="s2">&quot;retire_date&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-126" name="__codelineno-0-126"></a>    <span class="k">def</span> <span class="nf">retire_date_70_years</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+<a id="__codelineno-0-127" name="__codelineno-0-127"></a>        <span class="k">if</span> <span class="n">v</span> <span class="ow">and</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;birth_date&quot;</span><span class="p">]:</span>
+<a id="__codelineno-0-128" name="__codelineno-0-128"></a>            <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;birth_date&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">rd</span><span class="p">(</span><span class="n">years</span><span class="o">=</span><span class="n">MAX_JUSTICE_AGE</span><span class="p">)</span> <span class="o">!=</span> <span class="n">v</span><span class="p">:</span>
+<a id="__codelineno-0-129" name="__codelineno-0-129"></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must be 70 years from birth date.&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-130" name="__codelineno-0-130"></a>        <span class="k">return</span> <span class="n">v</span>
+<a id="__codelineno-0-131" name="__codelineno-0-131"></a>
+<a id="__codelineno-0-132" name="__codelineno-0-132"></a>    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+<a id="__codelineno-0-133" name="__codelineno-0-133"></a>        <span class="n">use_enum_values</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-0-134" name="__codelineno-0-134"></a>
+<a id="__codelineno-0-135" name="__codelineno-0-135"></a>    <span class="nd">@classmethod</span>
+<a id="__codelineno-0-136" name="__codelineno-0-136"></a>    <span class="k">def</span> <span class="nf">from_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<a id="__codelineno-0-137" name="__codelineno-0-137"></a>        <span class="k">def</span> <span class="nf">extract_date</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-138" name="__codelineno-0-138"></a>            <span class="k">return</span> <span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="k">if</span> <span class="n">text</span> <span class="k">else</span> <span class="kc">None</span>
+<a id="__codelineno-0-139" name="__codelineno-0-139"></a>
+<a id="__codelineno-0-140" name="__codelineno-0-140"></a>        <span class="n">bio</span> <span class="o">=</span> <span class="n">Bio</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-0-141" name="__codelineno-0-141"></a>
+<a id="__codelineno-0-142" name="__codelineno-0-142"></a>        <span class="c1"># Not all have aliases; default needed</span>
+<a id="__codelineno-0-143" name="__codelineno-0-143"></a>        <span class="n">alias</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;Alias&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<a id="__codelineno-0-144" name="__codelineno-0-144"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">alias</span><span class="p">:</span>
+<a id="__codelineno-0-145" name="__codelineno-0-145"></a>            <span class="k">if</span> <span class="n">bio</span><span class="o">.</span><span class="n">last_name</span> <span class="ow">and</span> <span class="n">bio</span><span class="o">.</span><span class="n">suffix</span><span class="p">:</span>
+<a id="__codelineno-0-146" name="__codelineno-0-146"></a>                <span class="n">alias</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bio</span><span class="o">.</span><span class="n">last_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">bio</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<a id="__codelineno-0-147" name="__codelineno-0-147"></a>
+<a id="__codelineno-0-148" name="__codelineno-0-148"></a>        <span class="n">retire_date</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-0-149" name="__codelineno-0-149"></a>        <span class="k">if</span> <span class="n">dob</span> <span class="o">:=</span> <span class="n">extract_date</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;Born&quot;</span><span class="p">)):</span>
+<a id="__codelineno-0-150" name="__codelineno-0-150"></a>            <span class="n">retire_date</span> <span class="o">=</span> <span class="n">dob</span> <span class="o">+</span> <span class="n">rd</span><span class="p">(</span><span class="n">years</span><span class="o">=</span><span class="n">MAX_JUSTICE_AGE</span><span class="p">)</span>
+<a id="__codelineno-0-151" name="__codelineno-0-151"></a>
+<a id="__codelineno-0-152" name="__codelineno-0-152"></a>        <span class="c1"># Assume that the retire_date is latest possible date of inactivity but if end_date is present, use this instead</span>
+<a id="__codelineno-0-153" name="__codelineno-0-153"></a>        <span class="n">inactive_date</span> <span class="o">=</span> <span class="n">retire_date</span>
+<a id="__codelineno-0-154" name="__codelineno-0-154"></a>        <span class="k">if</span> <span class="n">end_date</span> <span class="o">:=</span> <span class="n">extract_date</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;End of term&quot;</span><span class="p">)):</span>
+<a id="__codelineno-0-155" name="__codelineno-0-155"></a>            <span class="n">inactive_date</span> <span class="o">=</span> <span class="n">end_date</span> <span class="ow">or</span> <span class="n">retire_date</span>
+<a id="__codelineno-0-156" name="__codelineno-0-156"></a>
+<a id="__codelineno-0-157" name="__codelineno-0-157"></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+<a id="__codelineno-0-158" name="__codelineno-0-158"></a>            <span class="o">**</span><span class="n">bio</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<a id="__codelineno-0-159" name="__codelineno-0-159"></a>            <span class="nb">id</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">),</span>
+<a id="__codelineno-0-160" name="__codelineno-0-160"></a>            <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">,</span>
+<a id="__codelineno-0-161" name="__codelineno-0-161"></a>            <span class="n">birth_date</span><span class="o">=</span><span class="n">dob</span><span class="p">,</span>
+<a id="__codelineno-0-162" name="__codelineno-0-162"></a>            <span class="n">start_term</span><span class="o">=</span><span class="n">extract_date</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;Start of term&quot;</span><span class="p">)),</span>
+<a id="__codelineno-0-163" name="__codelineno-0-163"></a>            <span class="n">end_term</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span>
+<a id="__codelineno-0-164" name="__codelineno-0-164"></a>            <span class="n">chief_date</span><span class="o">=</span><span class="n">extract_date</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;Appointed chief&quot;</span><span class="p">)),</span>
+<a id="__codelineno-0-165" name="__codelineno-0-165"></a>            <span class="n">retire_date</span><span class="o">=</span><span class="n">retire_date</span><span class="p">,</span>
+<a id="__codelineno-0-166" name="__codelineno-0-166"></a>            <span class="n">inactive_date</span><span class="o">=</span><span class="n">inactive_date</span><span class="p">,</span>
+<a id="__codelineno-0-167" name="__codelineno-0-167"></a>        <span class="p">)</span>
+<a id="__codelineno-0-168" name="__codelineno-0-168"></a>
+<a id="__codelineno-0-169" name="__codelineno-0-169"></a>    <span class="nd">@classmethod</span>
+<a id="__codelineno-0-170" name="__codelineno-0-170"></a>    <span class="k">def</span> <span class="nf">validate_from_api</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s2">&quot;Justice&quot;</span><span class="p">]:</span>
+<a id="__codelineno-0-171" name="__codelineno-0-171"></a>        <span class="k">return</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">from_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">get_justices_from_api</span><span class="p">())</span>
 <a id="__codelineno-0-172" name="__codelineno-0-172"></a>
 <a id="__codelineno-0-173" name="__codelineno-0-173"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-0-174" name="__codelineno-0-174"></a>    <span class="k">def</span> <span class="nf">get_active_on_date</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">target_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
-<a id="__codelineno-0-175" name="__codelineno-0-175"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Get list of justices that have been appointed before the `target date` and have not yet become inactive.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-176" name="__codelineno-0-176"></a>        <span class="k">try</span><span class="p">:</span>
-<a id="__codelineno-0-177" name="__codelineno-0-177"></a>            <span class="n">valid_date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">target_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-<a id="__codelineno-0-178" name="__codelineno-0-178"></a>        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-<a id="__codelineno-0-179" name="__codelineno-0-179"></a>            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Need </span><span class="si">{</span><span class="n">target_date</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-180" name="__codelineno-0-180"></a>        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span>
-<a id="__codelineno-0-181" name="__codelineno-0-181"></a>            <span class="n">c</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">rows_where</span><span class="p">(</span>
-<a id="__codelineno-0-182" name="__codelineno-0-182"></a>                <span class="s2">&quot;inactive_date &gt; :date and :date &gt; start_term&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-183" name="__codelineno-0-183"></a>                <span class="p">{</span><span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">valid_date</span><span class="p">},</span>
-<a id="__codelineno-0-184" name="__codelineno-0-184"></a>                <span class="n">select</span><span class="o">=</span><span class="s2">&quot;id, lower(last_name) surname, alias, start_term, inactive_date, chief_date&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-185" name="__codelineno-0-185"></a>                <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;start_term desc&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-186" name="__codelineno-0-186"></a>            <span class="p">)</span>
-<a id="__codelineno-0-187" name="__codelineno-0-187"></a>        <span class="p">)</span>
-<a id="__codelineno-0-188" name="__codelineno-0-188"></a>
-<a id="__codelineno-0-189" name="__codelineno-0-189"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-0-190" name="__codelineno-0-190"></a>    <span class="k">def</span> <span class="nf">get_justice_on_date</span><span class="p">(</span>
-<a id="__codelineno-0-191" name="__codelineno-0-191"></a>        <span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">target_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cleaned_name</span><span class="p">:</span> <span class="nb">str</span>
-<a id="__codelineno-0-192" name="__codelineno-0-192"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-193" name="__codelineno-0-193"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Based on `get_active_on_date()`, match the cleaned_name to either the alias of the justice or the justice&#39;s last name; on match, determine whether the designation should be &#39;C.J.&#39; or &#39;J.&#39;&quot;&quot;&quot;</span>
-<a id="__codelineno-0-194" name="__codelineno-0-194"></a>        <span class="n">candidate_options</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_active_on_date</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">target_date</span><span class="p">)</span>
-<a id="__codelineno-0-195" name="__codelineno-0-195"></a>        <span class="n">opts</span> <span class="o">=</span> <span class="p">[]</span>
-<a id="__codelineno-0-196" name="__codelineno-0-196"></a>        <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidate_options</span><span class="p">:</span>
-<a id="__codelineno-0-197" name="__codelineno-0-197"></a>            <span class="k">if</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cleaned_name</span><span class="p">:</span>
-<a id="__codelineno-0-198" name="__codelineno-0-198"></a>                <span class="n">opts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
-<a id="__codelineno-0-199" name="__codelineno-0-199"></a>                <span class="k">continue</span>
-<a id="__codelineno-0-200" name="__codelineno-0-200"></a>            <span class="k">elif</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cleaned_name</span><span class="p">:</span>
-<a id="__codelineno-0-201" name="__codelineno-0-201"></a>                <span class="n">opts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
-<a id="__codelineno-0-202" name="__codelineno-0-202"></a>                <span class="k">continue</span>
-<a id="__codelineno-0-203" name="__codelineno-0-203"></a>        <span class="k">if</span> <span class="n">opts</span><span class="p">:</span>
-<a id="__codelineno-0-204" name="__codelineno-0-204"></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-<a id="__codelineno-0-205" name="__codelineno-0-205"></a>                <span class="n">res</span> <span class="o">=</span> <span class="n">opts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<a id="__codelineno-0-206" name="__codelineno-0-206"></a>                <span class="n">res</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;alias&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-207" name="__codelineno-0-207"></a>                <span class="n">res</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
-<a id="__codelineno-0-208" name="__codelineno-0-208"></a>                <span class="n">res</span><span class="p">[</span><span class="s2">&quot;designation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;J.&quot;</span>
-<a id="__codelineno-0-209" name="__codelineno-0-209"></a>                <span class="n">target</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">target_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
-<a id="__codelineno-0-210" name="__codelineno-0-210"></a>                <span class="k">if</span> <span class="n">chief_date</span> <span class="o">:=</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chief_date&quot;</span><span class="p">):</span>
-<a id="__codelineno-0-211" name="__codelineno-0-211"></a>                    <span class="n">s</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">chief_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
-<a id="__codelineno-0-212" name="__codelineno-0-212"></a>                    <span class="n">e</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s2">&quot;inactive_date&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
-<a id="__codelineno-0-213" name="__codelineno-0-213"></a>                    <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">:</span>
-<a id="__codelineno-0-214" name="__codelineno-0-214"></a>                        <span class="n">res</span><span class="p">[</span><span class="s2">&quot;designation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;C.J.&quot;</span>
-<a id="__codelineno-0-215" name="__codelineno-0-215"></a>                <span class="k">return</span> <span class="n">res</span>
-<a id="__codelineno-0-216" name="__codelineno-0-216"></a>            <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-217" name="__codelineno-0-217"></a>                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Many </span><span class="si">{</span><span class="n">opts</span><span class="si">=}</span><span class="s2"> for </span><span class="si">{</span><span class="n">cleaned_name</span><span class="si">=}</span><span class="s2"> on </span><span class="si">{</span><span class="n">target_date</span><span class="si">=}</span><span class="s2">&quot;</span>
-<a id="__codelineno-0-218" name="__codelineno-0-218"></a>                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-<a id="__codelineno-0-219" name="__codelineno-0-219"></a>        <span class="k">return</span> <span class="kc">None</span>
-<a id="__codelineno-0-220" name="__codelineno-0-220"></a>
-<a id="__codelineno-0-221" name="__codelineno-0-221"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-0-222" name="__codelineno-0-222"></a>    <span class="k">def</span> <span class="nf">view_chiefs</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
-<a id="__codelineno-0-223" name="__codelineno-0-223"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Get general information of the chief justices and their dates of appointment.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-224" name="__codelineno-0-224"></a>        <span class="n">view</span> <span class="o">=</span> <span class="n">CHIEF_DATES_VIEW</span>
-<a id="__codelineno-0-225" name="__codelineno-0-225"></a>        <span class="k">if</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">view_names</span><span class="p">():</span>
-<a id="__codelineno-0-226" name="__codelineno-0-226"></a>            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">view</span><span class="p">]</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
-<a id="__codelineno-0-227" name="__codelineno-0-227"></a>        <span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_view</span><span class="p">(</span>
-<a id="__codelineno-0-228" name="__codelineno-0-228"></a>            <span class="n">view</span><span class="p">,</span>
-<a id="__codelineno-0-229" name="__codelineno-0-229"></a>            <span class="n">sql</span><span class="o">=</span><span class="n">sc_jinja_env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;chief_dates.sql&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
-<a id="__codelineno-0-230" name="__codelineno-0-230"></a>                <span class="n">justice_table</span><span class="o">=</span><span class="n">Justice</span><span class="o">.</span><span class="n">__tablename__</span>
-<a id="__codelineno-0-231" name="__codelineno-0-231"></a>            <span class="p">),</span>
-<a id="__codelineno-0-232" name="__codelineno-0-232"></a>        <span class="p">)</span>
-<a id="__codelineno-0-233" name="__codelineno-0-233"></a>        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">view</span><span class="p">]</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+<a id="__codelineno-0-174" name="__codelineno-0-174"></a>    <span class="k">def</span> <span class="nf">extract_as_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<a id="__codelineno-0-175" name="__codelineno-0-175"></a>        <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">validate_from_api</span><span class="p">()]</span>
+<a id="__codelineno-0-176" name="__codelineno-0-176"></a>
+<a id="__codelineno-0-177" name="__codelineno-0-177"></a>    <span class="nd">@classmethod</span>
+<a id="__codelineno-0-178" name="__codelineno-0-178"></a>    <span class="k">def</span> <span class="nf">set_local_from_api</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">local</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">JUSTICE_LOCAL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<a id="__codelineno-0-179" name="__codelineno-0-179"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a local .yaml file containing the list of validated Justices.</span>
+<a id="__codelineno-0-180" name="__codelineno-0-180"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-0-181" name="__codelineno-0-181"></a>        <span class="k">if</span> <span class="n">local</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+<a id="__codelineno-0-182" name="__codelineno-0-182"></a>            <span class="k">return</span> <span class="n">local</span>
+<a id="__codelineno-0-183" name="__codelineno-0-183"></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writefile</span><span class="p">:</span>
+<a id="__codelineno-0-184" name="__codelineno-0-184"></a>            <span class="n">yaml</span><span class="o">.</span><span class="n">safe_dump</span><span class="p">(</span>
+<a id="__codelineno-0-185" name="__codelineno-0-185"></a>                <span class="n">data</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">extract_as_list</span><span class="p">(),</span>
+<a id="__codelineno-0-186" name="__codelineno-0-186"></a>                <span class="n">stream</span><span class="o">=</span><span class="n">writefile</span><span class="p">,</span>
+<a id="__codelineno-0-187" name="__codelineno-0-187"></a>                <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-188" name="__codelineno-0-188"></a>                <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-189" name="__codelineno-0-189"></a>            <span class="p">)</span>
+<a id="__codelineno-0-190" name="__codelineno-0-190"></a>            <span class="k">return</span> <span class="n">local</span>
+<a id="__codelineno-0-191" name="__codelineno-0-191"></a>
+<a id="__codelineno-0-192" name="__codelineno-0-192"></a>    <span class="nd">@classmethod</span>
+<a id="__codelineno-0-193" name="__codelineno-0-193"></a>    <span class="k">def</span> <span class="nf">init_justices_tbl</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">JUSTICE_LOCAL</span><span class="p">):</span>
+<a id="__codelineno-0-194" name="__codelineno-0-194"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a table containing names and ids of justices; alter the original decision&#39;s table for it to include a justice id.</span>
+<a id="__codelineno-0-195" name="__codelineno-0-195"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-0-196" name="__codelineno-0-196"></a>        <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">add_records</span><span class="p">(</span><span class="n">Justice</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()))</span>
+<a id="__codelineno-0-197" name="__codelineno-0-197"></a>
+<a id="__codelineno-0-198" name="__codelineno-0-198"></a>    <span class="nd">@classmethod</span>
+<a id="__codelineno-0-199" name="__codelineno-0-199"></a>    <span class="k">def</span> <span class="nf">get_active_on_date</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">target_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<a id="__codelineno-0-200" name="__codelineno-0-200"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Get list of justices that have been appointed before the `target date` and have not yet become inactive.</span>
+<a id="__codelineno-0-201" name="__codelineno-0-201"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-0-202" name="__codelineno-0-202"></a>        <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-0-203" name="__codelineno-0-203"></a>            <span class="n">valid_date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">target_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+<a id="__codelineno-0-204" name="__codelineno-0-204"></a>        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<a id="__codelineno-0-205" name="__codelineno-0-205"></a>            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Need </span><span class="si">{</span><span class="n">target_date</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-206" name="__codelineno-0-206"></a>        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span>
+<a id="__codelineno-0-207" name="__codelineno-0-207"></a>            <span class="n">c</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">rows_where</span><span class="p">(</span>
+<a id="__codelineno-0-208" name="__codelineno-0-208"></a>                <span class="s2">&quot;inactive_date &gt; :date and :date &gt; start_term&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-209" name="__codelineno-0-209"></a>                <span class="p">{</span><span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">valid_date</span><span class="p">},</span>
+<a id="__codelineno-0-210" name="__codelineno-0-210"></a>                <span class="n">select</span><span class="o">=</span><span class="p">(</span>
+<a id="__codelineno-0-211" name="__codelineno-0-211"></a>                    <span class="s2">&quot;id, lower(last_name) surname, alias, start_term,&quot;</span>
+<a id="__codelineno-0-212" name="__codelineno-0-212"></a>                    <span class="s2">&quot; inactive_date, chief_date&quot;</span>
+<a id="__codelineno-0-213" name="__codelineno-0-213"></a>                <span class="p">),</span>
+<a id="__codelineno-0-214" name="__codelineno-0-214"></a>                <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;start_term desc&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-215" name="__codelineno-0-215"></a>            <span class="p">)</span>
+<a id="__codelineno-0-216" name="__codelineno-0-216"></a>        <span class="p">)</span>
+<a id="__codelineno-0-217" name="__codelineno-0-217"></a>
+<a id="__codelineno-0-218" name="__codelineno-0-218"></a>    <span class="nd">@classmethod</span>
+<a id="__codelineno-0-219" name="__codelineno-0-219"></a>    <span class="k">def</span> <span class="nf">get_justice_on_date</span><span class="p">(</span>
+<a id="__codelineno-0-220" name="__codelineno-0-220"></a>        <span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">target_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cleaned_name</span><span class="p">:</span> <span class="nb">str</span>
+<a id="__codelineno-0-221" name="__codelineno-0-221"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-222" name="__codelineno-0-222"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Based on `get_active_on_date()`, match the cleaned_name to either the alias of the justice or the justice&#39;s last name; on match, determine whether the designation should be &#39;C.J.&#39; or &#39;J.&#39;</span>
+<a id="__codelineno-0-223" name="__codelineno-0-223"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-0-224" name="__codelineno-0-224"></a>        <span class="n">candidate_options</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_active_on_date</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">target_date</span><span class="p">)</span>
+<a id="__codelineno-0-225" name="__codelineno-0-225"></a>        <span class="n">opts</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-226" name="__codelineno-0-226"></a>        <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidate_options</span><span class="p">:</span>
+<a id="__codelineno-0-227" name="__codelineno-0-227"></a>            <span class="k">if</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cleaned_name</span><span class="p">:</span>
+<a id="__codelineno-0-228" name="__codelineno-0-228"></a>                <span class="n">opts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+<a id="__codelineno-0-229" name="__codelineno-0-229"></a>                <span class="k">continue</span>
+<a id="__codelineno-0-230" name="__codelineno-0-230"></a>            <span class="k">elif</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cleaned_name</span><span class="p">:</span>
+<a id="__codelineno-0-231" name="__codelineno-0-231"></a>                <span class="n">opts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+<a id="__codelineno-0-232" name="__codelineno-0-232"></a>                <span class="k">continue</span>
+<a id="__codelineno-0-233" name="__codelineno-0-233"></a>        <span class="k">if</span> <span class="n">opts</span><span class="p">:</span>
+<a id="__codelineno-0-234" name="__codelineno-0-234"></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-0-235" name="__codelineno-0-235"></a>                <span class="n">res</span> <span class="o">=</span> <span class="n">opts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-0-236" name="__codelineno-0-236"></a>                <span class="n">res</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;alias&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-237" name="__codelineno-0-237"></a>                <span class="n">res</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+<a id="__codelineno-0-238" name="__codelineno-0-238"></a>                <span class="n">res</span><span class="p">[</span><span class="s2">&quot;designation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;J.&quot;</span>
+<a id="__codelineno-0-239" name="__codelineno-0-239"></a>                <span class="n">target</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">target_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+<a id="__codelineno-0-240" name="__codelineno-0-240"></a>                <span class="k">if</span> <span class="n">chief_date</span> <span class="o">:=</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chief_date&quot;</span><span class="p">):</span>
+<a id="__codelineno-0-241" name="__codelineno-0-241"></a>                    <span class="n">s</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">chief_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+<a id="__codelineno-0-242" name="__codelineno-0-242"></a>                    <span class="n">e</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s2">&quot;inactive_date&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+<a id="__codelineno-0-243" name="__codelineno-0-243"></a>                    <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-0-244" name="__codelineno-0-244"></a>                        <span class="n">res</span><span class="p">[</span><span class="s2">&quot;designation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;C.J.&quot;</span>
+<a id="__codelineno-0-245" name="__codelineno-0-245"></a>                <span class="k">return</span> <span class="n">res</span>
+<a id="__codelineno-0-246" name="__codelineno-0-246"></a>            <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-247" name="__codelineno-0-247"></a>                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Many </span><span class="si">{</span><span class="n">opts</span><span class="si">=}</span><span class="s2"> for </span><span class="si">{</span><span class="n">cleaned_name</span><span class="si">=}</span><span class="s2"> on </span><span class="si">{</span><span class="n">target_date</span><span class="si">=}</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-248" name="__codelineno-0-248"></a>                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<a id="__codelineno-0-249" name="__codelineno-0-249"></a>        <span class="k">return</span> <span class="kc">None</span>
+<a id="__codelineno-0-250" name="__codelineno-0-250"></a>
+<a id="__codelineno-0-251" name="__codelineno-0-251"></a>    <span class="nd">@classmethod</span>
+<a id="__codelineno-0-252" name="__codelineno-0-252"></a>    <span class="k">def</span> <span class="nf">view_chiefs</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<a id="__codelineno-0-253" name="__codelineno-0-253"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Get general information of the chief justices and their dates of appointment.</span>
+<a id="__codelineno-0-254" name="__codelineno-0-254"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-0-255" name="__codelineno-0-255"></a>        <span class="n">view</span> <span class="o">=</span> <span class="n">CHIEF_DATES_VIEW</span>
+<a id="__codelineno-0-256" name="__codelineno-0-256"></a>        <span class="k">if</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">view_names</span><span class="p">():</span>
+<a id="__codelineno-0-257" name="__codelineno-0-257"></a>            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">view</span><span class="p">]</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+<a id="__codelineno-0-258" name="__codelineno-0-258"></a>        <span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_view</span><span class="p">(</span>
+<a id="__codelineno-0-259" name="__codelineno-0-259"></a>            <span class="n">view</span><span class="p">,</span>
+<a id="__codelineno-0-260" name="__codelineno-0-260"></a>            <span class="n">sql</span><span class="o">=</span><span class="n">sc_jinja_env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;chief_dates.sql&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+<a id="__codelineno-0-261" name="__codelineno-0-261"></a>                <span class="n">justice_table</span><span class="o">=</span><span class="n">Justice</span><span class="o">.</span><span class="n">__tablename__</span>
+<a id="__codelineno-0-262" name="__codelineno-0-262"></a>            <span class="p">),</span>
+<a id="__codelineno-0-263" name="__codelineno-0-263"></a>        <span class="p">)</span>
+<a id="__codelineno-0-264" name="__codelineno-0-264"></a>        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">view</span><span class="p">]</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -1142,20 +1133,20 @@
 
 
 
-<h4 id="corpus_base.justice.Justice-functions">Functions</h4>
+<h5 id="corpus_base.justice.Justice-functions">Functions</h5>
 
 <div class="doc doc-object doc-function">
 
 
 
-<h5 id="corpus_base.justice.Justice.get_active_on_date" class="doc doc-heading">
+<h6 id="corpus_base.justice.Justice.get_active_on_date" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">get_active_on_date</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">target_date</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
   </span>
 
-</h5>
+</h6>
 
 
   <div class="doc doc-contents ">
@@ -1164,71 +1155,7 @@
 
       <details class="quote">
         <summary>Source code in <code>corpus_base/justice.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-173">173</a></span>
-<span class="normal"><a href="#__codelineno-0-174">174</a></span>
-<span class="normal"><a href="#__codelineno-0-175">175</a></span>
-<span class="normal"><a href="#__codelineno-0-176">176</a></span>
-<span class="normal"><a href="#__codelineno-0-177">177</a></span>
-<span class="normal"><a href="#__codelineno-0-178">178</a></span>
-<span class="normal"><a href="#__codelineno-0-179">179</a></span>
-<span class="normal"><a href="#__codelineno-0-180">180</a></span>
-<span class="normal"><a href="#__codelineno-0-181">181</a></span>
-<span class="normal"><a href="#__codelineno-0-182">182</a></span>
-<span class="normal"><a href="#__codelineno-0-183">183</a></span>
-<span class="normal"><a href="#__codelineno-0-184">184</a></span>
-<span class="normal"><a href="#__codelineno-0-185">185</a></span>
-<span class="normal"><a href="#__codelineno-0-186">186</a></span>
-<span class="normal"><a href="#__codelineno-0-187">187</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-173" name="__codelineno-0-173"></a><span class="nd">@classmethod</span>
-<a id="__codelineno-0-174" name="__codelineno-0-174"></a><span class="k">def</span> <span class="nf">get_active_on_date</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">target_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
-<a id="__codelineno-0-175" name="__codelineno-0-175"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get list of justices that have been appointed before the `target date` and have not yet become inactive.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-176" name="__codelineno-0-176"></a>    <span class="k">try</span><span class="p">:</span>
-<a id="__codelineno-0-177" name="__codelineno-0-177"></a>        <span class="n">valid_date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">target_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-<a id="__codelineno-0-178" name="__codelineno-0-178"></a>    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-<a id="__codelineno-0-179" name="__codelineno-0-179"></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Need </span><span class="si">{</span><span class="n">target_date</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-180" name="__codelineno-0-180"></a>    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span>
-<a id="__codelineno-0-181" name="__codelineno-0-181"></a>        <span class="n">c</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">rows_where</span><span class="p">(</span>
-<a id="__codelineno-0-182" name="__codelineno-0-182"></a>            <span class="s2">&quot;inactive_date &gt; :date and :date &gt; start_term&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-183" name="__codelineno-0-183"></a>            <span class="p">{</span><span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">valid_date</span><span class="p">},</span>
-<a id="__codelineno-0-184" name="__codelineno-0-184"></a>            <span class="n">select</span><span class="o">=</span><span class="s2">&quot;id, lower(last_name) surname, alias, start_term, inactive_date, chief_date&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-185" name="__codelineno-0-185"></a>            <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;start_term desc&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-186" name="__codelineno-0-186"></a>        <span class="p">)</span>
-<a id="__codelineno-0-187" name="__codelineno-0-187"></a>    <span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h5 id="corpus_base.justice.Justice.get_justice_on_date" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_justice_on_date</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">target_date</span><span class="p">,</span> <span class="n">cleaned_name</span><span class="p">)</span></code>
-  
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
-  </span>
-
-</h5>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Based on <code>get_active_on_date()</code>, match the cleaned_name to either the alias of the justice or the justice's last name; on match, determine whether the designation should be 'C.J.' or 'J.'</p>
-
-      <details class="quote">
-        <summary>Source code in <code>corpus_base/justice.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-189">189</a></span>
-<span class="normal"><a href="#__codelineno-0-190">190</a></span>
-<span class="normal"><a href="#__codelineno-0-191">191</a></span>
-<span class="normal"><a href="#__codelineno-0-192">192</a></span>
-<span class="normal"><a href="#__codelineno-0-193">193</a></span>
-<span class="normal"><a href="#__codelineno-0-194">194</a></span>
-<span class="normal"><a href="#__codelineno-0-195">195</a></span>
-<span class="normal"><a href="#__codelineno-0-196">196</a></span>
-<span class="normal"><a href="#__codelineno-0-197">197</a></span>
-<span class="normal"><a href="#__codelineno-0-198">198</a></span>
+        <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-198">198</a></span>
 <span class="normal"><a href="#__codelineno-0-199">199</a></span>
 <span class="normal"><a href="#__codelineno-0-200">200</a></span>
 <span class="normal"><a href="#__codelineno-0-201">201</a></span>
@@ -1246,40 +1173,25 @@
 <span class="normal"><a href="#__codelineno-0-213">213</a></span>
 <span class="normal"><a href="#__codelineno-0-214">214</a></span>
 <span class="normal"><a href="#__codelineno-0-215">215</a></span>
-<span class="normal"><a href="#__codelineno-0-216">216</a></span>
-<span class="normal"><a href="#__codelineno-0-217">217</a></span>
-<span class="normal"><a href="#__codelineno-0-218">218</a></span>
-<span class="normal"><a href="#__codelineno-0-219">219</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-189" name="__codelineno-0-189"></a><span class="nd">@classmethod</span>
-<a id="__codelineno-0-190" name="__codelineno-0-190"></a><span class="k">def</span> <span class="nf">get_justice_on_date</span><span class="p">(</span>
-<a id="__codelineno-0-191" name="__codelineno-0-191"></a>    <span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">target_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cleaned_name</span><span class="p">:</span> <span class="nb">str</span>
-<a id="__codelineno-0-192" name="__codelineno-0-192"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-193" name="__codelineno-0-193"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Based on `get_active_on_date()`, match the cleaned_name to either the alias of the justice or the justice&#39;s last name; on match, determine whether the designation should be &#39;C.J.&#39; or &#39;J.&#39;&quot;&quot;&quot;</span>
-<a id="__codelineno-0-194" name="__codelineno-0-194"></a>    <span class="n">candidate_options</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_active_on_date</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">target_date</span><span class="p">)</span>
-<a id="__codelineno-0-195" name="__codelineno-0-195"></a>    <span class="n">opts</span> <span class="o">=</span> <span class="p">[]</span>
-<a id="__codelineno-0-196" name="__codelineno-0-196"></a>    <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidate_options</span><span class="p">:</span>
-<a id="__codelineno-0-197" name="__codelineno-0-197"></a>        <span class="k">if</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cleaned_name</span><span class="p">:</span>
-<a id="__codelineno-0-198" name="__codelineno-0-198"></a>            <span class="n">opts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
-<a id="__codelineno-0-199" name="__codelineno-0-199"></a>            <span class="k">continue</span>
-<a id="__codelineno-0-200" name="__codelineno-0-200"></a>        <span class="k">elif</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cleaned_name</span><span class="p">:</span>
-<a id="__codelineno-0-201" name="__codelineno-0-201"></a>            <span class="n">opts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
-<a id="__codelineno-0-202" name="__codelineno-0-202"></a>            <span class="k">continue</span>
-<a id="__codelineno-0-203" name="__codelineno-0-203"></a>    <span class="k">if</span> <span class="n">opts</span><span class="p">:</span>
-<a id="__codelineno-0-204" name="__codelineno-0-204"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-<a id="__codelineno-0-205" name="__codelineno-0-205"></a>            <span class="n">res</span> <span class="o">=</span> <span class="n">opts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<a id="__codelineno-0-206" name="__codelineno-0-206"></a>            <span class="n">res</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;alias&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-207" name="__codelineno-0-207"></a>            <span class="n">res</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
-<a id="__codelineno-0-208" name="__codelineno-0-208"></a>            <span class="n">res</span><span class="p">[</span><span class="s2">&quot;designation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;J.&quot;</span>
-<a id="__codelineno-0-209" name="__codelineno-0-209"></a>            <span class="n">target</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">target_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
-<a id="__codelineno-0-210" name="__codelineno-0-210"></a>            <span class="k">if</span> <span class="n">chief_date</span> <span class="o">:=</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chief_date&quot;</span><span class="p">):</span>
-<a id="__codelineno-0-211" name="__codelineno-0-211"></a>                <span class="n">s</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">chief_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
-<a id="__codelineno-0-212" name="__codelineno-0-212"></a>                <span class="n">e</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s2">&quot;inactive_date&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
-<a id="__codelineno-0-213" name="__codelineno-0-213"></a>                <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">:</span>
-<a id="__codelineno-0-214" name="__codelineno-0-214"></a>                    <span class="n">res</span><span class="p">[</span><span class="s2">&quot;designation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;C.J.&quot;</span>
-<a id="__codelineno-0-215" name="__codelineno-0-215"></a>            <span class="k">return</span> <span class="n">res</span>
-<a id="__codelineno-0-216" name="__codelineno-0-216"></a>        <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-217" name="__codelineno-0-217"></a>            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Many </span><span class="si">{</span><span class="n">opts</span><span class="si">=}</span><span class="s2"> for </span><span class="si">{</span><span class="n">cleaned_name</span><span class="si">=}</span><span class="s2"> on </span><span class="si">{</span><span class="n">target_date</span><span class="si">=}</span><span class="s2">&quot;</span>
-<a id="__codelineno-0-218" name="__codelineno-0-218"></a>            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-<a id="__codelineno-0-219" name="__codelineno-0-219"></a>    <span class="k">return</span> <span class="kc">None</span>
+<span class="normal"><a href="#__codelineno-0-216">216</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-198" name="__codelineno-0-198"></a><span class="nd">@classmethod</span>
+<a id="__codelineno-0-199" name="__codelineno-0-199"></a><span class="k">def</span> <span class="nf">get_active_on_date</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">target_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<a id="__codelineno-0-200" name="__codelineno-0-200"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get list of justices that have been appointed before the `target date` and have not yet become inactive.</span>
+<a id="__codelineno-0-201" name="__codelineno-0-201"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-202" name="__codelineno-0-202"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-0-203" name="__codelineno-0-203"></a>        <span class="n">valid_date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">target_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+<a id="__codelineno-0-204" name="__codelineno-0-204"></a>    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<a id="__codelineno-0-205" name="__codelineno-0-205"></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Need </span><span class="si">{</span><span class="n">target_date</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-206" name="__codelineno-0-206"></a>    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span>
+<a id="__codelineno-0-207" name="__codelineno-0-207"></a>        <span class="n">c</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">rows_where</span><span class="p">(</span>
+<a id="__codelineno-0-208" name="__codelineno-0-208"></a>            <span class="s2">&quot;inactive_date &gt; :date and :date &gt; start_term&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-209" name="__codelineno-0-209"></a>            <span class="p">{</span><span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">valid_date</span><span class="p">},</span>
+<a id="__codelineno-0-210" name="__codelineno-0-210"></a>            <span class="n">select</span><span class="o">=</span><span class="p">(</span>
+<a id="__codelineno-0-211" name="__codelineno-0-211"></a>                <span class="s2">&quot;id, lower(last_name) surname, alias, start_term,&quot;</span>
+<a id="__codelineno-0-212" name="__codelineno-0-212"></a>                <span class="s2">&quot; inactive_date, chief_date&quot;</span>
+<a id="__codelineno-0-213" name="__codelineno-0-213"></a>            <span class="p">),</span>
+<a id="__codelineno-0-214" name="__codelineno-0-214"></a>            <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;start_term desc&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-215" name="__codelineno-0-215"></a>        <span class="p">)</span>
+<a id="__codelineno-0-216" name="__codelineno-0-216"></a>    <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1290,107 +1202,26 @@
 
 
 
-<h5 id="corpus_base.justice.Justice.init_justices_tbl" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">init_justices_tbl</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">JUSTICE_LOCAL</span><span class="p">)</span></code>
+<h6 id="corpus_base.justice.Justice.get_justice_on_date" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_justice_on_date</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">target_date</span><span class="p">,</span> <span class="n">cleaned_name</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
   </span>
 
-</h5>
+</h6>
 
 
   <div class="doc doc-contents ">
   
-      <p>Add a table containing names and ids of justices; alter the original decision's table for it to include a justice id.</p>
+      <p>Based on <code>get_active_on_date()</code>, match the cleaned_name to either the alias of the justice or the justice's last name; on match, determine whether the designation should be 'C.J.' or 'J.'</p>
 
       <details class="quote">
         <summary>Source code in <code>corpus_base/justice.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-168">168</a></span>
-<span class="normal"><a href="#__codelineno-0-169">169</a></span>
-<span class="normal"><a href="#__codelineno-0-170">170</a></span>
-<span class="normal"><a href="#__codelineno-0-171">171</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-168" name="__codelineno-0-168"></a><span class="nd">@classmethod</span>
-<a id="__codelineno-0-169" name="__codelineno-0-169"></a><span class="k">def</span> <span class="nf">init_justices_tbl</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">JUSTICE_LOCAL</span><span class="p">):</span>
-<a id="__codelineno-0-170" name="__codelineno-0-170"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a table containing names and ids of justices; alter the original decision&#39;s table for it to include a justice id.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-171" name="__codelineno-0-171"></a>    <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">add_records</span><span class="p">(</span><span class="n">Justice</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()))</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h5 id="corpus_base.justice.Justice.set_local_from_api" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">set_local_from_api</span><span class="p">(</span><span class="n">local</span><span class="o">=</span><span class="n">JUSTICE_LOCAL</span><span class="p">)</span></code>
-  
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
-  </span>
-
-</h5>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Create a local .yaml file containing the list of validated Justices.</p>
-
-      <details class="quote">
-        <summary>Source code in <code>corpus_base/justice.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-154">154</a></span>
-<span class="normal"><a href="#__codelineno-0-155">155</a></span>
-<span class="normal"><a href="#__codelineno-0-156">156</a></span>
-<span class="normal"><a href="#__codelineno-0-157">157</a></span>
-<span class="normal"><a href="#__codelineno-0-158">158</a></span>
-<span class="normal"><a href="#__codelineno-0-159">159</a></span>
-<span class="normal"><a href="#__codelineno-0-160">160</a></span>
-<span class="normal"><a href="#__codelineno-0-161">161</a></span>
-<span class="normal"><a href="#__codelineno-0-162">162</a></span>
-<span class="normal"><a href="#__codelineno-0-163">163</a></span>
-<span class="normal"><a href="#__codelineno-0-164">164</a></span>
-<span class="normal"><a href="#__codelineno-0-165">165</a></span>
-<span class="normal"><a href="#__codelineno-0-166">166</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-154" name="__codelineno-0-154"></a><span class="nd">@classmethod</span>
-<a id="__codelineno-0-155" name="__codelineno-0-155"></a><span class="k">def</span> <span class="nf">set_local_from_api</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">local</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">JUSTICE_LOCAL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
-<a id="__codelineno-0-156" name="__codelineno-0-156"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a local .yaml file containing the list of validated Justices.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-157" name="__codelineno-0-157"></a>    <span class="k">if</span> <span class="n">local</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-<a id="__codelineno-0-158" name="__codelineno-0-158"></a>        <span class="k">return</span> <span class="n">local</span>
-<a id="__codelineno-0-159" name="__codelineno-0-159"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writefile</span><span class="p">:</span>
-<a id="__codelineno-0-160" name="__codelineno-0-160"></a>        <span class="n">yaml</span><span class="o">.</span><span class="n">safe_dump</span><span class="p">(</span>
-<a id="__codelineno-0-161" name="__codelineno-0-161"></a>            <span class="n">data</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">extract_as_list</span><span class="p">(),</span>
-<a id="__codelineno-0-162" name="__codelineno-0-162"></a>            <span class="n">stream</span><span class="o">=</span><span class="n">writefile</span><span class="p">,</span>
-<a id="__codelineno-0-163" name="__codelineno-0-163"></a>            <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<a id="__codelineno-0-164" name="__codelineno-0-164"></a>            <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<a id="__codelineno-0-165" name="__codelineno-0-165"></a>        <span class="p">)</span>
-<a id="__codelineno-0-166" name="__codelineno-0-166"></a>        <span class="k">return</span> <span class="n">local</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h5 id="corpus_base.justice.Justice.view_chiefs" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">view_chiefs</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></code>
-  
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
-  </span>
-
-</h5>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Get general information of the chief justices and their dates of appointment.</p>
-
-      <details class="quote">
-        <summary>Source code in <code>corpus_base/justice.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-221">221</a></span>
+        <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-218">218</a></span>
+<span class="normal"><a href="#__codelineno-0-219">219</a></span>
+<span class="normal"><a href="#__codelineno-0-220">220</a></span>
+<span class="normal"><a href="#__codelineno-0-221">221</a></span>
 <span class="normal"><a href="#__codelineno-0-222">222</a></span>
 <span class="normal"><a href="#__codelineno-0-223">223</a></span>
 <span class="normal"><a href="#__codelineno-0-224">224</a></span>
@@ -1402,19 +1233,195 @@
 <span class="normal"><a href="#__codelineno-0-230">230</a></span>
 <span class="normal"><a href="#__codelineno-0-231">231</a></span>
 <span class="normal"><a href="#__codelineno-0-232">232</a></span>
-<span class="normal"><a href="#__codelineno-0-233">233</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-221" name="__codelineno-0-221"></a><span class="nd">@classmethod</span>
-<a id="__codelineno-0-222" name="__codelineno-0-222"></a><span class="k">def</span> <span class="nf">view_chiefs</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
-<a id="__codelineno-0-223" name="__codelineno-0-223"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get general information of the chief justices and their dates of appointment.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-224" name="__codelineno-0-224"></a>    <span class="n">view</span> <span class="o">=</span> <span class="n">CHIEF_DATES_VIEW</span>
-<a id="__codelineno-0-225" name="__codelineno-0-225"></a>    <span class="k">if</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">view_names</span><span class="p">():</span>
-<a id="__codelineno-0-226" name="__codelineno-0-226"></a>        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">view</span><span class="p">]</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
-<a id="__codelineno-0-227" name="__codelineno-0-227"></a>    <span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_view</span><span class="p">(</span>
-<a id="__codelineno-0-228" name="__codelineno-0-228"></a>        <span class="n">view</span><span class="p">,</span>
-<a id="__codelineno-0-229" name="__codelineno-0-229"></a>        <span class="n">sql</span><span class="o">=</span><span class="n">sc_jinja_env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;chief_dates.sql&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
-<a id="__codelineno-0-230" name="__codelineno-0-230"></a>            <span class="n">justice_table</span><span class="o">=</span><span class="n">Justice</span><span class="o">.</span><span class="n">__tablename__</span>
-<a id="__codelineno-0-231" name="__codelineno-0-231"></a>        <span class="p">),</span>
-<a id="__codelineno-0-232" name="__codelineno-0-232"></a>    <span class="p">)</span>
-<a id="__codelineno-0-233" name="__codelineno-0-233"></a>    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">view</span><span class="p">]</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+<span class="normal"><a href="#__codelineno-0-233">233</a></span>
+<span class="normal"><a href="#__codelineno-0-234">234</a></span>
+<span class="normal"><a href="#__codelineno-0-235">235</a></span>
+<span class="normal"><a href="#__codelineno-0-236">236</a></span>
+<span class="normal"><a href="#__codelineno-0-237">237</a></span>
+<span class="normal"><a href="#__codelineno-0-238">238</a></span>
+<span class="normal"><a href="#__codelineno-0-239">239</a></span>
+<span class="normal"><a href="#__codelineno-0-240">240</a></span>
+<span class="normal"><a href="#__codelineno-0-241">241</a></span>
+<span class="normal"><a href="#__codelineno-0-242">242</a></span>
+<span class="normal"><a href="#__codelineno-0-243">243</a></span>
+<span class="normal"><a href="#__codelineno-0-244">244</a></span>
+<span class="normal"><a href="#__codelineno-0-245">245</a></span>
+<span class="normal"><a href="#__codelineno-0-246">246</a></span>
+<span class="normal"><a href="#__codelineno-0-247">247</a></span>
+<span class="normal"><a href="#__codelineno-0-248">248</a></span>
+<span class="normal"><a href="#__codelineno-0-249">249</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-218" name="__codelineno-0-218"></a><span class="nd">@classmethod</span>
+<a id="__codelineno-0-219" name="__codelineno-0-219"></a><span class="k">def</span> <span class="nf">get_justice_on_date</span><span class="p">(</span>
+<a id="__codelineno-0-220" name="__codelineno-0-220"></a>    <span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">target_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cleaned_name</span><span class="p">:</span> <span class="nb">str</span>
+<a id="__codelineno-0-221" name="__codelineno-0-221"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-222" name="__codelineno-0-222"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Based on `get_active_on_date()`, match the cleaned_name to either the alias of the justice or the justice&#39;s last name; on match, determine whether the designation should be &#39;C.J.&#39; or &#39;J.&#39;</span>
+<a id="__codelineno-0-223" name="__codelineno-0-223"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-224" name="__codelineno-0-224"></a>    <span class="n">candidate_options</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_active_on_date</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">target_date</span><span class="p">)</span>
+<a id="__codelineno-0-225" name="__codelineno-0-225"></a>    <span class="n">opts</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-226" name="__codelineno-0-226"></a>    <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidate_options</span><span class="p">:</span>
+<a id="__codelineno-0-227" name="__codelineno-0-227"></a>        <span class="k">if</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cleaned_name</span><span class="p">:</span>
+<a id="__codelineno-0-228" name="__codelineno-0-228"></a>            <span class="n">opts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+<a id="__codelineno-0-229" name="__codelineno-0-229"></a>            <span class="k">continue</span>
+<a id="__codelineno-0-230" name="__codelineno-0-230"></a>        <span class="k">elif</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cleaned_name</span><span class="p">:</span>
+<a id="__codelineno-0-231" name="__codelineno-0-231"></a>            <span class="n">opts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+<a id="__codelineno-0-232" name="__codelineno-0-232"></a>            <span class="k">continue</span>
+<a id="__codelineno-0-233" name="__codelineno-0-233"></a>    <span class="k">if</span> <span class="n">opts</span><span class="p">:</span>
+<a id="__codelineno-0-234" name="__codelineno-0-234"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-0-235" name="__codelineno-0-235"></a>            <span class="n">res</span> <span class="o">=</span> <span class="n">opts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-0-236" name="__codelineno-0-236"></a>            <span class="n">res</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;alias&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-237" name="__codelineno-0-237"></a>            <span class="n">res</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s2">&quot;surname&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+<a id="__codelineno-0-238" name="__codelineno-0-238"></a>            <span class="n">res</span><span class="p">[</span><span class="s2">&quot;designation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;J.&quot;</span>
+<a id="__codelineno-0-239" name="__codelineno-0-239"></a>            <span class="n">target</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">target_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+<a id="__codelineno-0-240" name="__codelineno-0-240"></a>            <span class="k">if</span> <span class="n">chief_date</span> <span class="o">:=</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chief_date&quot;</span><span class="p">):</span>
+<a id="__codelineno-0-241" name="__codelineno-0-241"></a>                <span class="n">s</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">chief_date</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+<a id="__codelineno-0-242" name="__codelineno-0-242"></a>                <span class="n">e</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s2">&quot;inactive_date&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+<a id="__codelineno-0-243" name="__codelineno-0-243"></a>                <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-0-244" name="__codelineno-0-244"></a>                    <span class="n">res</span><span class="p">[</span><span class="s2">&quot;designation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;C.J.&quot;</span>
+<a id="__codelineno-0-245" name="__codelineno-0-245"></a>            <span class="k">return</span> <span class="n">res</span>
+<a id="__codelineno-0-246" name="__codelineno-0-246"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-247" name="__codelineno-0-247"></a>            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Many </span><span class="si">{</span><span class="n">opts</span><span class="si">=}</span><span class="s2"> for </span><span class="si">{</span><span class="n">cleaned_name</span><span class="si">=}</span><span class="s2"> on </span><span class="si">{</span><span class="n">target_date</span><span class="si">=}</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-248" name="__codelineno-0-248"></a>            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<a id="__codelineno-0-249" name="__codelineno-0-249"></a>    <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h6 id="corpus_base.justice.Justice.init_justices_tbl" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">init_justices_tbl</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">JUSTICE_LOCAL</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h6>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Add a table containing names and ids of justices; alter the original decision's table for it to include a justice id.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>corpus_base/justice.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-192">192</a></span>
+<span class="normal"><a href="#__codelineno-0-193">193</a></span>
+<span class="normal"><a href="#__codelineno-0-194">194</a></span>
+<span class="normal"><a href="#__codelineno-0-195">195</a></span>
+<span class="normal"><a href="#__codelineno-0-196">196</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-192" name="__codelineno-0-192"></a><span class="nd">@classmethod</span>
+<a id="__codelineno-0-193" name="__codelineno-0-193"></a><span class="k">def</span> <span class="nf">init_justices_tbl</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">JUSTICE_LOCAL</span><span class="p">):</span>
+<a id="__codelineno-0-194" name="__codelineno-0-194"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a table containing names and ids of justices; alter the original decision&#39;s table for it to include a justice id.</span>
+<a id="__codelineno-0-195" name="__codelineno-0-195"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-196" name="__codelineno-0-196"></a>    <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">add_records</span><span class="p">(</span><span class="n">Justice</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()))</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h6 id="corpus_base.justice.Justice.set_local_from_api" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">set_local_from_api</span><span class="p">(</span><span class="n">local</span><span class="o">=</span><span class="n">JUSTICE_LOCAL</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h6>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Create a local .yaml file containing the list of validated Justices.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>corpus_base/justice.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-177">177</a></span>
+<span class="normal"><a href="#__codelineno-0-178">178</a></span>
+<span class="normal"><a href="#__codelineno-0-179">179</a></span>
+<span class="normal"><a href="#__codelineno-0-180">180</a></span>
+<span class="normal"><a href="#__codelineno-0-181">181</a></span>
+<span class="normal"><a href="#__codelineno-0-182">182</a></span>
+<span class="normal"><a href="#__codelineno-0-183">183</a></span>
+<span class="normal"><a href="#__codelineno-0-184">184</a></span>
+<span class="normal"><a href="#__codelineno-0-185">185</a></span>
+<span class="normal"><a href="#__codelineno-0-186">186</a></span>
+<span class="normal"><a href="#__codelineno-0-187">187</a></span>
+<span class="normal"><a href="#__codelineno-0-188">188</a></span>
+<span class="normal"><a href="#__codelineno-0-189">189</a></span>
+<span class="normal"><a href="#__codelineno-0-190">190</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-177" name="__codelineno-0-177"></a><span class="nd">@classmethod</span>
+<a id="__codelineno-0-178" name="__codelineno-0-178"></a><span class="k">def</span> <span class="nf">set_local_from_api</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">local</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">JUSTICE_LOCAL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<a id="__codelineno-0-179" name="__codelineno-0-179"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a local .yaml file containing the list of validated Justices.</span>
+<a id="__codelineno-0-180" name="__codelineno-0-180"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-181" name="__codelineno-0-181"></a>    <span class="k">if</span> <span class="n">local</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+<a id="__codelineno-0-182" name="__codelineno-0-182"></a>        <span class="k">return</span> <span class="n">local</span>
+<a id="__codelineno-0-183" name="__codelineno-0-183"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writefile</span><span class="p">:</span>
+<a id="__codelineno-0-184" name="__codelineno-0-184"></a>        <span class="n">yaml</span><span class="o">.</span><span class="n">safe_dump</span><span class="p">(</span>
+<a id="__codelineno-0-185" name="__codelineno-0-185"></a>            <span class="n">data</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">extract_as_list</span><span class="p">(),</span>
+<a id="__codelineno-0-186" name="__codelineno-0-186"></a>            <span class="n">stream</span><span class="o">=</span><span class="n">writefile</span><span class="p">,</span>
+<a id="__codelineno-0-187" name="__codelineno-0-187"></a>            <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-188" name="__codelineno-0-188"></a>            <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-189" name="__codelineno-0-189"></a>        <span class="p">)</span>
+<a id="__codelineno-0-190" name="__codelineno-0-190"></a>        <span class="k">return</span> <span class="n">local</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h6 id="corpus_base.justice.Justice.view_chiefs" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">view_chiefs</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h6>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get general information of the chief justices and their dates of appointment.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>corpus_base/justice.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-251">251</a></span>
+<span class="normal"><a href="#__codelineno-0-252">252</a></span>
+<span class="normal"><a href="#__codelineno-0-253">253</a></span>
+<span class="normal"><a href="#__codelineno-0-254">254</a></span>
+<span class="normal"><a href="#__codelineno-0-255">255</a></span>
+<span class="normal"><a href="#__codelineno-0-256">256</a></span>
+<span class="normal"><a href="#__codelineno-0-257">257</a></span>
+<span class="normal"><a href="#__codelineno-0-258">258</a></span>
+<span class="normal"><a href="#__codelineno-0-259">259</a></span>
+<span class="normal"><a href="#__codelineno-0-260">260</a></span>
+<span class="normal"><a href="#__codelineno-0-261">261</a></span>
+<span class="normal"><a href="#__codelineno-0-262">262</a></span>
+<span class="normal"><a href="#__codelineno-0-263">263</a></span>
+<span class="normal"><a href="#__codelineno-0-264">264</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-251" name="__codelineno-0-251"></a><span class="nd">@classmethod</span>
+<a id="__codelineno-0-252" name="__codelineno-0-252"></a><span class="k">def</span> <span class="nf">view_chiefs</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<a id="__codelineno-0-253" name="__codelineno-0-253"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get general information of the chief justices and their dates of appointment.</span>
+<a id="__codelineno-0-254" name="__codelineno-0-254"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-255" name="__codelineno-0-255"></a>    <span class="n">view</span> <span class="o">=</span> <span class="n">CHIEF_DATES_VIEW</span>
+<a id="__codelineno-0-256" name="__codelineno-0-256"></a>    <span class="k">if</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">view_names</span><span class="p">():</span>
+<a id="__codelineno-0-257" name="__codelineno-0-257"></a>        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">view</span><span class="p">]</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+<a id="__codelineno-0-258" name="__codelineno-0-258"></a>    <span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_view</span><span class="p">(</span>
+<a id="__codelineno-0-259" name="__codelineno-0-259"></a>        <span class="n">view</span><span class="p">,</span>
+<a id="__codelineno-0-260" name="__codelineno-0-260"></a>        <span class="n">sql</span><span class="o">=</span><span class="n">sc_jinja_env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;chief_dates.sql&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+<a id="__codelineno-0-261" name="__codelineno-0-261"></a>            <span class="n">justice_table</span><span class="o">=</span><span class="n">Justice</span><span class="o">.</span><span class="n">__tablename__</span>
+<a id="__codelineno-0-262" name="__codelineno-0-262"></a>        <span class="p">),</span>
+<a id="__codelineno-0-263" name="__codelineno-0-263"></a>    <span class="p">)</span>
+<a id="__codelineno-0-264" name="__codelineno-0-264"></a>    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">view</span><span class="p">]</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1579,10 +1586,24 @@
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
   
+    <div class="md-copyright__highlight">
+      Copyright &copy; Marcelino Veloso III
+    </div>
+  
   
     Made with
     <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
       Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="https://github.com/justmars" target="_blank" rel="noopener" title="justmars on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
     </a>
   
 </div>
@@ -1596,7 +1617,7 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
