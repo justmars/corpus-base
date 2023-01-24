@@ -1,8 +1,3 @@
----
-hide:
-- navigation
-- toc
----
 # Corpus Base Docs
 
 ```mermaid
