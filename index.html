@@ -16,7 +16,7 @@
       
       
       
-        <link rel="next" href="decision/">
+        <link rel="next" href="reference/">
       
       <link rel="icon" href="assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Overview
+              Corpus Base Docs
             
           </span>
         </div>
@@ -201,9 +201,7 @@
           
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -252,12 +250,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Overview
+          Corpus Base Docs
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="." class="md-nav__link md-nav__link--active">
-        Overview
+        Corpus Base Docs
       </a>
       
         
@@ -343,6 +341,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#helper-function-to-do-things-incrementally" class="md-nav__link">
+    Helper function to do things incrementally
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -359,8 +364,8 @@
   
   
     <li class="md-nav__item">
-      <a href="decision/" class="md-nav__link">
-        Decisions
+      <a href="reference/" class="md-nav__link">
+        Reference
       </a>
     </li>
   
@@ -381,36 +386,6 @@
   
 
     
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="segments/" class="md-nav__link">
-        Segments
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="misc/" class="md-nav__link">
-        Misc
-      </a>
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -419,9 +394,7 @@
             
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -504,6 +477,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helper-function-to-do-things-incrementally" class="md-nav__link">
+    Helper function to do things incrementally
+  </a>
   
 </li>
       
@@ -621,10 +601,13 @@ end</code></pre>
 <li><code>DB_FILE</code> (sqlite)</li>
 </ol>
 <p>Note the workflow (main.yml) where the secrets are included for Github actions. Ensure these are set in the repository's <code>&lt;url-to-repo&gt;/settings/secrets/actions</code>, making the proper replacements when the tokens for Cloudflare and Github expire.</p>
+<h2 id="helper-function-to-do-things-incrementally">Helper function to do things incrementally</h2>
+<div class="highlight"><span class="filename">Python</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">corpus_base</span> <span class="kn">import</span> <span class="n">init_sc_cases</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">init_sc_cases</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">test_only</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<p>Since there are thousands of cases, can limit the number of downloads via the <code>test_only</code> function attribute.</p>
 
 
-
-  
 
 
 

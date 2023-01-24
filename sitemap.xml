@@ -6,22 +6,12 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://lawsql.com/decision/</loc>
-         <lastmod>2023-01-24</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://lawsql.com/justice/</loc>
          <lastmod>2023-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://lawsql.com/misc/</loc>
-         <lastmod>2023-01-24</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://lawsql.com/segments/</loc>
+         <loc>https://lawsql.com/reference/</loc>
          <lastmod>2023-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
