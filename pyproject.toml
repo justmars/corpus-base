@@ -1,12 +1,13 @@
 [tool.poetry]
 name = "corpus-base"
-version = "0.1.9"
+version = "0.1.10"
 description = "Add justice, decision, citation, voting, opinion, and segment tables to database."
 authors = ["Marcelino G. Veloso III <mars@veloso.one>"]
 readme = "README.md"
 license = "MIT"
 homepage = "https://lawdata.xyz"
 repository = "https://github.com/justmars/corpus-base"
+documentation = "https://justmars.github.io/corpus-base"
 classifiers = [
   "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
