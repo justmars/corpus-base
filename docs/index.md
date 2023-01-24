@@ -76,3 +76,12 @@ Create an .env file to create/populate the database. See `sample .env` highlight
 4. `DB_FILE` (sqlite)
 
 Note the workflow (main.yml) where the secrets are included for Github actions. Ensure these are set in the repository's `<url-to-repo>/settings/secrets/actions`, making the proper replacements when the tokens for Cloudflare and Github expire.
+
+## Helper function to do things incrementally
+
+```py
+>>> from corpus_base import init_sc_cases
+>>> init_sc_cases(c, test_only=10)
+```
+
+Since there are thousands of cases, can limit the number of downloads via the `test_only` function attribute.
