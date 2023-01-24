@@ -18,11 +18,9 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
 nav:
-  - Overview: index.md
-  - decision.md
+  - index.md
+  - reference.md
   - justice.md
-  - segments.md
-  - misc.md
 extra:
   social:
     - icon: fontawesome/brands/github
