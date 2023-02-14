@@ -18,13 +18,13 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.11"          #
+python = "^3.11"
 citation-utils = "^0.2.3" # citation-specific utils + pydantic, python-slugify, loguru
-corpus-pax = "^0.1.12"    # contains sqlpyd (sqlite-utils, pydantic), email-validator, httpx, frontmatter
-corpus-sc-toolkit = "^0.0.3" # contains various functions to extract prospective decision / opinion fields
+corpus-pax = "^0.1.12"    # sqlpyd (sqlite-utils, pydantic), email-validator, httpx, frontmatter
+corpus-sc-toolkit = "^0.0.5" # various functions to extract prospective decision / opinion fields
 
 [tool.poetry.group.dev.dependencies]
-rich = "^12.6"
+rich = "^13.3"
 pytest = "^7.2"
 pytest-datadir = "^1.4.1"
 pytest-cov = "^2.12.1"
@@ -34,7 +34,7 @@ types-PyYAML = "^6.0.7"
 types-python-slugify = "^5.0.4"
 mkdocs = "^1.4.2"
 mkdocstrings = { extras = ["python"], version = "^0.20.0" }
-mkdocs-material = "^9.0.6"
+mkdocs-material = "^9.0.12"
 notebook = "^6.5.2"
 
 [tool.pytest.ini_options]

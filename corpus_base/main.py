@@ -1,44 +1,32 @@
 import datetime
 from collections.abc import Iterator
-from enum import Enum
 from pathlib import Path
 from typing import Any
 
 import frontmatter
 import yaml
 from citation_utils import Citation
+from corpus_pax import Individual
 from corpus_sc_toolkit import (
     CandidateJustice,
     CourtComposition,
     DecisionCategory,
     DecisionHTMLConvertMarkdown,
+    DecisionSource,
     Justice,
-    OpinionWriterName,
+    extract_votelines,
+    get_id_from_citation,
+    get_justices_file,
+    segmentize,
+    tags_from_title,
     voteline_clean,
 )
+from corpus_sc_toolkit.resources import DECISION_PATH
 from loguru import logger
 from markdownify import markdownify
 from pydantic import Field, root_validator
-from slugify import slugify
+from sqlite_utils.db import Database
 from sqlpyd import Connection, TableConfig
-
-DECISION_PATH = Path().home().joinpath("code/corpus/decisions")
-
-
-class DecisionSource(str, Enum):
-    """The Supreme Court website contains decisions starting from 1996 onwards.
-    Decisions dated prior to that year are only available through various secondary sources.
-    For purposes of classification and determining their provenance, we will use the
-    following categorization:
-
-    source | description
-    --:|:--
-    sc | 1996 onwards from the Supreme Court
-    legacy | Prior to 1996, from other sources
-    """
-
-    sc = "sc"
-    legacy = "legacy"
 
 
 class DecisionRow(TableConfig):
@@ -132,58 +120,38 @@ class DecisionRow(TableConfig):
 
         f = p.parent / "fallo.html"
         data = yaml.safe_load(p.read_text())
-        justice_id = None
-        if pon := OpinionWriterName.extract(data.get("ponente")):
-            search = CandidateJustice(
-                db=c.db, text=pon.writer, date_str=data.get("date_prom")
-            )
-            if search.choice:
-                justice_id = search.choice["id"]
-        citation = Citation.extract_citation_from_data(data)
-        id = cls.get_id_from_citation(
-            folder_name=p.parent.name,
-            source=p.parent.parent.stem,
-            citation=citation,
+        candidate = CandidateJustice(
+            db=c.db,
+            text=data.get("ponente"),
+            date_str=data.get("date_prom"),
         )
-
+        justice_fields = (
+            candidate.detail._asdict()
+            if candidate and candidate.detail
+            else {"raw_ponente": None, "per_curiam": False, "justice_id": None}
+        )
+        cite = Citation.extract_citation_from_data(data)
         return cls(
-            id=id,
+            id=get_id_from_citation(
+                folder_name=p.parent.name,
+                source=p.parent.parent.stem,
+                citation=cite,
+            ),
             origin=p.parent.name,
             source=DecisionSource(p.parent.parent.stem),
             created=p.stat().st_ctime,
             modified=p.stat().st_mtime,
             title=data.get("case_title"),
-            description=citation.display,
+            description=cite.display,
             date=data.get("date_prom"),
             composition=CourtComposition._setter(data.get("composition")),
             category=DecisionCategory._setter(data.get("category")),
             fallo=markdownify(f.read_text()) if f.exists() else None,
             voting=voteline_clean(data.get("voting")),
-            raw_ponente=pon.writer if pon else None,
-            justice_id=justice_id,
-            per_curiam=pon.per_curiam if pon else False,
-            citation=citation,
+            citation=cite,
             emails=data.get("emails", ["bot@lawsql.com"]),
+            **justice_fields,
         )
-
-    @classmethod
-    def get_id_from_citation(
-        cls, folder_name: str, source: str, citation: Citation
-    ) -> str:
-        """The decision id to be used as a url slug ought to be unique,
-        based on citation paramters if possible."""
-        if not citation.slug:
-            logger.debug(f"Citation absent: {source=}; {folder_name=}")
-            return folder_name
-
-        if source == "legacy":
-            return citation.slug or folder_name
-
-        elif citation.docket:
-            if report := citation.scra or citation.phil:
-                return slugify("-".join([citation.docket, report]))
-            return slugify(citation.docket)
-        return folder_name
 
     @property
     def citation_fk(self) -> dict:
@@ -338,9 +306,7 @@ class OpinionRow(TableConfig):
     @property
     def segments(self) -> Iterator[dict[str, Any]]:
         """Validate each segment and output its dict format."""
-        from .segment import SegmentRow
-
-        for extract in SegmentRow.segmentize(self.text):
+        for extract in segmentize(self.text):
             yield SegmentRow(
                 id=f"{self.id}-{extract['position']}",
                 decision_id=self.decision_id,
@@ -351,3 +317,141 @@ class OpinionRow(TableConfig):
     @classmethod
     def as_fk(cls) -> tuple[str, str]:
         return (cls.__tablename__, "id")
+
+
+class SegmentRow(TableConfig):
+    __prefix__ = "sc"
+    __tablename__ = "segments"
+    __indexes__ = [
+        ["opinion_id", "decision_id"],
+    ]
+    id: str = Field(..., col=str)
+    decision_id: str = Field(..., col=str, fk=DecisionRow.as_fk())
+    opinion_id: str = Field(..., col=str, fk=OpinionRow.as_fk())
+    position: str = Field(
+        ...,
+        title="Relative Position",
+        description=(
+            "The line number of the text as stripped from its markdown source."
+        ),
+        col=int,
+        index=True,
+    )
+    char_count: int = Field(
+        ...,
+        title="Character Count",
+        description=(
+            "The number of characters of the text makes it easier to discover"
+            " patterns."
+        ),
+        col=int,
+        index=True,
+    )
+    segment: str = Field(
+        ...,
+        title="Body Segment",
+        description=(
+            "A partial text fragment of an opinion, exclusive of footnotes."
+        ),
+        col=str,
+        fts=True,
+    )
+
+
+def build_sc_tables(c: Connection) -> Connection:
+    c.add_records(Justice, yaml.safe_load(get_justices_file().read_bytes()))
+    c.create_table(DecisionRow)
+    c.create_table(CitationRow)
+    c.create_table(OpinionRow)
+    c.create_table(VoteLine)
+    c.create_table(TitleTagRow)
+    c.create_table(SegmentRow)
+    c.db.index_foreign_keys()
+    return c
+
+
+def setup_case(c: Connection, path: Path) -> None:
+    """Parse a case's `details.yaml` found in the `path`
+    to generate rows for various `sc_tbl` prefixed sqlite tables found.
+
+    After creation a decision row, get correlated metadata involving
+    the decision: the citation, voting text, tags from the title, etc.,
+    and then add rows for their respective tables.
+
+    Args:
+        c (Connection): sqlpyd Connection
+        path (Path): path to a case's details.yaml
+    """
+
+    # initialize content from the path
+    case_tbl = c.table(DecisionRow)
+    obj = DecisionRow.from_path(c, path)
+
+    try:
+        decision_id = case_tbl.insert(obj.dict(), pk="id").last_pk  # type: ignore
+        logger.debug(f"Added {decision_id=}")
+    except Exception as e:
+        logger.error(f"Skipping duplicate {obj=}; {e=}")
+        return
+    if not decision_id:
+        logger.error(f"Could not find decision_id for {obj=}")
+        return
+
+    # assign author row to a joined m2m table, note the explicit m2m table name
+    # so that the prefix used is `sc`; the default will start with `pax_`
+    for email in obj.emails:
+        case_tbl.update(decision_id).m2m(
+            other_table=c.table(Individual),
+            pk="id",
+            lookup={"email": email},
+            m2m_table="sc_tbl_decisions_pax_tbl_individuals",
+        )
+
+    # add associated citation
+    if obj.citation and obj.citation.has_citation:
+        c.add_record(CitationRow, obj.citation_fk)
+
+    # process votelines of voting text in decision
+    if obj.voting:
+        c.add_records(VoteLine, extract_votelines(decision_id, obj.voting))
+
+    # add tags based on the title of decision
+    if obj.title:
+        c.add_records(TitleTagRow, tags_from_title(decision_id, obj.title))
+
+    # add opinions and segments
+    for op in OpinionRow.get_opinions(
+        case_path=path.parent,
+        decision_id=decision_id,
+        justice_id=case_tbl.get(decision_id).get("justice_id"),
+    ):
+        c.add_record(OpinionRow, op.dict(exclude={"concurs", "tags"}))
+        c.add_records(SegmentRow, op.segments)
+
+
+def add_authors_only(c: Connection):
+    """Helper function for just adding the author decision m2m table."""
+    case_details = DECISION_PATH.glob("**/*/details.yaml")
+    for detail_path in case_details:
+        obj = DecisionRow.from_path(c, detail_path)
+        for email in obj.emails:  # assign author row to a joined m2m table
+            tbl = c.table(DecisionRow)
+            if tbl.get(obj.id):
+                tbl.update(obj.id).m2m(
+                    other_table=c.table(Individual),
+                    lookup={"email": email},
+                    pk="id",
+                    m2m_table="sc_tbl_decisions_pax_tbl_individuals",
+                )
+
+
+def add_cases(c: Connection, test_only: int = 0) -> Database:
+    case_details = DECISION_PATH.glob("**/*/details.yaml")
+    for idx, details_file in enumerate(case_details):
+        if test_only and idx == test_only:
+            break
+        try:
+            setup_case(c, details_file)
+        except Exception as e:
+            logger.info(e)
+    return c.db

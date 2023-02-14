@@ -17,7 +17,7 @@ end
 See [corpus-pax](https://github.com/justmars/corpus-pax): this establishes the database tables related
 to individuals and organizations.
 
-After the creation of the personnel, we can proceed to `corpus-base`. This creates [sqlpyd](https://github.com/justmars/sqlpyd)-tables related to decisions of the Philippine Supreme Court, incorporating the following models:
+After the creation of the personnel, we can proceed to `corpus-base`. This creates [sqlpyd](https://github.com/justmars/sqlpyd)-tables related to _decisions_ of the Philippine Supreme Court, incorporating the following models:
 
 - Decisions
 - Justices
