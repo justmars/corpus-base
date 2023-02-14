@@ -1,9 +1,9 @@
+from corpus_sc_toolkit import Justice
 from sqlpyd import Connection
 
 from corpus_base import (
     CitationRow,
     DecisionRow,
-    Justice,
     OpinionRow,
     TitleTagRow,
     VoteLine,

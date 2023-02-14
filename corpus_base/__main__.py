@@ -1,25 +1,47 @@
 from pathlib import Path
 
+import yaml
 from corpus_pax import Individual, setup_pax
 from corpus_pax.utils import delete_tables_with_prefix
+from corpus_sc_toolkit import (
+    Justice,
+    extract_votelines,
+    get_justices_file,
+    tags_from_title,
+)
 from loguru import logger
+from sqlite_utils import Database
 from sqlpyd import Connection
 
-from .decision import (
+from .main import (
+    DECISION_PATH,
     CitationRow,
     DecisionRow,
     OpinionRow,
     TitleTagRow,
     VoteLine,
 )
-from .justice import Justice
 from .segment import SegmentRow
-from .utils import DECISION_PATH, extract_votelines, tags_from_title
+
+logger.configure(
+    handlers=[
+        {
+            "sink": "logs/error.log",
+            "format": "{message}",
+            "level": "ERROR",
+        },
+        {
+            "sink": "logs/warnings.log",
+            "format": "{message}",
+            "level": "WARNING",
+            "serialize": True,
+        },
+    ]
+)
 
 
 def build_sc_tables(c: Connection) -> Connection:
-    Justice.set_local_from_api()
-    Justice.init_justices_tbl(c)
+    c.add_records(Justice, yaml.safe_load(get_justices_file().read_bytes()))
     c.create_table(DecisionRow)
     c.create_table(CitationRow)
     c.create_table(OpinionRow)
@@ -89,17 +111,6 @@ def setup_case(c: Connection, path: Path) -> None:
         c.add_records(SegmentRow, op.segments)
 
 
-def init_sc_cases(c: Connection, test_only: int = 0):
-    case_details = DECISION_PATH.glob("**/*/details.yaml")
-    for idx, details_file in enumerate(case_details):
-        if test_only and idx == test_only:
-            break
-        try:
-            setup_case(c, details_file)
-        except Exception as e:
-            logger.info(e)
-
-
 def add_authors_only(c: Connection):
     """Helper function for just adding the author decision m2m table."""
     case_details = DECISION_PATH.glob("**/*/details.yaml")
@@ -114,6 +125,18 @@ def add_authors_only(c: Connection):
                     pk="id",
                     m2m_table="sc_tbl_decisions_pax_tbl_individuals",
                 )
+
+
+def add_cases(c: Connection, test_only: int = 0) -> Database:
+    case_details = DECISION_PATH.glob("**/*/details.yaml")
+    for idx, details_file in enumerate(case_details):
+        if test_only and idx == test_only:
+            break
+        try:
+            setup_case(c, details_file)
+        except Exception as e:
+            logger.info(e)
+    return c.db
 
 
 def setup_base(db_path: str, test_num: int | None = None) -> Connection:
@@ -134,12 +157,12 @@ def setup_base(db_path: str, test_num: int | None = None) -> Connection:
     delete_tables_with_prefix(c, ["sc"])
     build_sc_tables(c)
     if test_num:
-        init_sc_cases(c, test_num)
+        add_cases(c, test_num)
     else:
-        init_sc_cases(c)
+        add_cases(c)
     return c
 
 
-def setup_pax_base(db_path: str):
+def setup_pax_base(db_path: str) -> Connection:
     setup_pax(db_path)
-    setup_base(db_path)
+    return setup_base(db_path)

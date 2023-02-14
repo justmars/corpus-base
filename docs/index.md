@@ -18,15 +18,14 @@ end
 
 ## Concept
 
-In tandem with [corpus-pax](https://github.com/justmars/corpus-pax), `corpus-base` creates [sqlpyd](https://github.com/justmars/sqlpyd) tables related to decisions of the Philippine Supreme Court, thereby adding the following:
+In tandem with [corpus-pax](https://github.com/justmars/corpus-pax) and [corpus-sc-toolkit](https://github.com/justmars/corpus-sc-toolkit), `corpus-base` creates [sqlpyd](https://github.com/justmars/sqlpyd)-tables related to decisions of the Philippine Supreme Court, incorporating the following models:
 
-1. Justices
-2. Decisions
-   - Citations
-   - Votelines
-   - Titletags
-   - Opinions
-   - Segments
+- Justices
+- Citations
+- Votelines
+- Titletags
+- Opinions
+- Segments
 
 ## Run
 
@@ -63,6 +62,7 @@ repository | status | type | purpose
 [lawsql-articles](https://github.com/justmars/lawsql-articles) | private | data source | used by _corpus-pax_; yaml-formatted member and org files
 [corpus-entities](https://github.com/justmars/corpus-entities) | private | data source | used by _corpus-pax_; markdown-styled articles with frontmatter
 [corpus](https://github.com/justmars/corpus) | private | data source | used by _corpus-base_
+[corpus-sc-toolkit](https://github.com/justmars/corpus-sc-toolkit) | public | functions to create sc-related tables | used by _corpus-base_
 [corpus-pax](https://github.com/justmars/corpus-pax) | public | sqlite i/o | functions to create pax-related tables
 [corpus-base](https://github.com/justmars/corpus-base)| public | sqlite i/o |  functions to create sc-related tables
 

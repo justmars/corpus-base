@@ -4,7 +4,7 @@ from collections.abc import Iterator
 from pydantic import Field
 from sqlpyd import TableConfig
 
-from .decision import DecisionRow, OpinionRow
+from .main import DecisionRow, OpinionRow
 
 single_spaced = re.compile(r"\s*\n\s*")
 double_spaced = re.compile(r"\s*\n\s*\n\s*")

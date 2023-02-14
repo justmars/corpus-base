@@ -1,28 +1,34 @@
 import datetime
 from collections.abc import Iterator
+from enum import Enum
 from pathlib import Path
 from typing import Any
 
 import frontmatter
 import yaml
 from citation_utils import Citation
-from dateutil.parser import parse
+from corpus_sc_toolkit import (
+    CandidateJustice,
+    CourtComposition,
+    DecisionCategory,
+    DecisionHTMLConvertMarkdown,
+    Justice,
+    OpinionWriterName,
+)
+from corpus_sc_toolkit.meta.voteline import voteline_clean
 from loguru import logger
 from markdownify import markdownify
 from pydantic import Field, root_validator
 from slugify import slugify
 from sqlpyd import Connection, TableConfig
 
-from .justice import Justice
-from .utils import (
-    CourtComposition,
-    DecisionCategory,
-    DecisionHTMLConvertMarkdown,
-    DecisionSource,
-    RawPonente,
-    sc_jinja_env,
-    voteline_clean,
-)
+_DECISIONS = "code/corpus/decisions"
+DECISION_PATH = Path().home().joinpath(_DECISIONS)
+
+
+class DecisionSource(str, Enum):
+    sc = "sc"
+    legacy = "legacy"
 
 
 class DecisionRow(TableConfig):
@@ -116,13 +122,20 @@ class DecisionRow(TableConfig):
 
         f = p.parent / "fallo.html"
         data = yaml.safe_load(p.read_text())
-        pon = RawPonente.extract(data.get("ponente"))
+        justice_id = None
+        if pon := OpinionWriterName.extract(data.get("ponente")):
+            search = CandidateJustice(
+                db=c.db, text=pon.writer, date_str=data.get("date_prom")
+            )
+            if search.choice:
+                justice_id = search.choice["id"]
         citation = Citation.extract_citation_from_data(data)
         id = cls.get_id_from_citation(
             folder_name=p.parent.name,
             source=p.parent.parent.stem,
             citation=citation,
         )
+
         return cls(
             id=id,
             origin=p.parent.name,
@@ -137,48 +150,11 @@ class DecisionRow(TableConfig):
             fallo=markdownify(f.read_text()) if f.exists() else None,
             voting=voteline_clean(data.get("voting")),
             raw_ponente=pon.writer if pon else None,
-            justice_id=cls.get_justice_id(c, pon, data.get("date_prom"), p),
+            justice_id=justice_id,
             per_curiam=pon.per_curiam if pon else False,
             citation=citation,
             emails=data.get("emails", ["bot@lawsql.com"]),
         )
-
-    @classmethod
-    def get_justice_id(
-        cls,
-        c: Connection,
-        ponente: RawPonente | None,
-        raw_date: str,
-        path: Path,
-    ) -> int | None:
-        if not ponente or not raw_date:
-            return None
-        if not ponente.writer:
-            return None
-
-        try:
-            conv_date = parse(raw_date).date().isoformat()
-        except Exception as e:
-            logger.error(f"Bad {raw_date=}; {e=} {path=}")
-            return None
-
-        candidates = c.db.execute_returning_dicts(
-            sql=sc_jinja_env.get_template("get_justice_id.sql").render(
-                justice_tbl=Justice.__tablename__,
-                target_name=ponente.writer,
-                target_date=conv_date,
-            )
-        )
-
-        if not candidates:
-            logger.error(f"No id: {ponente.writer=}; {conv_date=}; {path=}")
-            return None
-
-        elif len(candidates) > 1:
-            logger.error(f"Multiple ids; similarity {candidates=}; {path=}")
-            return None
-
-        return candidates[0]["id"]
 
     @classmethod
     def get_id_from_citation(
@@ -243,6 +219,7 @@ class TitleTagRow(TableConfig):
         ..., col=str, fk=(DecisionRow.__tablename__, "id")
     )
     tag: str = Field(..., col=str, index=True)
+
 
 
 class OpinionRow(TableConfig):
@@ -365,3 +342,4 @@ class OpinionRow(TableConfig):
                 opinion_id=self.id,
                 **extract,
             ).dict()
+
