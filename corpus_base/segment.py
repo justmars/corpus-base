@@ -30,16 +30,8 @@ class SegmentRow(TableConfig):
         ["opinion_id", "decision_id"],
     ]
     id: str = Field(..., col=str)
-    decision_id: str = Field(
-        ...,
-        col=str,
-        fk=(DecisionRow.__tablename__, "id"),
-    )
-    opinion_id: str = Field(
-        ...,
-        col=str,
-        fk=(OpinionRow.__tablename__, "id"),
-    )
+    decision_id: str = Field(..., col=str, fk=DecisionRow.as_fk())
+    opinion_id: str = Field(..., col=str, fk=OpinionRow.as_fk())
     position: str = Field(
         ...,
         title="Relative Position",

@@ -20,15 +20,20 @@ theme:
         name: Switch to light mode
 nav:
   - index.md
-  - reference.md
-  - justice.md
+  - decision.md
 extra:
+  homepage: https://mv3.dev
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/justmars
       name: justmars on Github
+    - icon: fontawesome/brands/mastodon
+      link: https://esq.social/@mv
+      name: mv on Mastodon
 copyright: Copyright &copy; Marcelino Veloso III
+
 plugins:
+  - autorefs
   - mkdocstrings:
       handlers:
         python:
@@ -36,10 +41,14 @@ plugins:
             show_root_toc_entry: false
             show_category_heading: true
             show_source: true
-            heading_level: 3
+            heading_level: 4
   - search:
       lang: en
 markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
       auto_title: true

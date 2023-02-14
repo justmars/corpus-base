@@ -2,23 +2,23 @@
 
 ## Decision
 
-:::corpus_base.decision.DecisionRow
+:::corpus_base.main.DecisionRow
 
 ## Citation
 
-:::corpus_base.decision.CitationRow
+:::corpus_base.main.CitationRow
 
 ## Title Tag
 
-:::corpus_base.decision.TitleTagRow
+:::corpus_base.main.TitleTagRow
 
 ## Vote Line
 
-:::corpus_base.decision.VoteLine
+:::corpus_base.main.VoteLine
 
 ## Opinion
 
-:::corpus_base.decision.OpinionRow
+:::corpus_base.main.OpinionRow
 
 ## Segment
 

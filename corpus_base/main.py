@@ -14,19 +14,29 @@ from corpus_sc_toolkit import (
     DecisionHTMLConvertMarkdown,
     Justice,
     OpinionWriterName,
+    voteline_clean,
 )
-from corpus_sc_toolkit.meta.voteline import voteline_clean
 from loguru import logger
 from markdownify import markdownify
 from pydantic import Field, root_validator
 from slugify import slugify
 from sqlpyd import Connection, TableConfig
 
-_DECISIONS = "code/corpus/decisions"
-DECISION_PATH = Path().home().joinpath(_DECISIONS)
+DECISION_PATH = Path().home().joinpath("code/corpus/decisions")
 
 
 class DecisionSource(str, Enum):
+    """The Supreme Court website contains decisions starting from 1996 onwards.
+    Decisions dated prior to that year are only available through various secondary sources.
+    For purposes of classification and determining their provenance, we will use the
+    following categorization:
+
+    source | description
+    --:|:--
+    sc | 1996 onwards from the Supreme Court
+    legacy | Prior to 1996, from other sources
+    """
+
     sc = "sc"
     legacy = "legacy"
 
@@ -179,6 +189,10 @@ class DecisionRow(TableConfig):
     def citation_fk(self) -> dict:
         return self.citation.dict() | {"decision_id": self.id}
 
+    @classmethod
+    def as_fk(cls) -> tuple[str, str]:
+        return (cls.__tablename__, "id")
+
 
 class CitationRow(Citation, TableConfig):
     __prefix__ = "sc"
@@ -188,18 +202,14 @@ class CitationRow(Citation, TableConfig):
         ["docket_category", "docket_serial", "docket_date"],
         ["scra", "phil", "offg", "docket"],
     ]
-    decision_id: str = Field(
-        ..., col=str, fk=(DecisionRow.__tablename__, "id")
-    )
+    decision_id: str = Field(..., col=str, fk=DecisionRow.as_fk())
 
 
 class VoteLine(TableConfig):
     __prefix__ = "sc"
     __tablename__ = "votelines"
     __indexes__ = [["id", "decision_id"]]
-    decision_id: str = Field(
-        ..., col=str, fk=(DecisionRow.__tablename__, "id")
-    )
+    decision_id: str = Field(..., col=str, fk=DecisionRow.as_fk())
     text: str = Field(
         ...,
         title="Voteline Text",
@@ -215,11 +225,8 @@ class VoteLine(TableConfig):
 class TitleTagRow(TableConfig):
     __prefix__ = "sc"
     __tablename__ = "titletags"
-    decision_id: str = Field(
-        ..., col=str, fk=(DecisionRow.__tablename__, "id")
-    )
+    decision_id: str = Field(..., col=str, fk=DecisionRow.as_fk())
     tag: str = Field(..., col=str, index=True)
-
 
 
 class OpinionRow(TableConfig):
@@ -231,9 +238,7 @@ class OpinionRow(TableConfig):
         ["id", "decision_id"],
         ["decision_id", "title"],
     ]
-    decision_id: str = Field(
-        ..., col=str, fk=(DecisionRow.__tablename__, "id")
-    )
+    decision_id: str = Field(..., col=str, fk=DecisionRow.as_fk())
     id: str = Field(
         ...,
         description=(
@@ -343,3 +348,6 @@ class OpinionRow(TableConfig):
                 **extract,
             ).dict()
 
+    @classmethod
+    def as_fk(cls) -> tuple[str, str]:
+        return (cls.__tablename__, "id")

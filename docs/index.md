@@ -1,31 +1,37 @@
-# Corpus Base Docs
+# Overview
 
 ```mermaid
-flowchart TD
-pax(corpus-pax)--github api--->sc
-subgraph /corpus
-  1(justices)
-  2(decisions/sc)
-  3(decisions/legacy)
-end
+flowchart LR
+pax((corpus-pax))--github api--->sc
+ext((corpus-extractor))--corpus-sc-toolkit--->sc
+jus("/corpus/justices")--corpus-sc-toolkit--->sc
+decisions("/corpus/decisions")--local access-->sc
 subgraph local
-  1--github api---sc
-  2--local copy of corpus---sc
-  3--local copy of corpus---sc
+  direction TB
   sc(corpus-base)--run setup_base--->db[(sqlite.db)]
 end
 ```
 
 ## Concept
 
-In tandem with [corpus-pax](https://github.com/justmars/corpus-pax) and [corpus-sc-toolkit](https://github.com/justmars/corpus-sc-toolkit), `corpus-base` creates [sqlpyd](https://github.com/justmars/sqlpyd)-tables related to decisions of the Philippine Supreme Court, incorporating the following models:
+See [corpus-pax](https://github.com/justmars/corpus-pax): this establishes the database tables related
+to individuals and organizations.
 
+After the creation of the personnel, we can proceed to `corpus-base`. This creates [sqlpyd](https://github.com/justmars/sqlpyd)-tables related to decisions of the Philippine Supreme Court, incorporating the following models:
+
+- Decisions
 - Justices
 - Citations
 - Votelines
 - Titletags
 - Opinions
 - Segments
+
+[corpus-sc-toolkit](https://github.com/justmars/corpus-sc-toolkit) helps process individual components described above and includes
+the functions required to:
+
+1. deal with justice identity; and
+2. extract metadata of pdf-based documents processed via [corpus-extractor](https://github.com/justmars/corpus-extractor).
 
 ## Run
 
