@@ -1,25 +1,27 @@
-import yaml
-from sqlite_utils.db import Database
 from pathlib import Path
-from sqlpyd import Connection
+
+import yaml
 from corpus_pax import Individual, setup_pax
 from corpus_pax.utils import delete_tables_with_prefix
 from corpus_sc_toolkit import (
     DECISION_PATH,
-    Justice,
     InterimDecision,
+    Justice,
     extract_votelines,
-    tags_from_title,
     get_justices_file,
+    tags_from_title,
 )
 from loguru import logger
+from sqlite_utils.db import Database
+from sqlpyd import Connection
+
 from .main import (
-    DecisionRow,
     CitationRow,
+    DecisionRow,
     OpinionRow,
-    VoteLine,
-    TitleTagRow,
     SegmentRow,
+    TitleTagRow,
+    VoteLine,
 )
 
 

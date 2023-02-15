@@ -9,7 +9,7 @@ from sqlpyd import Connection
 
 from corpus_base import build_sc_tables, setup_decision_from_path
 
-temppath = "tests/test.db"
+temppath = "tests/data/test.db"
 
 
 def extract_files(shared_datadir, folder):
