@@ -21,7 +21,7 @@ classifiers = [
 python = "^3.11"
 citation-utils = "^0.2.3" # citation-specific utils + pydantic, python-slugify, loguru
 corpus-pax = "^0.1.12"    # sqlpyd (sqlite-utils, pydantic), email-validator, httpx, frontmatter
-corpus-sc-toolkit = "^0.0.5" # various functions to extract prospective decision / opinion fields
+corpus-sc-toolkit = "^0.0.9" # various functions to extract prospective decision / opinion fields
 
 [tool.poetry.group.dev.dependencies]
 rich = "^13.3"

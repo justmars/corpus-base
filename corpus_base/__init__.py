@@ -1,6 +1,10 @@
 __version__ = "0.2.0"
 
-from .__main__ import add_cases, build_sc_tables, setup_base, setup_pax_base
+from .build import (
+    build_sc_tables,
+    setup_decision_from_path,
+    setup_decision_from_pdf,
+)
 from .main import (
     CitationRow,
     DecisionRow,
@@ -8,5 +12,4 @@ from .main import (
     OpinionRow,
     TitleTagRow,
     VoteLine,
-    setup_case,
 )

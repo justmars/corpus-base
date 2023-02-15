@@ -541,14 +541,14 @@ sqlpyd = ">=0.1.4,<0.2.0"
 
 [[package]]
 name = "corpus-sc-toolkit"
-version = "0.0.5"
+version = "0.0.9"
 description = "Toolkit to process component elements of a Philippine Supreme Court decision."
 category = "main"
 optional = false
 python-versions = ">=3.11,<4.0"
 files = [
-    {file = "corpus_sc_toolkit-0.0.5-py3-none-any.whl", hash = "sha256:fa7cbf26b07d7481c24ac6194aa7aa2e5f15fe895da8f5e32d6db887ef7ae0e4"},
-    {file = "corpus_sc_toolkit-0.0.5.tar.gz", hash = "sha256:c39214410b77bae0f1005bab55e44905412dacbd0bc8ddf27292e4e59b0e8bd7"},
+    {file = "corpus_sc_toolkit-0.0.9-py3-none-any.whl", hash = "sha256:46d0864e9195fae78cdc9d8e8412112b6199173e93ac564777d52085218d27fa"},
+    {file = "corpus_sc_toolkit-0.0.9.tar.gz", hash = "sha256:2c79472f80680628fc166068eb3b4f22dae4add6b57f89cb4c864364b49cc0d9"},
 ]
 
 [package.dependencies]
@@ -2916,14 +2916,14 @@ files = [
 
 [[package]]
 name = "typing-extensions"
-version = "4.4.0"
+version = "4.5.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
-    {file = "typing_extensions-4.4.0.tar.gz", hash = "sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa"},
+    {file = "typing_extensions-4.5.0-py3-none-any.whl", hash = "sha256:fb33085c39dd998ac16d1431ebc293a8b3eedd00fd4a32de0ff79002c19511b4"},
+    {file = "typing_extensions-4.5.0.tar.gz", hash = "sha256:5cb5f4a79139d699607b3ef622a1dedafa84e115ab0024e0d9c044a9479ca7cb"},
 ]
 
 [[package]]
@@ -3102,4 +3102,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "a1f39152529c3b9e4f6b93132d9ff98c0e3bf919517bf71b3dc30c082df9bd31"
+content-hash = "e4652c2b682f61b90faae75f4e1163e933febfb0f9fa50bfc630050bf9e58950"

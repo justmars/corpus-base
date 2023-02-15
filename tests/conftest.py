@@ -7,7 +7,7 @@ import yaml
 from corpus_pax import Individual, init_person_tables
 from sqlpyd import Connection
 
-from corpus_base import build_sc_tables, setup_case
+from corpus_base import build_sc_tables, setup_decision_from_path
 
 temppath = "tests/test.db"
 
@@ -37,7 +37,7 @@ def setup_db(conn: Connection, paths: Iterator[Path], persons: list[dict]):
     conn.add_records(Individual, persons)
     build_sc_tables(conn)
     for p in paths:
-        setup_case(conn, p)
+        setup_decision_from_path(conn, p)
     return conn
 
 

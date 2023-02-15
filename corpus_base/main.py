@@ -1,31 +1,22 @@
 import datetime
 from collections.abc import Iterator
 from pathlib import Path
-from typing import Any
+from typing import Any, Self
 
 import frontmatter
-import yaml
 from citation_utils import Citation
-from corpus_pax import Individual
 from corpus_sc_toolkit import (
-    CandidateJustice,
+    BaseDecision,
     CourtComposition,
     DecisionCategory,
     DecisionHTMLConvertMarkdown,
     DecisionSource,
+    InterimDecision,
     Justice,
-    extract_votelines,
-    get_id_from_citation,
-    get_justices_file,
     segmentize,
-    tags_from_title,
-    voteline_clean,
 )
-from corpus_sc_toolkit.resources import DECISION_PATH
 from loguru import logger
-from markdownify import markdownify
 from pydantic import Field, root_validator
-from sqlite_utils.db import Database
 from sqlpyd import Connection, TableConfig
 
 
@@ -82,6 +73,7 @@ class DecisionRow(TableConfig):
     category: DecisionCategory = Field(None, col=str, index=True)
     fallo: str | None = Field(None, col=str, index=True, fts=True)
     voting: str | None = Field(None, col=str, index=True, fts=True)
+    is_pdf: bool | None = Field(False, col=bool, index=True)
 
     @root_validator()
     def citation_date_is_object_date(cls, values):
@@ -107,59 +99,28 @@ class DecisionRow(TableConfig):
         use_enum_values = True
 
     @classmethod
-    def from_path(cls, c: Connection, p: Path):
-        """Requires path be structured, viz.:
+    def from_path(cls, c: Connection, p: Path) -> Self | None:
+        obj = BaseDecision.from_path(path=p, db=c.db)
+        return cls(**obj.dict()) if obj else None
 
-        ```yaml
-        - /decisions
-            - /source e.g. sc / legacy # where the file was scraped from
-                - /folder_name, e.g. 12341 # the original id when scraped
-                    - /details.yaml #the file containing the metadata that is `p`
-        ```
-        """
-
-        f = p.parent / "fallo.html"
-        data = yaml.safe_load(p.read_text())
-        candidate = CandidateJustice(
-            db=c.db,
-            text=data.get("ponente"),
-            date_str=data.get("date_prom"),
-        )
-        justice_fields = (
-            candidate.detail._asdict()
-            if candidate and candidate.detail
-            else {"raw_ponente": None, "per_curiam": False, "justice_id": None}
-        )
-        cite = Citation.extract_citation_from_data(data)
-        return cls(
-            id=get_id_from_citation(
-                folder_name=p.parent.name,
-                source=p.parent.parent.stem,
-                citation=cite,
-            ),
-            origin=p.parent.name,
-            source=DecisionSource(p.parent.parent.stem),
-            created=p.stat().st_ctime,
-            modified=p.stat().st_mtime,
-            title=data.get("case_title"),
-            description=cite.display,
-            date=data.get("date_prom"),
-            composition=CourtComposition._setter(data.get("composition")),
-            category=DecisionCategory._setter(data.get("category")),
-            fallo=markdownify(f.read_text()) if f.exists() else None,
-            voting=voteline_clean(data.get("voting")),
-            citation=cite,
-            emails=data.get("emails", ["bot@lawsql.com"]),
-            **justice_fields,
-        )
+    @classmethod
+    def from_pdf(cls, obj: InterimDecision) -> Self | None:
+        return cls(**obj.dict())
 
     @property
     def citation_fk(self) -> dict:
         return self.citation.dict() | {"decision_id": self.id}
 
-    @classmethod
-    def as_fk(cls) -> tuple[str, str]:
-        return (cls.__tablename__, "id")
+
+DECISION_ID = Field(
+    default=...,
+    title="Decision ID",
+    description=(
+        "Foreign key used by other tables referencing the Decision table."
+    ),
+    col=str,
+    fk=(DecisionRow.__tablename__, "id"),
+)
 
 
 class CitationRow(Citation, TableConfig):
@@ -170,14 +131,14 @@ class CitationRow(Citation, TableConfig):
         ["docket_category", "docket_serial", "docket_date"],
         ["scra", "phil", "offg", "docket"],
     ]
-    decision_id: str = Field(..., col=str, fk=DecisionRow.as_fk())
+    decision_id: str = DECISION_ID
 
 
 class VoteLine(TableConfig):
     __prefix__ = "sc"
     __tablename__ = "votelines"
     __indexes__ = [["id", "decision_id"]]
-    decision_id: str = Field(..., col=str, fk=DecisionRow.as_fk())
+    decision_id: str = DECISION_ID
     text: str = Field(
         ...,
         title="Voteline Text",
@@ -193,7 +154,7 @@ class VoteLine(TableConfig):
 class TitleTagRow(TableConfig):
     __prefix__ = "sc"
     __tablename__ = "titletags"
-    decision_id: str = Field(..., col=str, fk=DecisionRow.as_fk())
+    decision_id: str = DECISION_ID
     tag: str = Field(..., col=str, index=True)
 
 
@@ -206,12 +167,20 @@ class OpinionRow(TableConfig):
         ["id", "decision_id"],
         ["decision_id", "title"],
     ]
-    decision_id: str = Field(..., col=str, fk=DecisionRow.as_fk())
+    decision_id: str = DECISION_ID
     id: str = Field(
         ...,
         description=(
             "The opinion pk is based on combining the decision_id with the"
             " justice_id"
+        ),
+        col=str,
+    )
+    pdf: str | None = Field(
+        default=None,
+        description=(
+            "The opinion pdf is the url that links to the downloadable PDF, if"
+            " it exists"
         ),
         col=str,
     )
@@ -224,11 +193,11 @@ class OpinionRow(TableConfig):
         col=str,
     )
     tags: list[str] | None = Field(
-        None,
+        default=None,
         description="e.g. main, dissenting, concurring, separate",
     )
     justice_id: int | None = Field(
-        None,
+        default=None,
         description=(
             "The writer of the opinion; when not supplied could mean a Per"
             " Curiam opinion, or unable to detect the proper justice."
@@ -238,7 +207,7 @@ class OpinionRow(TableConfig):
         fk=(Justice.__tablename__, "id"),
     )
     remark: str | None = Field(
-        None,
+        default=None,
         description=(
             "Short description of the opinion, when available, i.e. 'I reserve"
             " my right, etc.', 'On leave.', etc."
@@ -246,9 +215,14 @@ class OpinionRow(TableConfig):
         col=str,
         fts=True,
     )
-    concurs: list[dict] | None
+    concurs: list[dict] | None = Field(default=None)
     text: str = Field(
-        ..., description="Text proper of the opinion.", col=str, fts=True
+        ...,
+        description=(
+            "Text proper of the opinion (should ideally be in markdown format)"
+        ),
+        col=str,
+        fts=True,
     )
 
     @classmethod
@@ -314,10 +288,6 @@ class OpinionRow(TableConfig):
                 **extract,
             ).dict()
 
-    @classmethod
-    def as_fk(cls) -> tuple[str, str]:
-        return (cls.__tablename__, "id")
-
 
 class SegmentRow(TableConfig):
     __prefix__ = "sc"
@@ -326,8 +296,8 @@ class SegmentRow(TableConfig):
         ["opinion_id", "decision_id"],
     ]
     id: str = Field(..., col=str)
-    decision_id: str = Field(..., col=str, fk=DecisionRow.as_fk())
-    opinion_id: str = Field(..., col=str, fk=OpinionRow.as_fk())
+    decision_id: str = DECISION_ID
+    opinion_id: str = Field(..., col=str, fk=(OpinionRow.__tablename__, "id"))
     position: str = Field(
         ...,
         title="Relative Position",
@@ -356,102 +326,3 @@ class SegmentRow(TableConfig):
         col=str,
         fts=True,
     )
-
-
-def build_sc_tables(c: Connection) -> Connection:
-    c.add_records(Justice, yaml.safe_load(get_justices_file().read_bytes()))
-    c.create_table(DecisionRow)
-    c.create_table(CitationRow)
-    c.create_table(OpinionRow)
-    c.create_table(VoteLine)
-    c.create_table(TitleTagRow)
-    c.create_table(SegmentRow)
-    c.db.index_foreign_keys()
-    return c
-
-
-def setup_case(c: Connection, path: Path) -> None:
-    """Parse a case's `details.yaml` found in the `path`
-    to generate rows for various `sc_tbl` prefixed sqlite tables found.
-
-    After creation a decision row, get correlated metadata involving
-    the decision: the citation, voting text, tags from the title, etc.,
-    and then add rows for their respective tables.
-
-    Args:
-        c (Connection): sqlpyd Connection
-        path (Path): path to a case's details.yaml
-    """
-
-    # initialize content from the path
-    case_tbl = c.table(DecisionRow)
-    obj = DecisionRow.from_path(c, path)
-
-    try:
-        decision_id = case_tbl.insert(obj.dict(), pk="id").last_pk  # type: ignore
-        logger.debug(f"Added {decision_id=}")
-    except Exception as e:
-        logger.error(f"Skipping duplicate {obj=}; {e=}")
-        return
-    if not decision_id:
-        logger.error(f"Could not find decision_id for {obj=}")
-        return
-
-    # assign author row to a joined m2m table, note the explicit m2m table name
-    # so that the prefix used is `sc`; the default will start with `pax_`
-    for email in obj.emails:
-        case_tbl.update(decision_id).m2m(
-            other_table=c.table(Individual),
-            pk="id",
-            lookup={"email": email},
-            m2m_table="sc_tbl_decisions_pax_tbl_individuals",
-        )
-
-    # add associated citation
-    if obj.citation and obj.citation.has_citation:
-        c.add_record(CitationRow, obj.citation_fk)
-
-    # process votelines of voting text in decision
-    if obj.voting:
-        c.add_records(VoteLine, extract_votelines(decision_id, obj.voting))
-
-    # add tags based on the title of decision
-    if obj.title:
-        c.add_records(TitleTagRow, tags_from_title(decision_id, obj.title))
-
-    # add opinions and segments
-    for op in OpinionRow.get_opinions(
-        case_path=path.parent,
-        decision_id=decision_id,
-        justice_id=case_tbl.get(decision_id).get("justice_id"),
-    ):
-        c.add_record(OpinionRow, op.dict(exclude={"concurs", "tags"}))
-        c.add_records(SegmentRow, op.segments)
-
-
-def add_authors_only(c: Connection):
-    """Helper function for just adding the author decision m2m table."""
-    case_details = DECISION_PATH.glob("**/*/details.yaml")
-    for detail_path in case_details:
-        obj = DecisionRow.from_path(c, detail_path)
-        for email in obj.emails:  # assign author row to a joined m2m table
-            tbl = c.table(DecisionRow)
-            if tbl.get(obj.id):
-                tbl.update(obj.id).m2m(
-                    other_table=c.table(Individual),
-                    lookup={"email": email},
-                    pk="id",
-                    m2m_table="sc_tbl_decisions_pax_tbl_individuals",
-                )
-
-
-def add_cases(c: Connection, test_only: int = 0) -> Database:
-    case_details = DECISION_PATH.glob("**/*/details.yaml")
-    for idx, details_file in enumerate(case_details):
-        if test_only and idx == test_only:
-            break
-        try:
-            setup_case(c, details_file)
-        except Exception as e:
-            logger.info(e)
-    return c.db
