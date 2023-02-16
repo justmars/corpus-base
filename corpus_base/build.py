@@ -1,3 +1,4 @@
+from collections.abc import Callable, Iterator
 from pathlib import Path
 
 import yaml
@@ -7,12 +8,10 @@ from corpus_sc_toolkit import (
     DECISION_PATH,
     InterimDecision,
     Justice,
-    extract_votelines,
     get_justices_file,
-    tags_from_title,
 )
 from loguru import logger
-from sqlite_utils.db import Database
+from pydantic import BaseModel
 from sqlpyd import Connection
 
 from .main import (
@@ -25,125 +24,87 @@ from .main import (
 )
 
 
-def build_sc_tables(c: Connection) -> Connection:
-    c.add_records(Justice, yaml.safe_load(get_justices_file().read_bytes()))
-    c.create_table(DecisionRow)
-    c.create_table(CitationRow)
-    c.create_table(OpinionRow)
-    c.create_table(VoteLine)
-    c.create_table(TitleTagRow)
-    c.create_table(SegmentRow)
-    c.db.index_foreign_keys()
-    return c
+class CorpusDecision(BaseModel):
+    conn: Connection
+    test: int = 0
+    rebuild: bool = False
 
+    @property
+    def paths(self):
+        return DECISION_PATH.glob("**/*/details.yaml")
 
-def add_decision_meta(c: Connection, decision: DecisionRow) -> str | None:
-    """This creates a decision row and correlated metadata involving
-    the decision, i.e. the citation, voting text, tags from the title, etc.,
-    and then add rows for their respective tables.
+    @property
+    def pdfs(self):
+        return InterimDecision.limited_decisions(self.conn.db)
 
-    Args:
-        c (Connection): sqlpyd wrapper over sqlite_utils
-        decision (DecisionRow): Uniform fields ready for database insertion
+    def setup(self):
+        """Since there are thousands of cases, limit the number of objects
+        via the `test_num`."""
+        if self.rebuild:
+            delete_tables_with_prefix(self.conn, ["pax", "sc"])
+            setup_pax(str(self.conn.path_to_db))
+            self.build_tables()
+        self.add(self.paths, self.add_path)
+        self.add(self.pdfs, self.add_pdf)
 
-    Returns:
-        str | None: The decision id, if the insertion of records is successful.
-    """
-    case_tbl = c.table(DecisionRow)
-    try:
-        decision_id = case_tbl.insert(decision.dict(), pk="id").last_pk  # type: ignore
-        logger.debug(f"Added {decision_id=}")
-    except Exception as e:
-        logger.error(f"Skipping duplicate {decision=}; {e=}")
-        return None
-    if not decision_id:
-        logger.error(f"Could not find decision_id for {decision=}")
-        return None
+    def build_tables(self):
+        """Create all the relevant tables involving a decision object."""
+        justices = yaml.safe_load(get_justices_file().read_bytes())
+        self.conn.add_records(Justice, justices)
+        self.conn.create_table(DecisionRow)
+        self.conn.create_table(CitationRow)
+        self.conn.create_table(OpinionRow)
+        self.conn.create_table(VoteLine)
+        self.conn.create_table(TitleTagRow)
+        self.conn.create_table(SegmentRow)
+        self.conn.db.index_foreign_keys()
 
-    # assign author row to a joined m2m table, note the explicit m2m table name
-    # so that the prefix used is `sc`; the default will start with `pax_`
-    for email in decision.emails:
-        case_tbl.update(decision_id).m2m(
-            other_table=c.table(Individual),
-            pk="id",
-            lookup={"email": email},
-            m2m_table="sc_tbl_decisions_pax_tbl_individuals",
-        )
+    def add(self, items: Iterator[InterimDecision | Path], func_add: Callable):
+        """Use `func_add()` on each of the `items`, limited count by the
+        `self.test`, if declared."""
+        for counter, item in enumerate(items):
+            if self.test and counter == self.test:
+                logger.info(f"Test add: {counter=}")
+                break
+            try:
+                func_add(item)
+            except Exception as e:
+                logger.info(e)
 
-    # add associated citation
-    if decision.citation and decision.citation.has_citation:
-        c.add_record(
-            kls=CitationRow,
-            item=decision.citation_fk,
-        )
+    def build_decision(self, item_obj: InterimDecision | Path) -> str | None:
+        """Based on the type of object, create the `DecisionRow` and using this
+        structure, create all the other meta objects."""
+        if isinstance(item_obj, Path):
+            obj = DecisionRow.from_path(c=self.conn, p=item_obj)
+        elif isinstance(item_obj, InterimDecision):
+            obj = DecisionRow.from_pdf(obj=item_obj)
+        if not obj:
+            logger.error(f"Skipping bad {item_obj=};")
+            return None
+        decision_id = obj.add_meta(self.conn)
+        if not decision_id:
+            logger.error(f"Could not setup pdf-based {obj.id=}; {obj.origin=}")
+            return None
+        return decision_id
 
-    # process votelines of voting text in decision
-    if decision.voting:
-        c.add_records(
-            VoteLine,
-            extract_votelines(
-                decision_pk=decision_id,
-                text=decision.voting,
-            ),
-        )
+    def add_pdf(self, pdf_obj: InterimDecision):
+        """Parse a case's pre-processed pdf found in the `pdf_obj`."""
+        if not self.build_decision(pdf_obj):
+            return
+        for op in pdf_obj.opinions:
+            self.conn.add_record(kls=OpinionRow, item=op.row)
+            for segment in op.segments:
+                self.conn.add_record(kls=SegmentRow, item=segment._asdict())
 
-    # add tags based on title of decision
-    if decision.title:
-        c.add_records(
-            TitleTagRow,
-            tags_from_title(
-                decision_pk=decision_id,
-                text=decision.title,
-            ),
-        )
-    return decision.id
-
-
-def setup_decision_from_pdf(c: Connection, pdf_obj: InterimDecision) -> None:
-    """Transfer pre-processed `pdf_obj`, per corpus-sc-toolkit.
-    to generate rows for various `sc_tbl` prefixed sqlite tables found.
-
-    Args:
-        c (Connection): sqlpyd wrapper over sqlite_utils
-        pdf_obj (InterimDecision): see corpus-sc-toolkit
-    """
-    obj = DecisionRow.from_pdf(pdf_obj)
-    if not obj:
-        logger.error(f"Skipping bad {pdf_obj.id=}; {pdf_obj.origin=}")
-        return
-    decision_id = add_decision_meta(c, obj)
-    if not decision_id:
-        logger.error(f"Could not setup pdf-based {obj.id=}; {obj.origin=}")
-        return
-    for op in pdf_obj.opinions:
-        c.add_record(OpinionRow, op.row)
-        for segment in op.segments:
-            c.add_record(SegmentRow, segment._asdict())
-
-
-def setup_decision_from_path(c: Connection, path: Path) -> None:
-    """Parse a case's `details.yaml` found in the `path`
-    to generate rows for various `sc_tbl` prefixed sqlite tables found.
-
-    Args:
-        c (Connection): sqlpyd wrapper over sqlite_utils
-        path (Path): path to a case's details.yaml
-    """
-    obj = DecisionRow.from_path(c, path)
-    if not obj:
-        logger.error(f"Skipping bad {path=}")
-        return
-    decision_id = add_decision_meta(c, obj)
-    if not decision_id:
-        logger.error(f"Could not setup path-based {obj.id=}; {path=}")
-        return
-    for op in OpinionRow.get_opinions(
-        case_path=path.parent,
-        decision_id=decision_id,
-        justice_id=c.table(DecisionRow).get(decision_id).get("justice_id"),
-    ):
-        c.add_record(OpinionRow, op.dict(exclude={"concurs", "tags"}))
-        c.add_records(SegmentRow, op.segments)
+    def add_path(self, path_obj: Path):
+        """Parse a case's `details.yaml` found in the `path_obj`."""
+        if not (pk := self.build_decision(path_obj)):
+            return
+        j_id = self.conn.table(DecisionRow).get(pk).get("justice_id")
+        to_fix = {"concurs", "tags"}  # TODO: handle new features later
+        for op in OpinionRow.get_opinions(path_obj.parent, pk, j_id):
+            self.conn.add_record(kls=OpinionRow, item=op.dict(exclude=to_fix))
+            self.conn.add_records(kls=SegmentRow, items=op.segments)
 
 
 def add_authors_only(c: Connection):
@@ -160,44 +121,3 @@ def add_authors_only(c: Connection):
                         pk="id",
                         m2m_table="sc_tbl_decisions_pax_tbl_individuals",
                     )
-
-
-def add_cases_from_path(c: Connection, test_only: int = 0) -> Database:
-    case_details = DECISION_PATH.glob("**/*/details.yaml")
-    for idx, details_file in enumerate(case_details):
-        if test_only and idx == test_only:
-            break
-        try:
-            setup_decision_from_path(c, details_file)
-        except Exception as e:
-            logger.info(e)
-    return c.db
-
-
-def setup_base(db_path: str, test_num: int | None = None) -> Connection:
-    """Recreates tables and populates the same.
-
-    Since there are thousands of cases, limit the number of downloads
-    via the `test_num`.
-
-    Args:
-        db_path (str): string path from the cwd
-        test_num (int | None, optional): e.g. how many cases will it
-            add to the database. Defaults to None.
-
-    Returns:
-        Connection: sqlpyd wrapper sqlite.utils Database
-    """
-    c = Connection(DatabasePath=db_path, WAL=True)  # type: ignore
-    delete_tables_with_prefix(c, ["sc"])
-    build_sc_tables(c)
-    if test_num:
-        add_cases_from_path(c, test_num)
-    else:
-        add_cases_from_path(c)
-    return c
-
-
-def setup_pax_base(db_path: str, test_num: int | None = None) -> Connection:
-    setup_pax(db_path)
-    return setup_base(db_path, test_num)
