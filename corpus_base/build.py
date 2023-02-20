@@ -1,6 +1,8 @@
+from pylts import ConfigS3
 from collections.abc import Callable, Iterator
 from pathlib import Path
-
+import sys
+import click
 import yaml
 from corpus_pax import Individual, setup_pax
 from corpus_pax.utils import delete_tables_with_prefix
@@ -23,27 +25,70 @@ from .main import (
     VoteLine,
 )
 
+logger.configure(
+    handlers=[
+        {
+            "sink": "logs/error.log",
+            "format": "{message}",
+            "level": "ERROR",
+        },
+        {
+            "sink": "logs/warnings.log",
+            "format": "{message}",
+            "level": "WARNING",
+            "serialize": True,
+        },
+        {
+            "sink": sys.stderr,
+            "format": "{message}",
+            "level": "DEBUG",
+            "serialize": True,
+        },
+    ]
+)
+
 
 class CorpusDecision(BaseModel):
+    """Accepts the following fields:
+
+    Field | Type | Description
+    --:|:--:|:--
+    conn | sqlpyd.Connection | Database to add decisions to
+    test | int (defaults to 0) | If specified, the number of decisions to add to the database object
+    rebuild | bool (defaults to False) | If True, rebuild the database from scratch
+
+    This presumes existence of a local folder identified by `DECISION_PATH` and that the
+    `conn` was previously populated by PDF tables. These prerequires enable the following properties:
+
+    Property | Type | Description
+    --:|:--:|:--
+    `@paths` | Iterator[Path] | Path to *.yaml files
+    `@pdfs` | Iterator[InterimDecision] | Content sourced from pdf files
+    """  # noqa: E501
+
     conn: Connection
     test: int = 0
     rebuild: bool = False
 
     @property
-    def paths(self):
+    def paths(self) -> Iterator[Path]:
         return DECISION_PATH.glob("**/*/details.yaml")
 
     @property
-    def pdfs(self):
+    def pdfs(self) -> Iterator[InterimDecision]:
         return InterimDecision.limited_decisions(self.conn.db)
 
     def setup(self):
         """Since there are thousands of cases, limit the number of objects
         via the `test_num`."""
+        db = str(self.conn.db)
         if self.rebuild:
+            logger.info(f"Rebuilding database in {db=}")
             delete_tables_with_prefix(self.conn, ["pax", "sc"])
             setup_pax(str(self.conn.path_to_db))
             self.build_tables()
+        else:
+            logger.info(f"Start decision creation in {db=}")
         self.add(self.paths, self.add_path)
         self.add(self.pdfs, self.add_pdf)
 
@@ -74,6 +119,8 @@ class CorpusDecision(BaseModel):
     def build_decision(self, item_obj: InterimDecision | Path) -> str | None:
         """Based on the type of object, create the `DecisionRow` and using this
         structure, create all the other meta objects."""
+
+        # Create the DecisionRow
         if isinstance(item_obj, Path):
             obj = DecisionRow.from_path(c=self.conn, p=item_obj)
         elif isinstance(item_obj, InterimDecision):
@@ -81,10 +128,13 @@ class CorpusDecision(BaseModel):
         if not obj:
             logger.error(f"Skipping bad {item_obj=};")
             return None
+
+        # Each DecisionRow will have related meta objects
         decision_id = obj.add_meta(self.conn)
         if not decision_id:
             logger.error(f"Could not setup pdf-based {obj.id=}; {obj.origin=}")
             return None
+
         return decision_id
 
     def add_pdf(self, pdf_obj: InterimDecision):
@@ -121,3 +171,47 @@ def add_authors_only(c: Connection):
                         pk="id",
                         m2m_table="sc_tbl_decisions_pax_tbl_individuals",
                     )
+
+
+@click.group()
+def cli():
+    ...
+
+
+def restore_conn(dbfolder: str) -> Connection:
+    """Get the Connection object to the database restored."""
+    logger.info("Starting setup of corpus-base by restoration.")
+    stream = ConfigS3(s3="s3://corpus-pdf/db", folder=Path().cwd() / dbfolder)
+    stream.restore()
+    return Connection(DatabasePath=str(stream.dbpath), WAL=True)
+
+
+@cli.command()
+@click.option("--dbfolder", default="data", help="Location of the database.")
+@click.option("--test", default=0, help="If 0, will add all entries found.")
+@click.option(
+    "--rebuild",
+    default=True,
+    help="If True, will create database from scratch.",
+)
+def prep(dbfolder, test, rebuild):
+    conn = restore_conn(dbfolder)
+    corpus = CorpusDecision(conn=conn, test=test, rebuild=rebuild)
+    corpus.setup()
+
+
+@cli.command()
+@click.option("--dbfolder", default="data", help="Location of the database.")
+def test(dbfolder):
+    conn = restore_conn(dbfolder)
+    corpus = CorpusDecision(conn=conn, test=5, rebuild=True)
+    corpus.setup()
+
+
+@cli.command()
+@click.option("--dbfolder", default="data", help="Location of the database.")
+@click.option("--test", default=0, help="If 0, will add all entries found.")
+def rebuild(dbfolder, test):
+    conn = restore_conn(dbfolder)
+    corpus = CorpusDecision(conn=conn, test=test, rebuild=True)
+    corpus.setup()

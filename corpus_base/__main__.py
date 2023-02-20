@@ -1,17 +1,3 @@
-from loguru import logger
+from .build import cli
 
-logger.configure(
-    handlers=[
-        {
-            "sink": "logs/error.log",
-            "format": "{message}",
-            "level": "ERROR",
-        },
-        {
-            "sink": "logs/warnings.log",
-            "format": "{message}",
-            "level": "WARNING",
-            "serialize": True,
-        },
-    ]
-)
+cli()

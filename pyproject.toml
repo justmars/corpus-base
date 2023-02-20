@@ -20,8 +20,8 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.11"
 citation-utils = "^0.2.3" # citation-specific utils + pydantic, python-slugify, loguru
-corpus-pax = "^0.1.12"    # sqlpyd (sqlite-utils, pydantic), email-validator, httpx, frontmatter
-corpus-sc-toolkit = "^0.0.9" # various functions to extract prospective decision / opinion fields
+corpus-pax = "^0.1.13"    # sqlpyd (sqlite-utils, pydantic), email-validator, httpx, frontmatter
+corpus-sc-toolkit = "^0.0.10" # various functions to extract prospective decision / opinion fields
 
 [tool.poetry.group.dev.dependencies]
 rich = "^13.3"
@@ -34,25 +34,19 @@ types-PyYAML = "^6.0.7"
 types-python-slugify = "^5.0.4"
 mkdocs = "^1.4.2"
 mkdocstrings = { extras = ["python"], version = "^0.20.0" }
-mkdocs-material = "^9.0.12"
+mkdocs-material = "^9.0.13"
 notebook = "^6.5.2"
 
 [tool.pytest.ini_options]
 filterwarnings = ['ignore::DeprecationWarning']
 
 [tool.ruff]
-ignore = ["F401", "E501"]
+ignore = ["F401"]
 
 [tool.pytest]
 minversion = "7.2"
 addopts = "-ra -q --cov=corpus_base tests/"
 testpaths = ["tests"]
-
-[tool.isort]
-profile = "black"
-multi_line_output = 3
-line_length = 79
-include_trailing_comma = 'True'
 
 [tool.black]
 line-length = 79

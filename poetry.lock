@@ -298,7 +298,7 @@ files = [
 name = "charset-normalizer"
 version = "3.0.1"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 files = [
@@ -519,36 +519,33 @@ test = ["pytest"]
 
 [[package]]
 name = "corpus-pax"
-version = "0.1.12"
+version = "0.1.13"
 description = "Using Github API (to pull individuals, orgs, and article content), setup a local sqlite database, syncing images to Cloudflare."
 category = "main"
 optional = false
 python-versions = ">=3.11,<4.0"
 files = [
-    {file = "corpus_pax-0.1.12-py3-none-any.whl", hash = "sha256:ceb3bd9e5dc12ee2f3acfa25cabfc54fa8367fbc7eedd341fc54859e8a078cad"},
-    {file = "corpus_pax-0.1.12.tar.gz", hash = "sha256:204e5098b96b54fd98410d8fa8fd6214acb4bee5d20851f8a39818837f46c2bb"},
+    {file = "corpus_pax-0.1.13-py3-none-any.whl", hash = "sha256:16b124c0b02feda1f08d528bdec8ee8e63ddadc7b290cc62b2a6aed84b7d9518"},
+    {file = "corpus_pax-0.1.13.tar.gz", hash = "sha256:4155c61b2c11d57c1354ff52a5c3e86bdf38b8685c3aa7333a91422088771b94"},
 ]
 
 [package.dependencies]
 email-validator = ">=1.3.0,<2.0.0"
 httpx = ">=0.23.0,<0.24.0"
 jinja2 = ">=3.1.2,<4.0.0"
-mkdocs = ">=1.4.2,<2.0.0"
-mkdocs-material = ">=9.0.6,<10.0.0"
-mkdocstrings = {version = ">=0.20.0,<0.21.0", extras = ["python"]}
 python-frontmatter = ">=1.0.0,<2.0.0"
 sqlpyd = ">=0.1.4,<0.2.0"
 
 [[package]]
 name = "corpus-sc-toolkit"
-version = "0.0.9"
+version = "0.0.10"
 description = "Toolkit to process component elements of a Philippine Supreme Court decision."
 category = "main"
 optional = false
 python-versions = ">=3.11,<4.0"
 files = [
-    {file = "corpus_sc_toolkit-0.0.9-py3-none-any.whl", hash = "sha256:46d0864e9195fae78cdc9d8e8412112b6199173e93ac564777d52085218d27fa"},
-    {file = "corpus_sc_toolkit-0.0.9.tar.gz", hash = "sha256:2c79472f80680628fc166068eb3b4f22dae4add6b57f89cb4c864364b49cc0d9"},
+    {file = "corpus_sc_toolkit-0.0.10-py3-none-any.whl", hash = "sha256:8608694916e89bf48bbbb559d4fe0c836da7cab25493b556ce18fa49f515e544"},
+    {file = "corpus_sc_toolkit-0.0.10.tar.gz", hash = "sha256:5a2b05d540aa32e7fbf4a0b38a9c8829b58c94f85033822e1f365e172515244d"},
 ]
 
 [package.dependencies]
@@ -788,7 +785,7 @@ files = [
 name = "ghp-import"
 version = "2.1.0"
 description = "Copy your docs directly to the gh-pages branch."
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 files = [
@@ -804,14 +801,14 @@ dev = ["flake8", "markdown", "twine", "wheel"]
 
 [[package]]
 name = "griffe"
-version = "0.25.4"
+version = "0.25.5"
 description = "Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "griffe-0.25.4-py3-none-any.whl", hash = "sha256:919f935a358b31074d16e324e26b041883c60a8cf10504655e394afc3a7caad8"},
-    {file = "griffe-0.25.4.tar.gz", hash = "sha256:f190edf8ef58d43c856d2d6761ec324a043ff60deb8c14359263571e8b91fe68"},
+    {file = "griffe-0.25.5-py3-none-any.whl", hash = "sha256:1fb9edff48e66d4873014a2ebf21aca5f271d0006a4c937826e3cf592ffb3706"},
+    {file = "griffe-0.25.5.tar.gz", hash = "sha256:11ea3403ef0560a1cbcf7f302eb5d21cf4c1d8ed3f8a16a75aa9f6f458caf3f1"},
 ]
 
 [package.dependencies]
@@ -1097,14 +1094,14 @@ format-nongpl = ["fqdn", "idna", "isoduration", "jsonpointer (>1.13)", "rfc3339-
 
 [[package]]
 name = "jupyter-client"
-version = "8.0.2"
+version = "8.0.3"
 description = "Jupyter protocol implementation and client libraries"
 category = "dev"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "jupyter_client-8.0.2-py3-none-any.whl", hash = "sha256:c53731eb590b68839b0ce04bf46ff8c4f03278f5d9fe5c3b0f268a57cc2bd97e"},
-    {file = "jupyter_client-8.0.2.tar.gz", hash = "sha256:47ac9f586dbcff4d79387ec264faf0fdeb5f14845fa7345fd7d1e378f8096011"},
+    {file = "jupyter_client-8.0.3-py3-none-any.whl", hash = "sha256:be48ac6bd659cbbddb7a674cf06b3b8afbf53f228253cf58bde604c03bd487b0"},
+    {file = "jupyter_client-8.0.3.tar.gz", hash = "sha256:ed65498bea6d876ef9d8da3e0db3dd33c5d129f5b2645f56ae03993782966bd0"},
 ]
 
 [package.dependencies]
@@ -1255,7 +1252,7 @@ dev = ["Sphinx (>=4.1.1)", "black (>=19.10b0)", "colorama (>=0.3.4)", "docutils 
 name = "markdown"
 version = "3.3.7"
 description = "Python implementation of Markdown."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1398,7 +1395,7 @@ files = [
 name = "mergedeep"
 version = "1.3.4"
 description = "A deep merge function for 🐍."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1422,7 +1419,7 @@ files = [
 name = "mkdocs"
 version = "1.4.2"
 description = "Project documentation with Markdown."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1450,7 +1447,7 @@ min-versions = ["babel (==2.9.0)", "click (==7.0)", "colorama (==0.4)", "ghp-imp
 name = "mkdocs-autorefs"
 version = "0.4.1"
 description = "Automatically link across pages in MkDocs."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1464,14 +1461,14 @@ mkdocs = ">=1.1"
 
 [[package]]
 name = "mkdocs-material"
-version = "9.0.12"
+version = "9.0.13"
 description = "Documentation that simply works"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "mkdocs_material-9.0.12-py3-none-any.whl", hash = "sha256:ff4233e4f4da0c879db0dbcb532a690a3f86f5a66a0cfcce99a124e82a462afb"},
-    {file = "mkdocs_material-9.0.12.tar.gz", hash = "sha256:4da07b1390c6b78844f1566d723dd045572e645f31b108a1b5062fa7d11aa241"},
+    {file = "mkdocs_material-9.0.13-py3-none-any.whl", hash = "sha256:06e51eba6a090de070a3489890cf1e491d52c04c6ff2b06dd4586c6cdd974a3f"},
+    {file = "mkdocs_material-9.0.13.tar.gz", hash = "sha256:a62696610899d01df091b4d5ad23f9811f878a1f34307d7cea677baf4854c84f"},
 ]
 
 [package.dependencies]
@@ -1489,7 +1486,7 @@ requests = ">=2.26"
 name = "mkdocs-material-extensions"
 version = "1.1.1"
 description = "Extension pack for Python Markdown and MkDocs Material."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1501,7 +1498,7 @@ files = [
 name = "mkdocstrings"
 version = "0.20.0"
 description = "Automatic documentation from sources, for MkDocs."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1527,7 +1524,7 @@ python-legacy = ["mkdocstrings-python-legacy (>=0.2.1)"]
 name = "mkdocstrings-python"
 version = "0.8.3"
 description = "A Python handler for mkdocstrings."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1541,14 +1538,14 @@ mkdocstrings = ">=0.19"
 
 [[package]]
 name = "nbclassic"
-version = "0.5.1"
+version = "0.5.2"
 description = "Jupyter Notebook as a Jupyter Server extension."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "nbclassic-0.5.1-py3-none-any.whl", hash = "sha256:32c235e1f22f4048f3b877d354c198202898797cf9c2085856827598cead001b"},
-    {file = "nbclassic-0.5.1.tar.gz", hash = "sha256:8e8ffce7582bb7a4baf11fa86a3d88b184e8e7df78eed4ead69f15aa4fc0e323"},
+    {file = "nbclassic-0.5.2-py3-none-any.whl", hash = "sha256:6403a996562dadefa7fee9c49e17b663b5fd508241de5df655b90011cf3342d9"},
+    {file = "nbclassic-0.5.2.tar.gz", hash = "sha256:40f11bbcc59e8956c3d5ef132dec8e5a853e893ecf831e791d54da0d8a50d79d"},
 ]
 
 [package.dependencies]
@@ -1558,7 +1555,7 @@ ipython-genutils = "*"
 jinja2 = "*"
 jupyter-client = ">=6.1.1"
 jupyter-core = ">=4.6.1"
-jupyter-server = ">=1.17.0"
+jupyter-server = ">=1.8"
 nbconvert = ">=5"
 nbformat = "*"
 nest-asyncio = ">=1.5"
@@ -1742,7 +1739,7 @@ test = ["pytest", "pytest-console-scripts", "pytest-tornasync"]
 name = "packaging"
 version = "23.0"
 description = "Core utilities for Python packages"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -2007,7 +2004,7 @@ email = ["email-validator (>=1.0.3)"]
 name = "pygments"
 version = "2.14.0"
 description = "Pygments is a syntax highlighting package written in Python."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -2040,7 +2037,7 @@ python-dotenv = ">=0.21,<0.22"
 name = "pymdown-extensions"
 version = "9.9.2"
 description = "Extension pack for Python Markdown."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -2318,7 +2315,7 @@ files = [
 name = "pyyaml-env-tag"
 version = "0.1"
 description = "A custom YAML tag for referencing environment variables in YAML files. "
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -2423,7 +2420,7 @@ cffi = {version = "*", markers = "implementation_name == \"pypy\""}
 name = "regex"
 version = "2022.10.31"
 description = "Alternative regular expression module, to replace re."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -2521,7 +2518,7 @@ files = [
 name = "requests"
 version = "2.28.2"
 description = "Python HTTP for Humans."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7, <4"
 files = [
@@ -2904,14 +2901,14 @@ files = [
 
 [[package]]
 name = "types-pyyaml"
-version = "6.0.12.6"
+version = "6.0.12.7"
 description = "Typing stubs for PyYAML"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "types-PyYAML-6.0.12.6.tar.gz", hash = "sha256:24e76b938d58e68645271eeb149af6022d1da99788e481f959bd284b164f39a1"},
-    {file = "types_PyYAML-6.0.12.6-py3-none-any.whl", hash = "sha256:77b74d0874482f2b42dd566b7277b0a220068595e0fb42689d0c0560f3d1ae9e"},
+    {file = "types-PyYAML-6.0.12.7.tar.gz", hash = "sha256:ad40c99142b1812615bac08d5e240d35107a27ec285af501682c685957692f95"},
+    {file = "types_PyYAML-6.0.12.7-py3-none-any.whl", hash = "sha256:91c64379a9ae88471a473d1ce0abf6a09c285700a297621b2177163d506584b8"},
 ]
 
 [[package]]
@@ -2957,7 +2954,7 @@ dev = ["flake8 (<4.0.0)", "flake8-annotations", "flake8-bugbear", "flake8-commas
 name = "urllib3"
 version = "1.26.14"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 files = [
@@ -2995,7 +2992,7 @@ test = ["covdefaults (>=2.2.2)", "coverage (>=7.1)", "coverage-enable-subprocess
 name = "watchdog"
 version = "2.2.1"
 description = "Filesystem events monitoring"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -3102,4 +3099,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "e4652c2b682f61b90faae75f4e1163e933febfb0f9fa50bfc630050bf9e58950"
+content-hash = "da6792fc0dc7eefd86c2429ce58c47d4c99ac416f26102baa5cbe09f5bcfbf29"
