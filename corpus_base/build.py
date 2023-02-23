@@ -25,6 +25,7 @@ from .main import (
     VoteLine,
 )
 
+
 logger.configure(
     handlers=[
         {
