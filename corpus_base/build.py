@@ -54,17 +54,16 @@ class CorpusDecision(BaseModel):
 
     Field | Type | Description
     --:|:--:|:--
-    conn | sqlpyd.Connection | Database to add decisions to
+    conn | sqlpyd.Connection | Database to add decisions to; _must be previously populated by PDF tables_
     test | int (defaults to 0) | If specified, the number of decisions to add to the database object
     rebuild | bool (defaults to False) | If True, rebuild the database from scratch
 
-    This presumes existence of a local folder identified by `DECISION_PATH` and that the
-    `conn` was previously populated by PDF tables. These prerequires enable the following properties:
+    Notes:
 
     Property | Type | Description
     --:|:--:|:--
-    `@paths` | Iterator[Path] | Path to *.yaml files
-    `@pdfs` | Iterator[InterimDecision] | Content sourced from pdf files
+    `@paths` | Iterator[Path] | Assumes a local path to *.yaml files
+    `@pdfs` | Iterator[InterimDecision] | Content will be sourced from PDF tables
     """  # noqa: E501
 
     conn: Connection
@@ -131,9 +130,9 @@ class CorpusDecision(BaseModel):
             return None
 
         # Each DecisionRow will have related meta objects
-        decision_id = obj.add_meta(self.conn)
+        decision_id = obj.add_meta(conn=self.conn)
         if not decision_id:
-            logger.error(f"Could not setup pdf-based {obj.id=}; {obj.origin=}")
+            logger.error(f"Could not setup {obj.id=}; {obj.origin=}")
             return None
 
         return decision_id

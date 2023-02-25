@@ -2,7 +2,7 @@ import datetime
 from collections.abc import Iterator
 from pathlib import Path
 from typing import Any, Self
-
+from sqlite_utils.db import Table
 import frontmatter
 from citation_utils import Citation
 from corpus_pax import Individual
@@ -114,34 +114,38 @@ class DecisionRow(TableConfig):
     def citation_fk(self) -> dict:
         return self.citation.dict() | {"decision_id": self.id}
 
-    def add_meta(self, c: Connection) -> str | None:
+    def add_meta(self, conn: Connection) -> str | None:
         """This creates a decision row and correlated metadata involving
         the decision, i.e. the citation, voting text, tags from the title, etc.,
         and then add rows for their respective tables.
 
         Args:
-            c (Connection): sqlpyd wrapper over sqlite_utils
+            conn (Connection): sqlpyd wrapper over sqlite_utils
             decision (DecisionRow): Uniform fields ready for database insertion
 
         Returns:
             str | None: The decision id, if the insertion of records is successful.
         """
-        case_tbl = c.table(DecisionRow)
+
         try:
-            decision_id = case_tbl.insert(self.dict(), pk="id").last_pk  # type: ignore
-            logger.debug(f"Added {decision_id=}")
+            pk = (
+                conn.table(DecisionRow)
+                .insert(record=self.dict(), pk="id")  # type: ignore
+                .last_pk
+            )
+            logger.debug(f"Added {pk=}")
         except Exception as e:
             logger.error(f"Skipping duplicate {self=}; {e=}")
             return None
-        if not decision_id:
+        if not pk:
             logger.error(f"Could not find decision_id for {self=}")
             return None
 
-        # assign author row to a joined m2m table, note the explicit m2m table name
-        # so that the prefix used is `sc`; the default will start with `pax_`
+        # Assign author row to a joined m2m table, note the explicit m2m table name
+        # so that the prefix used is `sc_`.
         for email in self.emails:
-            case_tbl.update(decision_id).m2m(
-                other_table=c.table(Individual),
+            conn.table(DecisionRow).update(pk).m2m(
+                other_table=conn.table(Individual),
                 pk="id",
                 lookup={"email": email},
                 m2m_table="sc_tbl_decisions_pax_tbl_individuals",
@@ -149,29 +153,23 @@ class DecisionRow(TableConfig):
 
         # add associated citation
         if self.citation and self.citation.has_citation:
-            c.add_record(
+            conn.add_record(
                 kls=CitationRow,
                 item=self.citation_fk,
             )
 
         # process votelines of voting text in decision
         if self.voting:
-            c.add_records(
-                VoteLine,
-                extract_votelines(
-                    decision_pk=decision_id,
-                    text=self.voting,
-                ),
+            conn.add_records(
+                kls=VoteLine,
+                items=extract_votelines(decision_pk=pk, text=self.voting),
             )
 
         # add tags based on title of decision
         if self.title:
-            c.add_records(
-                TitleTagRow,
-                tags_from_title(
-                    decision_pk=decision_id,
-                    text=self.title,
-                ),
+            conn.add_records(
+                kls=TitleTagRow,
+                items=tags_from_title(decision_pk=pk, text=self.title),
             )
         return self.id
 

@@ -19,9 +19,9 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.11"
-citation-utils = "^0.2.3" # citation-specific utils + pydantic, python-slugify, loguru
+citation-utils = "^0.2.4" # citation-specific utils + pydantic, python-slugify, loguru
 corpus-pax = "^0.1.15"    # sqlpyd (sqlite-utils, pydantic), email-validator, httpx, frontmatter
-corpus-sc-toolkit = "^0.0.10" # various functions to extract prospective decision / opinion fields
+corpus-sc-toolkit = "^0.0.11" # various functions to extract prospective decision / opinion fields
 
 [tool.poetry.group.dev.dependencies]
 rich = "^13.3"
@@ -34,8 +34,7 @@ types-PyYAML = "^6.0.7"
 types-python-slugify = "^5.0.4"
 mkdocs = "^1.4.2"
 mkdocstrings = { extras = ["python"], version = "^0.20.0" }
-mkdocs-material = "^9.0.13"
-notebook = "^6.5.2"
+mkdocs-material = "^9.0.14"
 
 [tool.pytest.ini_options]
 filterwarnings = ['ignore::DeprecationWarning']
