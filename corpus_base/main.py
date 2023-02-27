@@ -2,7 +2,7 @@ import datetime
 from collections.abc import Iterator
 from pathlib import Path
 from typing import Any, Self
-from sqlite_utils.db import Table
+
 import frontmatter
 from citation_utils import Citation
 from corpus_pax import Individual
@@ -354,9 +354,7 @@ class OpinionRow(TableConfig):
 class SegmentRow(TableConfig):
     __prefix__ = "sc"
     __tablename__ = "segments"
-    __indexes__ = [
-        ["opinion_id", "decision_id"],
-    ]
+    __indexes__ = [["opinion_id", "decision_id"]]
     id: str = Field(..., col=str)
     decision_id: str = DECISION_ID
     opinion_id: str = Field(..., col=str, fk=(OpinionRow.__tablename__, "id"))

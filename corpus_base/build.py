@@ -4,7 +4,10 @@ from pathlib import Path
 import sys
 import click
 import yaml
-from corpus_pax import Individual, setup_pax
+from loguru import logger
+from pydantic import BaseModel
+from sqlpyd import Connection
+from corpus_pax import setup_pax
 from corpus_pax.utils import delete_tables_with_prefix
 from corpus_sc_toolkit import (
     DECISION_PATH,
@@ -12,9 +15,7 @@ from corpus_sc_toolkit import (
     Justice,
     get_justices_file,
 )
-from loguru import logger
-from pydantic import BaseModel
-from sqlpyd import Connection
+
 
 from .main import (
     CitationRow,
@@ -155,22 +156,6 @@ class CorpusDecision(BaseModel):
         for op in OpinionRow.get_opinions(path_obj.parent, pk, j_id):
             self.conn.add_record(kls=OpinionRow, item=op.dict(exclude=to_fix))
             self.conn.add_records(kls=SegmentRow, items=op.segments)
-
-
-def add_authors_only(c: Connection):
-    """Helper function for just adding the author decision m2m table."""
-    case_details = DECISION_PATH.glob("**/*/details.yaml")
-    for detail_path in case_details:
-        if obj := DecisionRow.from_path(c, detail_path):
-            for email in obj.emails:  # assign author row to a joined m2m table
-                tbl = c.table(DecisionRow)
-                if tbl.get(obj.id):
-                    tbl.update(obj.id).m2m(
-                        other_table=c.table(Individual),
-                        lookup={"email": email},
-                        pk="id",
-                        m2m_table="sc_tbl_decisions_pax_tbl_individuals",
-                    )
 
 
 @click.group()
